@@ -1,0 +1,1028 @@
+---
+// Portal Manajemen Tamu & WhatsApp Blaster (Ahmad Nabil Kholili & Fadilatul Izza)
+---
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Portal Pengantin &amp; Kirim Undangan | Nabil &amp; Izza</title>
+  <meta name="description" content="Portal privat pengantin untuk mengelola daftar tamu, generate link personal, dan mengirim undangan WhatsApp.">
+  <meta name="theme-color" content="#260610">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/fonts-wedding.css">
+  <style>
+    :root {
+      --wine-950: #1b030b;
+      --wine-900: #2a0712;
+      --wine-850: #3a0916;
+      --wine-800: #571024;
+      --wine-700: #741a32;
+      --gold: #c9a56b;
+      --gold-soft: #f2e0be;
+      --gold-deep: #8a6730;
+      --ivory: #faf3e8;
+      --tile-gold: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='%23c9a56b' stroke-width='1'%3E%3Crect x='22' y='22' width='40' height='40'/%3E%3Crect x='22' y='22' width='40' height='40' transform='rotate(45 42 42)'/%3E%3Ccircle cx='42' cy='42' r='7'/%3E%3C/g%3E%3Cg fill='%23c9a56b'%3E%3Ccircle cx='0' cy='0' r='3'/%3E%3Ccircle cx='84' cy='0' r='3'/%3E%3Ccircle cx='0' cy='84' r='3'/%3E%3Ccircle cx='84' cy='84' r='3'/%3E%3Ccircle cx='42' cy='42' r='2'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(ellipse at 50% 20%, #460c1d 0%, var(--wine-950) 80%);
+      color: var(--ivory);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      padding-bottom: 60px;
+    }
+
+    /* Pola geometris emas transparan di background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: var(--tile-gold);
+      opacity: 0.08;
+      z-index: 0;
+    }
+
+    /* Ambient floral corner ornaments */
+    .flora-corner {
+      position: fixed;
+      width: clamp(140px, 20vw, 260px);
+      pointer-events: none;
+      opacity: 0.35;
+      z-index: 1;
+    }
+    .flora-tl { top: -20px; left: -20px; }
+    .flora-tr { top: -20px; right: -20px; transform: scaleX(-1); }
+    .flora-bl { bottom: -20px; left: -20px; transform: scaleY(-1); }
+    .flora-br { bottom: -20px; right: -20px; transform: scale(-1); }
+
+    .portal-wrap {
+      position: relative;
+      z-index: 5;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: clamp(20px, 4vw, 42px) 16px;
+    }
+
+    /* Typography */
+    h1, h2, h3 { font-family: 'Cinzel', serif; letter-spacing: 0.06em; color: var(--gold-soft); }
+    .font-couple { font-family: 'Hugh is Life', cursive, serif !important; font-weight: normal; }
+
+    /* Buttons */
+    .btn {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.6rem;
+      font: 500 0.8rem 'Jost', sans-serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--wine-950);
+      background: linear-gradient(135deg, var(--gold-soft), var(--gold) 55%, var(--gold-deep));
+      border: 1.5px solid var(--gold);
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(10, 1, 4, 0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 16px rgba(201, 165, 107, 0.4);
+      filter: brightness(1.05);
+    }
+    .btn:active { transform: translateY(0); }
+    .btn-wa {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #ffffff;
+      border-color: #25D366;
+      box-shadow: 0 8px 20px rgba(18, 140, 126, 0.4);
+    }
+    .btn-wa:hover {
+      box-shadow: 0 12px 28px rgba(18, 140, 126, 0.6), 0 0 18px rgba(37, 211, 102, 0.5);
+    }
+    .btn-outline {
+      background: rgba(42, 7, 18, 0.5);
+      border: 1px solid var(--gold);
+      color: var(--gold-soft);
+      backdrop-filter: blur(6px);
+    }
+    .btn-outline:hover {
+      background: rgba(201, 165, 107, 0.15);
+      color: #ffffff;
+    }
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+    }
+    .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* Cards */
+    .card {
+      background: rgba(38, 6, 16, 0.72);
+      border: 1px solid rgba(201, 165, 107, 0.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 20px;
+      padding: clamp(20px, 4vw, 32px);
+      box-shadow: 0 20px 45px rgba(10, 1, 4, 0.55), inset 0 1px 0 rgba(255, 245, 220, 0.15);
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    /* Form Inputs */
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.76rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      background: rgba(18, 3, 8, 0.65);
+      border: 1.5px solid rgba(201, 165, 107, 0.35);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ivory);
+      outline: none;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 16px rgba(201, 165, 107, 0.35);
+    }
+    .form-textarea {
+      resize: vertical;
+      min-height: 160px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    /* Category & Template Pills */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .pill-btn {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(30, 5, 12, 0.6);
+      border: 1px solid rgba(201, 165, 107, 0.3);
+      color: var(--gold-soft);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .pill-btn:hover, .pill-btn.active {
+      background: var(--gold);
+      color: var(--wine-950);
+      border-color: var(--gold-soft);
+      font-weight: 500;
+    }
+
+    /* Portal Header */
+    .portal-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(201, 165, 107, 0.25);
+      margin-bottom: 28px;
+    }
+    .portal-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .portal-seal {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fff3d1, var(--gold) 58%, var(--gold-deep));
+      color: var(--wine-950);
+      display: grid;
+      place-items: center;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      transform: rotate(45deg);
+      border: 1.5px solid var(--gold-deep);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+      flex-shrink: 0;
+    }
+    .portal-seal span { transform: rotate(-45deg); }
+    .portal-brand-text h1 {
+      font-size: clamp(1.15rem, 4vw, 1.45rem);
+      margin-bottom: 2px;
+    }
+    .portal-brand-text p {
+      font-size: 0.82rem;
+      color: var(--gold-soft);
+      letter-spacing: 0.04em;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .stat-box {
+      background: rgba(30, 5, 12, 0.65);
+      border: 1px solid rgba(201, 165, 107, 0.25);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.4rem, 4vw, 1.9rem);
+      font-weight: 700;
+      color: var(--gold-soft);
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(242, 224, 190, 0.75);
+      margin-top: 2px;
+    }
+
+    /* Guest Table */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(201, 165, 107, 0.2);
+    }
+    .guest-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.86rem;
+    }
+    .guest-table th {
+      background: rgba(25, 4, 10, 0.85);
+      color: var(--gold-soft);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(201, 165, 107, 0.3);
+      white-space: nowrap;
+    }
+    .guest-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(201, 165, 107, 0.15);
+      vertical-align: middle;
+    }
+    .guest-table tr:hover td {
+      background: rgba(201, 165, 107, 0.05);
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .badge-sent {
+      background: rgba(37, 211, 102, 0.2);
+      color: #62ebb0;
+      border: 1px solid rgba(37, 211, 102, 0.4);
+      cursor: pointer;
+    }
+    .badge-unsent {
+      background: rgba(201, 165, 107, 0.18);
+      color: var(--gold-soft);
+      border: 1px solid rgba(201, 165, 107, 0.4);
+      cursor: pointer;
+    }
+    .badge-cat {
+      background: rgba(87, 16, 36, 0.6);
+      color: var(--ivory);
+      border: 1px solid rgba(201, 165, 107, 0.3);
+      margin-left: 6px;
+    }
+
+    /* Modal Login */
+    #loginModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 2, 7, 0.94);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .login-box {
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      animation: modalFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .login-seal {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #fff3d1, var(--gold) 58%, var(--gold-deep));
+      color: var(--wine-950);
+      display: grid;
+      place-items: center;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.45rem;
+      transform: rotate(45deg);
+      border: 2px solid var(--gold-deep);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+      margin: 0 auto 24px;
+    }
+    .login-seal span { transform: rotate(-45deg); }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(38, 6, 16, 0.95);
+      border: 1.5px solid var(--gold);
+      color: var(--gold-soft);
+      padding: 12px 24px;
+      border-radius: 999px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
+      font-size: 0.86rem;
+      letter-spacing: 0.05em;
+      z-index: 2000;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Utilities */
+    .hidden { display: none !important; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media(min-width: 820px) {
+      .grid-2 { grid-template-columns: 1.15fr 0.85fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floral Corner Accents -->
+  <img src="/images/florals/frame/frame-tl.webp" class="flora-corner flora-tl" alt="" aria-hidden="true" />
+  <img src="/images/florals/frame/frame-tl.webp" class="flora-corner flora-tr" alt="" aria-hidden="true" />
+  <img src="/images/florals/frame/frame-tl.webp" class="flora-corner flora-bl" alt="" aria-hidden="true" />
+  <img src="/images/florals/frame/frame-tl.webp" class="flora-corner flora-br" alt="" aria-hidden="true" />
+
+  <!-- ================= LAYAR LOGIN ================= -->
+  <div id="loginModal">
+    <div class="card login-box">
+      <div class="login-seal"><span>N&amp;I</span></div>
+      <h2 style="font-size:1.45rem;margin-bottom:6px">Portal Pengantin</h2>
+      <p style="font-size:0.86rem;color:var(--gold-soft);margin-bottom:24px">
+        Ahmad Nabil Kholili &amp; Fadilatul Izza
+      </p>
+
+      <form id="loginForm" onsubmit="return handleLogin(event)">
+        <div class="form-group" style="text-align:left">
+          <label class="form-label" for="loginPass">Kata Sandi Acara</label>
+          <input type="password" id="loginPass" class="form-input" placeholder="Masukkan kata sandi..." required autofocus />
+          <div id="loginError" style="color:#ff859d;font-size:0.8rem;margin-top:6px;display:none">
+            Kata sandi salah. Silakan coba kembali.
+          </div>
+        </div>
+        <button type="submit" class="btn" style="width:100%;margin-top:10px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          Masuk ke Portal
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= DASHBOARD PORTAL ================= -->
+  <div class="portal-wrap hidden" id="portalContent">
+    
+    <!-- Top Bar -->
+    <header class="portal-header">
+      <div class="portal-brand">
+        <div class="portal-seal"><span>N&amp;I</span></div>
+        <div class="portal-brand-text">
+          <h1>Portal Kirim Undangan</h1>
+          <p>Nabil &amp; Izza &bull; Kamis, 21 Januari 2027</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="/" target="_blank" class="btn btn-outline btn-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Lihat Undangan
+        </a>
+        <button type="button" onclick="handleLogout()" class="btn btn-outline btn-sm" style="border-color:rgba(201,165,107,0.3)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Keluar
+        </button>
+      </div>
+    </header>
+
+    <!-- Ringkasan Statistik -->
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-number" id="statTotal">0</div>
+        <div class="stat-label">Total Tamu</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number" id="statSent" style="color:#62ebb0">0</div>
+        <div class="stat-label">Sudah Dikirim</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number" id="statUnsent" style="color:#ffb870">0</div>
+        <div class="stat-label">Belum Dikirim</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number" id="statVip" style="color:#ffd98a">0</div>
+        <div class="stat-label">Tamu VIP / Keluarga</div>
+      </div>
+    </div>
+
+    <!-- Main Grid: Form Pembuatan & Preview Pesan -->
+    <div class="grid-2">
+      <!-- Sisi Kiri: Form Input Tamu -->
+      <div class="card">
+        <h2 style="font-size:1.15rem;margin-bottom:18px;display:flex;align-items:center;gap:8px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+          1. Tambah Data Tamu
+        </h2>
+
+        <div class="form-group">
+          <label class="form-label" for="guestName">Nama Tamu Undangan *</label>
+          <input type="text" id="guestName" class="form-input" placeholder="Contoh: Bpk. H. Ahmad Fauzi &amp; Istri" oninput="updateMessagePreview()" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="guestPhone">Nomor WhatsApp Tamu</label>
+          <input type="tel" id="guestPhone" class="form-input" placeholder="Contoh: 08123456789 atau 6281234..." oninput="updateMessagePreview()" />
+          <small style="color:rgba(242,224,190,0.65);font-size:0.75rem;margin-top:4px;display:block">
+            Bisa format 08... atau 628... (otomatis disesuaikan untuk link WhatsApp).
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Kategori Tamu</label>
+          <div class="pill-group" id="categoryGroup">
+            <button type="button" class="pill-btn active" data-cat="Umum" onclick="selectCategory(this)">Umum</button>
+            <button type="button" class="pill-btn" data-cat="Keluarga" onclick="selectCategory(this)">Keluarga</button>
+            <button type="button" class="pill-btn" data-cat="VIP" onclick="selectCategory(this)">VIP</button>
+            <button type="button" class="pill-btn" data-cat="Sahabat" onclick="selectCategory(this)">Sahabat</button>
+            <button type="button" class="pill-btn" data-cat="Teman Kantor" onclick="selectCategory(this)">Teman Kantor</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Gaya Bahasa Template Pesan</label>
+          <div class="pill-group" id="templateGroup">
+            <button type="button" class="pill-btn active" data-tpl="formal" onclick="selectTemplate(this)">Formal &amp; Sopan</button>
+            <button type="button" class="pill-btn" data-tpl="keluarga" onclick="selectTemplate(this)">Hangat (Keluarga)</button>
+            <button type="button" class="pill-btn" data-tpl="santai" onclick="selectTemplate(this)">Santai (Teman/Sahabat)</button>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap">
+          <button type="button" class="btn" style="flex:1" onclick="saveGuest()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Simpan Tamu
+          </button>
+          <button type="button" class="btn btn-outline" onclick="resetForm()">
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Sisi Kanan: Live Preview & Tombol Kirim WhatsApp -->
+      <div class="card">
+        <h2 style="font-size:1.15rem;margin-bottom:18px;display:flex;align-items:center;gap:8px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          2. Preview Teks WhatsApp
+        </h2>
+
+        <div class="form-group">
+          <label class="form-label">Teks Pesan (Dapat Diedit Langsung)</label>
+          <textarea id="messagePreview" class="form-textarea"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tautan Undangan Khusus Tamu Ini</label>
+          <input type="text" id="linkPreview" class="form-input" readonly style="color:var(--gold-soft);background:rgba(10,1,4,0.7)" />
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:20px">
+          <button type="button" class="btn btn-wa" style="width:100%" onclick="sendWhatsAppNow()">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.98-.276-.101-.477-.15-.678.15-.201.301-.779.98-.955 1.18-.176.201-.352.226-.653.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.352.452-.527.151-.176.201-.301.301-.502.101-.201.05-.377-.025-.527s-.678-1.633-.929-2.235c-.245-.587-.494-.508-.678-.517-.176-.009-.377-.009-.578-.009s-.527.075-.804.377c-.276.301-1.055 1.03-1.055 2.512 0 1.482 1.08 2.914 1.231 3.115.151.201 2.126 3.246 5.151 4.553.72.311 1.282.497 1.721.636.723.23 1.381.198 1.901.12.579-.087 1.78-.728 2.031-1.431.251-.703.251-1.306.176-1.431-.075-.126-.276-.201-.577-.351zM12.042 2C6.516 2 2.025 6.491 2.025 12.017c0 1.83.493 3.548 1.353 5.035L2 22l5.105-1.339c1.433.782 3.074 1.233 4.821 1.233 5.526 0 10.017-4.491 10.017-10.017C21.943 6.491 17.568 2 12.042 2z"/></svg>
+            Kirim WhatsApp Langsung
+          </button>
+          
+          <div style="display:flex;gap:10px">
+            <button type="button" class="btn btn-outline" style="flex:1" onclick="copyFullMessage()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Salin Pesan
+            </button>
+            <button type="button" class="btn btn-outline" style="flex:1" onclick="copyLinkOnly()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              Salin Link
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Daftar Tamu & Riwayat Blasting -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+        <div>
+          <h2 style="font-size:1.15rem">Daftar Tamu Undangan</h2>
+          <p style="font-size:0.8rem;color:var(--gold-soft);margin-top:2px">Kelola dan pantau status pengiriman undangan</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn btn-outline btn-sm" onclick="exportRecapText()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Salin Rekap Tamu
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" style="border-color:#ff5277;color:#ff859d" onclick="clearAllGuests()">
+            Hapus Semua
+          </button>
+        </div>
+      </div>
+
+      <!-- Search & Category Filter -->
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+        <input type="text" id="searchGuest" class="form-input" style="max-width:280px" placeholder="Cari nama tamu..." oninput="renderGuestTable()" />
+        <select id="filterCategory" class="form-select" style="max-width:200px" onchange="renderGuestTable()">
+          <option value="ALL">Semua Kategori</option>
+          <option value="Umum">Umum</option>
+          <option value="Keluarga">Keluarga</option>
+          <option value="VIP">VIP</option>
+          <option value="Sahabat">Sahabat</option>
+          <option value="Teman Kantor">Teman Kantor</option>
+        </select>
+        <select id="filterStatus" class="form-select" style="max-width:200px" onchange="renderGuestTable()">
+          <option value="ALL">Semua Status</option>
+          <option value="sent">Sudah Dikirim</option>
+          <option value="unsent">Belum Dikirim</option>
+        </select>
+      </div>
+
+      <!-- Tabel Tamu -->
+      <div class="table-container">
+        <table class="guest-table">
+          <thead>
+            <tr>
+              <th style="width:40px">#</th>
+              <th>Nama Tamu &amp; Kategori</th>
+              <th>WhatsApp</th>
+              <th>Status</th>
+              <th style="text-align:right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="guestTableBody">
+            <!-- Rows injected by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">Tersalin ke papan klip!</span>
+  </div>
+
+  <!-- SCRIPT LOGIKA PORTAL -->
+  <script is:inline>
+    // Konfigurasi Kunci Acara & State
+    var PORTAL_AUTH_KEY = 'azluna_portal_auth_nabil';
+    var GUESTS_STORAGE_KEY = 'azluna_guest_list_nabil';
+    var CURRENT_CATEGORY = 'Umum';
+    var CURRENT_TEMPLATE = 'formal';
+
+    // 1. OTENTIKASI PENGANTIN
+    function checkAuth() {
+      var isAuth = localStorage.getItem(PORTAL_AUTH_KEY) === '1';
+      if (isAuth) {
+        document.getElementById('loginModal').classList.add('hidden');
+        document.getElementById('portalContent').classList.remove('hidden');
+        renderGuestTable();
+        updateMessagePreview();
+      } else {
+        document.getElementById('loginModal').classList.remove('hidden');
+        document.getElementById('portalContent').classList.add('hidden');
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      var pass = document.getElementById('loginPass').value.trim();
+      var err = document.getElementById('loginError');
+      if (pass === 'Izza-Nabil2027') {
+        localStorage.setItem(PORTAL_AUTH_KEY, '1');
+        err.style.display = 'none';
+        checkAuth();
+        showToast('Selamat datang di Portal Pengantin!');
+      } else {
+        err.style.display = 'block';
+        var box = document.querySelector('.login-box');
+        box.style.animation = 'none';
+        box.offsetHeight;
+        box.style.animation = 'modalFadeIn 0.3s ease';
+      }
+      return false;
+    }
+
+    function handleLogout() {
+      if (confirm('Apakah Anda ingin keluar dari portal?')) {
+        localStorage.removeItem(PORTAL_AUTH_KEY);
+        location.reload();
+      }
+    }
+
+    // 2. KELOLA DATA TAMU DI LOCALSTORAGE
+    function getStoredGuests() {
+      try {
+        var data = localStorage.getItem(GUESTS_STORAGE_KEY);
+        return data ? JSON.parse(data) : [];
+      } catch(e) { return []; }
+    }
+
+    function saveStoredGuests(list) {
+      try {
+        localStorage.setItem(GUESTS_STORAGE_KEY, JSON.stringify(list));
+      } catch(e) {}
+      renderGuestTable();
+    }
+
+    // 3. GENERATOR LINK & TEMPLATE PESAN
+    function getBaseUrl() {
+      return window.location.origin + '/';
+    }
+
+    function buildGuestUrl(name) {
+      var clean = (name || '').trim();
+      if (!clean) return getBaseUrl();
+      return getBaseUrl() + '?to=' + encodeURIComponent(clean);
+    }
+
+    function formatWhatsAppNumber(phone) {
+      if (!phone) return '';
+      var clean = phone.replace(/[^0-9]/g, '');
+      if (clean.indexOf('08') === 0) {
+        clean = '628' + clean.slice(2);
+      } else if (clean.indexOf('8') === 0 && clean.length >= 9) {
+        clean = '628' + clean.slice(1);
+      }
+      return clean;
+    }
+
+    function generateMessage(name, link, style) {
+      var guestName = name ? name.trim() : '[Nama Tamu]';
+      var inviteLink = link || buildGuestUrl(name);
+
+      if (style === 'santai') {
+        return "Halo " + guestName + "!\n\n" +
+          "Kabar bahagia! Insya Allah kami akan melangsungkan pernikahan:\n\n" +
+          "💍 Ahmad Nabil Kholili & Fadilatul Izza\n" +
+          "📅 Kamis, 21 Januari 2027\n\n" +
+          "Kami sangat berharap kehadiranmu untuk merayakan momen bahagia ini bersama kami. Informasi lengkap acara dan ucapan bisa dibuka lewat link undangan berikut:\n\n" +
+          inviteLink + "\n\n" +
+          "Sampai jumpa di hari bahagia kami!\n\n" +
+          "— Nabil & Izza";
+      }
+
+      if (style === 'keluarga') {
+        return "Assalamu'alaikum Warahmatullahi Wabarakatuh.\n\n" +
+          "Kepada Yth. Keluarga Tercinta:\n" +
+          guestName + "\n\n" +
+          "Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang sanak saudara sekalian dalam acara walimatul 'urs putra-putri kami:\n\n" +
+          "Ahmad Nabil Kholili & Fadilatul Izza\n" +
+          "Hari/Tgl: Kamis, 21 Januari 2027\n" +
+          "Lokasi: Brebes, Jawa Tengah\n\n" +
+          "Detail rangkaian acara serta doa restu dapat diakses melalui tautan undangan digital di bawah ini:\n\n" +
+          inviteLink + "\n\n" +
+          "Kehadiran serta doa restu dari Bapak/Ibu/Saudara/i merupakan kebahagiaan dan kehormatan besar bagi keluarga kami.\n\n" +
+          "Wassalamu'alaikum Warahmatullahi Wabarakatuh.\n\n" +
+          "Keluarga Besar Bpk. Shobirin & Bpk. Rosihin\n" +
+          "Nabil & Izza";
+      }
+
+      // Default: Formal & Sopan
+      return "Kepada Yth.\n" +
+        "Bapak/Ibu/Saudara/i " + guestName + "\n\n" +
+        "Assalamu'alaikum Warahmatullahi Wabarakatuh.\n\n" +
+        "Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:\n\n" +
+        "Ahmad Nabil Kholili, S.Ag.\n" +
+        "&\n" +
+        "Fadilatul Izza\n\n" +
+        "Yang insya Allah akan dilaksanakan pada:\n" +
+        "Hari/Tanggal: Kamis, 21 Januari 2027\n" +
+        "Tempat: Brebes, Jawa Tengah\n\n" +
+        "Informasi lengkap mengenai jadwal akad, resepsi, dan peta lokasi dapat dilihat melalui tautan undangan resmi berikut:\n\n" +
+        inviteLink + "\n\n" +
+        "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada kedua mempelai.\n\n" +
+        "Wassalamu'alaikum Warahmatullahi Wabarakatuh.\n\n" +
+        "Hormat kami,\n" +
+        "Nabil & Izza";
+    }
+
+    function updateMessagePreview() {
+      var name = document.getElementById('guestName').value;
+      var link = buildGuestUrl(name);
+      document.getElementById('linkPreview').value = link;
+      var msg = generateMessage(name, link, CURRENT_TEMPLATE);
+      document.getElementById('messagePreview').value = msg;
+    }
+
+    function selectCategory(btn) {
+      document.querySelectorAll('#categoryGroup .pill-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      CURRENT_CATEGORY = btn.getAttribute('data-cat');
+    }
+
+    function selectTemplate(btn) {
+      document.querySelectorAll('#templateGroup .pill-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      CURRENT_TEMPLATE = btn.getAttribute('data-tpl');
+      updateMessagePreview();
+    }
+
+    // 4. AKSI PENGIRIMAN & CLIPBOARD
+    function sendWhatsAppNow() {
+      var name = document.getElementById('guestName').value.trim();
+      var phone = formatWhatsAppNumber(document.getElementById('guestPhone').value.trim());
+      var msg = document.getElementById('messagePreview').value.trim();
+
+      if (!name) {
+        alert('Mohon masukkan nama tamu undangan terlebih dahulu.');
+        document.getElementById('guestName').focus();
+        return;
+      }
+
+      // Auto save or update status
+      markOrAddGuest(name, phone, CURRENT_CATEGORY, true);
+
+      var url = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(msg);
+      if (phone) {
+        url = 'https://api.whatsapp.com/send?phone=' + phone + '&text=' + encodeURIComponent(msg);
+      }
+      window.open(url, '_blank');
+      showToast('Membuka WhatsApp untuk ' + name);
+    }
+
+    function copyFullMessage() {
+      var msg = document.getElementById('messagePreview').value;
+      if (!msg) return;
+      navigator.clipboard.writeText(msg).then(function(){
+        showToast('Teks pesan WhatsApp berhasil disalin!');
+      }).catch(function(){
+        alert('Gagal menyalin teks.');
+      });
+    }
+
+    function copyLinkOnly() {
+      var link = document.getElementById('linkPreview').value;
+      if (!link) return;
+      navigator.clipboard.writeText(link).then(function(){
+        showToast('Tautan undangan berhasil disalin!');
+      }).catch(function(){
+        alert('Gagal menyalin tautan.');
+      });
+    }
+
+    function markOrAddGuest(name, phone, category, isSent) {
+      var list = getStoredGuests();
+      var found = list.find(function(g){ return g.name.toLowerCase() === name.toLowerCase(); });
+      if (found) {
+        if (phone) found.phone = phone;
+        if (category) found.category = category;
+        if (isSent) found.sent = true;
+      } else {
+        list.unshift({
+          id: Date.now().toString(),
+          name: name,
+          phone: phone,
+          category: category || 'Umum',
+          sent: !!isSent,
+          createdAt: new Date().toISOString()
+        });
+      }
+      saveStoredGuests(list);
+    }
+
+    function saveGuest() {
+      var name = document.getElementById('guestName').value.trim();
+      var phone = formatWhatsAppNumber(document.getElementById('guestPhone').value.trim());
+      if (!name) {
+        alert('Mohon masukkan nama tamu undangan.');
+        document.getElementById('guestName').focus();
+        return;
+      }
+      markOrAddGuest(name, phone, CURRENT_CATEGORY, false);
+      showToast('Tamu ' + name + ' berhasil disimpan!');
+      resetForm();
+    }
+
+    function resetForm() {
+      document.getElementById('guestName').value = '';
+      document.getElementById('guestPhone').value = '';
+      updateMessagePreview();
+    }
+
+    // 5. RENDER DAFTAR TAMU & STATISTIK
+    function renderGuestTable() {
+      var list = getStoredGuests();
+      var tbody = document.getElementById('guestTableBody');
+      var search = (document.getElementById('searchGuest').value || '').toLowerCase().trim();
+      var filterCat = document.getElementById('filterCategory').value;
+      var filterSt = document.getElementById('filterStatus').value;
+
+      // Hitung Statistik
+      var total = list.length;
+      var sent = list.filter(function(g){ return g.sent; }).length;
+      var unsent = total - sent;
+      var vip = list.filter(function(g){ return g.category === 'VIP' || g.category === 'Keluarga'; }).length;
+
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statSent').textContent = sent;
+      document.getElementById('statUnsent').textContent = unsent;
+      document.getElementById('statVip').textContent = vip;
+
+      // Filter
+      var filtered = list.filter(function(g){
+        var matchName = !search || g.name.toLowerCase().indexOf(search) !== -1;
+        var matchCat = filterCat === 'ALL' || g.category === filterCat;
+        var matchSt = filterSt === 'ALL' || (filterSt === 'sent' && g.sent) || (filterSt === 'unsent' && !g.sent);
+        return matchName && matchCat && matchSt;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:32px;color:rgba(242,224,190,0.6)">Belum ada data tamu yang sesuai.</td></tr>';
+        return;
+      }
+
+      var html = '';
+      filtered.forEach(function(g, idx){
+        var link = buildGuestUrl(g.name);
+        var statusBadge = g.sent ?
+          '<span class="badge badge-sent" title="Klik untuk ubah status" onclick="toggleSentStatus(\'' + g.id + '\')">✓ Terkirim</span>' :
+          '<span class="badge badge-unsent" title="Klik untuk ubah status" onclick="toggleSentStatus(\'' + g.id + '\')">&bull; Belum Kirim</span>';
+
+        html += '<tr>' +
+          '<td style="color:rgba(242,224,190,0.6)">' + (idx + 1) + '</td>' +
+          '<td>' +
+            '<strong>' + escapeHtml(g.name) + '</strong>' +
+            '<span class="badge badge-cat">' + escapeHtml(g.category) + '</span>' +
+          '</td>' +
+          '<td>' + (g.phone ? '<a href="tel:' + g.phone + '" style="color:var(--gold-soft);text-decoration:none">' + g.phone + '</a>' : '<span style="opacity:0.4">-</span>') + '</td>' +
+          '<td>' + statusBadge + '</td>' +
+          '<td style="text-align:right;white-space:nowrap">' +
+            '<button type="button" class="btn btn-outline btn-sm" style="margin-right:6px" onclick="quickSendWA(\'' + g.id + '\')" title="Kirim via WhatsApp">WA</button>' +
+            '<button type="button" class="btn btn-outline btn-sm" style="margin-right:6px" onclick="quickCopyLink(\'' + escapeHtml(link) + '\')" title="Salin Tautan">Link</button>' +
+            '<a href="' + link + '" target="_blank" class="btn btn-outline btn-sm" style="margin-right:6px" title="Buka Undangan">Buka</a>' +
+            '<button type="button" class="btn btn-outline btn-sm" style="border-color:#ff5277;color:#ff859d" onclick="deleteGuest(\'' + g.id + '\')" title="Hapus">✕</button>' +
+          '</td>' +
+        '</tr>';
+      });
+      tbody.innerHTML = html;
+    }
+
+    function toggleSentStatus(id) {
+      var list = getStoredGuests();
+      var item = list.find(function(g){ return g.id === id; });
+      if (item) {
+        item.sent = !item.sent;
+        saveStoredGuests(list);
+      }
+    }
+
+    function quickSendWA(id) {
+      var list = getStoredGuests();
+      var item = list.find(function(g){ return g.id === id; });
+      if (!item) return;
+      var link = buildGuestUrl(item.name);
+      var msg = generateMessage(item.name, link, 'formal');
+      var url = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(msg);
+      if (item.phone) {
+        url = 'https://api.whatsapp.com/send?phone=' + item.phone + '&text=' + encodeURIComponent(msg);
+      }
+      item.sent = true;
+      saveStoredGuests(list);
+      window.open(url, '_blank');
+      showToast('Membuka WhatsApp untuk ' + item.name);
+    }
+
+    function quickCopyLink(link) {
+      navigator.clipboard.writeText(link).then(function(){
+        showToast('Link undangan berhasil disalin!');
+      });
+    }
+
+    function deleteGuest(id) {
+      if (confirm('Hapus tamu ini dari daftar?')) {
+        var list = getStoredGuests().filter(function(g){ return g.id !== id; });
+        saveStoredGuests(list);
+        showToast('Tamu telah dihapus.');
+      }
+    }
+
+    function clearAllGuests() {
+      if (confirm('PERINGATAN: Apakah Anda yakin ingin menghapus SEMUA daftar tamu?')) {
+        localStorage.removeItem(GUESTS_STORAGE_KEY);
+        renderGuestTable();
+        showToast('Semua tamu berhasil dibersihkan.');
+      }
+    }
+
+    function exportRecapText() {
+      var list = getStoredGuests();
+      if (!list.length) {
+        alert('Daftar tamu masih kosong.');
+        return;
+      }
+      var text = "REKAPITULASI TAMU UNDANGAN NABIL & IZZA\n";
+      text += "Total: " + list.length + " Tamu\n\n";
+      list.forEach(function(g, i){
+        var st = g.sent ? '[SUDAH TERKIRIM]' : '[BELUM KIRIM]';
+        text += (i + 1) + ". " + g.name + " (" + g.category + ") " + st + "\n";
+        text += "   Link: " + buildGuestUrl(g.name) + "\n";
+        if (g.phone) text += "   WA: " + g.phone + "\n";
+        text += "\n";
+      });
+      navigator.clipboard.writeText(text).then(function(){
+        showToast('Rekapitulasi seluruh tamu berhasil disalin!');
+      });
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+      });
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      var m = document.getElementById('toastMsg');
+      m.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function(){ t.classList.remove('show'); }, 3000);
+    }
+
+    // Inisialisasi saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', checkAuth);
+  </script>
+</body>
+</html>
