@@ -86,6 +86,7 @@
       justify-content: center;
       gap: 0.5rem;
       padding: 0.85rem 1.6rem;
+      min-height: 46px;
       font: 500 0.8rem 'Jost', sans-serif;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -97,6 +98,7 @@
       text-decoration: none;
       box-shadow: 0 8px 20px rgba(10, 1, 4, 0.4);
       transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      touch-action: manipulation;
     }
     .btn:hover {
       transform: translateY(-2px);
@@ -124,9 +126,10 @@
       color: #ffffff;
     }
     .btn-sm {
-      padding: 0.5rem 1rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
+      min-height: 38px;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.74rem;
+      letter-spacing: 0.1em;
     }
     .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
 
@@ -137,20 +140,20 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-radius: 20px;
-      padding: clamp(20px, 4vw, 32px);
+      padding: clamp(18px, 4vw, 32px);
       box-shadow: 0 20px 45px rgba(10, 1, 4, 0.55), inset 0 1px 0 rgba(255, 245, 220, 0.15);
       margin-bottom: 24px;
       position: relative;
     }
 
-    /* Form Inputs */
+    /* Form Inputs (Wajib font-size 16px agar tidak auto-zoom di iOS Safari) */
     .form-group {
       margin-bottom: 18px;
     }
     .form-label {
       display: block;
       font-size: 0.76rem;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--gold-soft);
       margin-bottom: 6px;
@@ -160,13 +163,21 @@
       width: 100%;
       background: rgba(18, 3, 8, 0.65);
       border: 1.5px solid rgba(201, 165, 107, 0.35);
-      border-radius: 12px;
-      padding: 12px 16px;
+      border-radius: 14px;
+      padding: 13px 16px;
       font-family: 'Jost', sans-serif;
-      font-size: 0.95rem;
+      font-size: 16px; /* 16px standard to avoid iOS zoom */
       color: var(--ivory);
       outline: none;
       transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c9a56b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
     }
     .form-input:focus, .form-textarea:focus, .form-select:focus {
       border-color: var(--gold);
@@ -174,8 +185,8 @@
     }
     .form-textarea {
       resize: vertical;
-      min-height: 160px;
-      font-size: 0.88rem;
+      min-height: 150px;
+      font-size: 15px;
       line-height: 1.6;
     }
 
@@ -187,14 +198,19 @@
       margin-top: 6px;
     }
     .pill-btn {
-      padding: 6px 14px;
+      padding: 8px 16px;
+      min-height: 38px;
       border-radius: 999px;
       background: rgba(30, 5, 12, 0.6);
       border: 1px solid rgba(201, 165, 107, 0.3);
       color: var(--gold-soft);
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       cursor: pointer;
       transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: manipulation;
     }
     .pill-btn:hover, .pill-btn.active {
       background: var(--gold);
@@ -210,9 +226,9 @@
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      padding-bottom: 24px;
+      padding-bottom: 22px;
       border-bottom: 1px solid rgba(201, 165, 107, 0.25);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
     .portal-brand {
       display: flex;
@@ -237,7 +253,7 @@
     }
     .portal-seal span { transform: rotate(-45deg); }
     .portal-brand-text h1 {
-      font-size: clamp(1.15rem, 4vw, 1.45rem);
+      font-size: clamp(1.15rem, 4.5vw, 1.45rem);
       margin-bottom: 2px;
     }
     .portal-brand-text p {
@@ -245,56 +261,62 @@
       color: var(--gold-soft);
       letter-spacing: 0.04em;
     }
+    .portal-header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
 
     /* Stats Grid */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
       margin-bottom: 24px;
     }
     .stat-box {
       background: rgba(30, 5, 12, 0.65);
       border: 1px solid rgba(201, 165, 107, 0.25);
       border-radius: 14px;
-      padding: 16px;
+      padding: 14px;
       text-align: center;
     }
     .stat-number {
       font-family: 'Cinzel', serif;
-      font-size: clamp(1.4rem, 4vw, 1.9rem);
+      font-size: clamp(1.4rem, 5vw, 1.9rem);
       font-weight: 700;
       color: var(--gold-soft);
+      line-height: 1.2;
     }
     .stat-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: rgba(242, 224, 190, 0.75);
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
-    /* Guest Table */
+    /* Guest Table & Responsive Card Styling */
     .table-container {
       overflow-x: auto;
       margin-top: 14px;
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid rgba(201, 165, 107, 0.2);
     }
     .guest-table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 0.86rem;
+      font-size: 0.88rem;
     }
     .guest-table th {
       background: rgba(25, 4, 10, 0.85);
       color: var(--gold-soft);
       font-family: 'Cinzel', serif;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 12px 16px;
+      padding: 14px 16px;
       border-bottom: 1px solid rgba(201, 165, 107, 0.3);
       white-space: nowrap;
     }
@@ -306,6 +328,14 @@
     .guest-table tr:hover td {
       background: rgba(201, 165, 107, 0.05);
     }
+    .mobile-label { display: none; }
+    .action-btn-group {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+
     .badge {
       display: inline-block;
       padding: 4px 10px;
@@ -314,6 +344,7 @@
       letter-spacing: 0.08em;
       font-weight: 500;
       text-transform: uppercase;
+      user-select: none;
     }
     .badge-sent {
       background: rgba(37, 211, 102, 0.2);
@@ -349,29 +380,30 @@
     }
     .login-box {
       width: 100%;
-      max-width: 440px;
+      max-width: 420px;
       text-align: center;
-      animation: modalFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: clamp(24px, 6vw, 36px) clamp(18px, 5vw, 28px);
     }
     @keyframes modalFadeIn {
-      from { opacity: 0; transform: translateY(24px) scale(0.96); }
+      from { opacity: 0; transform: translateY(20px) scale(0.96); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
     .login-seal {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
+      width: 60px;
+      height: 60px;
+      border-radius: 14px;
       background: linear-gradient(135deg, #fff3d1, var(--gold) 58%, var(--gold-deep));
       color: var(--wine-950);
       display: grid;
       place-items: center;
       font-family: 'Cinzel', serif;
       font-weight: 700;
-      font-size: 1.45rem;
+      font-size: 1.35rem;
       transform: rotate(45deg);
       border: 2px solid var(--gold-deep);
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
-      margin: 0 auto 24px;
+      margin: 0 auto 20px;
     }
     .login-seal span { transform: rotate(-45deg); }
 
@@ -381,19 +413,22 @@
       bottom: 24px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
+      max-width: min(90vw, 420px);
       background: rgba(38, 6, 16, 0.95);
       border: 1.5px solid var(--gold);
       color: var(--gold-soft);
-      padding: 12px 24px;
+      padding: 12px 22px;
       border-radius: 999px;
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
-      font-size: 0.86rem;
-      letter-spacing: 0.05em;
+      font-size: 0.84rem;
+      letter-spacing: 0.04em;
       z-index: 2000;
       opacity: 0;
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       align-items: center;
+      justify-content: center;
+      text-align: center;
       gap: 8px;
       pointer-events: none;
     }
@@ -402,15 +437,171 @@
       opacity: 1;
     }
 
-    /* Utilities */
-    .hidden { display: none !important; }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
+    /* ==========================================================================
+       MOBILE RESPONSIVE SYSTEM (Mobile Friendly untuk semua layar < 768px)
+       ========================================================================== */
+    @media (max-width: 768px) {
+      .portal-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        text-align: center;
+      }
+      .portal-brand {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      .portal-header-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        gap: 10px;
+      }
+      .portal-header-actions .btn {
+        width: 100%;
+        font-size: 0.74rem;
+        padding: 0.6rem 0.8rem;
+      }
+
+      /* Stats: 2x2 grid */
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      /* Search & Filter Full Width */
+      .filter-bar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+      .filter-bar .form-input,
+      .filter-bar .form-select {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      .filter-selects-row {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%;
+      }
+
+      /* Responsive Guest Card Transformation (Bukan tabel kaku yang scroll horizontal) */
+      .table-container {
+        border: none;
+        overflow: visible;
+      }
+      .guest-table, .guest-table tbody, .guest-table tr, .guest-table td {
+        display: block;
+        width: 100%;
+      }
+      .guest-table thead {
+        display: none; /* Sembunyikan header tabel di mobile */
+      }
+      .guest-table tr {
+        background: rgba(30, 5, 12, 0.78);
+        border: 1px solid rgba(201, 165, 107, 0.3);
+        border-radius: 16px;
+        margin-bottom: 14px;
+        padding: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      }
+      .guest-table tr:hover td {
+        background: transparent;
+      }
+      .guest-table td {
+        padding: 4px 0;
+        border-bottom: none;
+      }
+      .td-num {
+        display: none !important;
+      }
+      .td-name {
+        padding-bottom: 8px !important;
+        border-bottom: 1px dashed rgba(201, 165, 107, 0.2) !important;
+        margin-bottom: 8px;
+      }
+      .guest-name-text {
+        font-size: 1.05rem;
+        color: var(--ivory);
+        display: block;
+        margin-bottom: 4px;
+      }
+      .td-phone, .td-status {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0 !important;
+        font-size: 0.88rem;
+      }
+      .mobile-label {
+        display: inline-block;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold-soft);
+        opacity: 0.85;
+      }
+      .td-actions {
+        padding-top: 12px !important;
+        border-top: 1px solid rgba(201, 165, 107, 0.2) !important;
+        margin-top: 10px;
+      }
+      .action-btn-group {
+        display: grid;
+        grid-template-columns: 2.2fr 1fr 1fr 48px;
+        gap: 6px;
+        width: 100%;
+      }
+      .action-btn-group .btn {
+        width: 100%;
+        min-height: 40px;
+        justify-content: center;
+        padding: 0.45rem 0.2rem;
+        font-size: 0.72rem;
+      }
+
+      /* Stack header rekap di mobile */
+      .guest-list-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+      .guest-list-actions {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        gap: 8px;
+      }
+      .guest-list-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .form-action-row {
+        flex-direction: column;
+      }
+      .form-action-row .btn {
+        width: 100%;
+      }
     }
-    @media(min-width: 820px) {
-      .grid-2 { grid-template-columns: 1.15fr 0.85fr; }
+
+    @media (max-width: 480px) {
+      .portal-wrap {
+        padding: 16px 12px;
+      }
+      .card {
+        padding: 16px 14px;
+        border-radius: 16px;
+      }
+      .action-btn-group {
+        grid-template-columns: 1.8fr 1fr 1fr 42px;
+        gap: 5px;
+      }
+      .action-btn-group .btn {
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+      }
     }
   </style>
 </head>
@@ -465,7 +656,7 @@
           <p>Nabil &amp; Izza &bull; Kamis, 21 Januari 2027</p>
         </div>
       </div>
-      <div style="display:flex;gap:10px;align-items:center">
+      <div class="portal-header-actions">
         <a href="/" target="_blank" class="btn btn-outline btn-sm">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           Lihat Undangan
@@ -539,12 +730,12 @@
           </div>
         </div>
 
-        <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap">
-          <button type="button" class="btn" style="flex:1" onclick="saveGuest()">
+        <div class="form-action-row" style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap">
+          <button type="button" class="btn" style="flex:1.6" onclick="saveGuest()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
             Simpan Tamu
           </button>
-          <button type="button" class="btn btn-outline" onclick="resetForm()">
+          <button type="button" class="btn btn-outline" style="flex:1" onclick="resetForm()">
             Reset
           </button>
         </div>
@@ -589,12 +780,12 @@
 
     <!-- Section 3: Daftar Tamu & Riwayat Blasting -->
     <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+      <div class="guest-list-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px">
         <div>
           <h2 style="font-size:1.15rem">Daftar Tamu Undangan</h2>
           <p style="font-size:0.8rem;color:var(--gold-soft);margin-top:2px">Kelola dan pantau status pengiriman undangan</p>
         </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="guest-list-actions" style="display:flex;gap:8px;flex-wrap:wrap">
           <button type="button" class="btn btn-outline btn-sm" onclick="exportRecapText()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             Salin Rekap Tamu
@@ -606,21 +797,23 @@
       </div>
 
       <!-- Search & Category Filter -->
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+      <div class="filter-bar" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
         <input type="text" id="searchGuest" class="form-input" style="max-width:280px" placeholder="Cari nama tamu..." oninput="renderGuestTable()" />
-        <select id="filterCategory" class="form-select" style="max-width:200px" onchange="renderGuestTable()">
-          <option value="ALL">Semua Kategori</option>
-          <option value="Umum">Umum</option>
-          <option value="Keluarga">Keluarga</option>
-          <option value="VIP">VIP</option>
-          <option value="Sahabat">Sahabat</option>
-          <option value="Teman Kantor">Teman Kantor</option>
-        </select>
-        <select id="filterStatus" class="form-select" style="max-width:200px" onchange="renderGuestTable()">
-          <option value="ALL">Semua Status</option>
-          <option value="sent">Sudah Dikirim</option>
-          <option value="unsent">Belum Dikirim</option>
-        </select>
+        <div class="filter-selects-row" style="display:flex;gap:10px;flex:1">
+          <select id="filterCategory" class="form-select" onchange="renderGuestTable()">
+            <option value="ALL">Semua Kategori</option>
+            <option value="Umum">Umum</option>
+            <option value="Keluarga">Keluarga</option>
+            <option value="VIP">VIP</option>
+            <option value="Sahabat">Sahabat</option>
+            <option value="Teman Kantor">Teman Kantor</option>
+          </select>
+          <select id="filterStatus" class="form-select" onchange="renderGuestTable()">
+            <option value="ALL">Semua Status</option>
+            <option value="sent">Sudah Dikirim</option>
+            <option value="unsent">Belum Dikirim</option>
+          </select>
+        </div>
       </div>
 
       <!-- Tabel Tamu -->
@@ -943,19 +1136,28 @@
           '<span class="badge badge-sent" title="Klik untuk ubah status" onclick="toggleSentStatus(\'' + g.id + '\')">✓ Terkirim</span>' :
           '<span class="badge badge-unsent" title="Klik untuk ubah status" onclick="toggleSentStatus(\'' + g.id + '\')">&bull; Belum Kirim</span>';
 
-        html += '<tr>' +
-          '<td style="color:rgba(242,224,190,0.6)">' + (idx + 1) + '</td>' +
-          '<td>' +
-            '<strong>' + escapeHtml(g.name) + '</strong>' +
-            '<span class="badge badge-cat">' + escapeHtml(g.category) + '</span>' +
+        html += '<tr class="guest-row">' +
+          '<td class="td-num" style="color:rgba(242,224,190,0.6)">' + (idx + 1) + '</td>' +
+          '<td class="td-name">' +
+            '<div>' +
+              '<strong class="guest-name-text">' + escapeHtml(g.name) + '</strong>' +
+              '<span class="badge badge-cat">' + escapeHtml(g.category) + '</span>' +
+            '</div>' +
           '</td>' +
-          '<td>' + (g.phone ? '<a href="tel:' + g.phone + '" style="color:var(--gold-soft);text-decoration:none">' + g.phone + '</a>' : '<span style="opacity:0.4">-</span>') + '</td>' +
-          '<td>' + statusBadge + '</td>' +
-          '<td style="text-align:right;white-space:nowrap">' +
-            '<button type="button" class="btn btn-outline btn-sm" style="margin-right:6px" onclick="quickSendWA(\'' + g.id + '\')" title="Kirim via WhatsApp">WA</button>' +
-            '<button type="button" class="btn btn-outline btn-sm" style="margin-right:6px" onclick="quickCopyLink(\'' + escapeHtml(link) + '\')" title="Salin Tautan">Link</button>' +
-            '<a href="' + link + '" target="_blank" class="btn btn-outline btn-sm" style="margin-right:6px" title="Buka Undangan">Buka</a>' +
-            '<button type="button" class="btn btn-outline btn-sm" style="border-color:#ff5277;color:#ff859d" onclick="deleteGuest(\'' + g.id + '\')" title="Hapus">✕</button>' +
+          '<td class="td-phone">' +
+            '<span class="mobile-label">WhatsApp:</span>' +
+            (g.phone ? '<a href="tel:' + g.phone + '" style="color:var(--gold-soft);text-decoration:none;font-weight:500">' + g.phone + '</a>' : '<span style="opacity:0.4">Tanpa Nomor</span>') +
+          '</td>' +
+          '<td class="td-status">' +
+            '<span class="mobile-label">Status:</span>' + statusBadge +
+          '</td>' +
+          '<td class="td-actions">' +
+            '<div class="action-btn-group">' +
+              '<button type="button" class="btn btn-wa btn-sm" onclick="quickSendWA(\'' + g.id + '\')" title="Kirim via WhatsApp">Kirim WA</button>' +
+              '<button type="button" class="btn btn-outline btn-sm" onclick="quickCopyLink(\'' + escapeHtml(link) + '\')" title="Salin Tautan">Link</button>' +
+              '<a href="' + link + '" target="_blank" class="btn btn-outline btn-sm" title="Buka Undangan">Buka</a>' +
+              '<button type="button" class="btn btn-outline btn-sm" style="border-color:#ff5277;color:#ff859d" onclick="deleteGuest(\'' + g.id + '\')" title="Hapus">✕</button>' +
+            '</div>' +
           '</td>' +
         '</tr>';
       });
