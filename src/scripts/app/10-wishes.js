@@ -362,7 +362,7 @@ window.__addLiveWishToCarousel = function(wish, prepend) {
   return slide;
 };
 
-// Ambil wishes dari localStorage dan Supabase untuk slug saat ini
+// Ambil wishes dari localStorage, Cloudflare D1 (/api/rsvps), dan Supabase
 try {
   var curSlug = window.__WEDDING_SLUG || 'nabil-izza';
   var cachedWishes = [];
@@ -374,29 +374,59 @@ try {
     });
   } catch(e){ cachedWishes = []; }
 
-  var sb = window.getSupabaseClient ? window.getSupabaseClient() : null;
-  if (sb) {
-    sb.from('wedding_wishes').select('*').eq('wedding_slug', curSlug).order('created_at', {ascending: false}).limit(20).then(function(res){
-      if (res && !res.error && res.data && res.data.length > 0) {
-        var withMsg = res.data.filter(function(w){ return (w.message || w.pesan || '').trim(); });
-        if (!withMsg.length) { if (!getAllWishSlides().length || $('#wishPlaceholderSlide')) showEmptyWishState(); return; }
-        if (wishStage) wishStage.innerHTML = '';
-        currentWishIndex = 0;
-        withMsg.forEach(function(w){
-          window.__addLiveWishToCarousel(w, false);
+  // Prioritas: Ambil ucapan dari Cloudflare D1 (/api/rsvps)
+  fetch('/api/rsvps')
+    .then(function(res){
+      if (!res.ok) throw new Error('Status: ' + res.status);
+      return res.json();
+    })
+    .then(function(json){
+      if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
+        var withMsg = json.data.filter(function(w){ return (w.message || '').trim(); }).map(function(item){
+          return {
+            name: item.name,
+            presence: (item.attendance === 'hadir' || item.attendance === 'Hadir') ? 'Hadir' : 'Berhalangan',
+            message: item.message,
+            created_at: item.created_at
+          };
         });
-        try { localStorage.setItem('wedding_wishes_' + curSlug, JSON.stringify(withMsg)); } catch(e){}
-      } else if ($('#wishPlaceholderSlide')) {
+        if (withMsg.length > 0) {
+          if (wishStage) wishStage.innerHTML = '';
+          currentWishIndex = 0;
+          withMsg.forEach(function(w){
+            window.__addLiveWishToCarousel(w, false);
+          });
+          try { localStorage.setItem('wedding_wishes_' + curSlug, JSON.stringify(withMsg)); } catch(e){}
+        } else if (!getAllWishSlides().length || $('#wishPlaceholderSlide')) {
+          showEmptyWishState();
+        }
+      }
+    })
+    .catch(function(err){
+      console.warn('Load wishes dari D1 dilewati (fallback ke cache/supabase):', err);
+      // Fallback Supabase jika ada
+      var sb = window.getSupabaseClient ? window.getSupabaseClient() : null;
+      if (sb) {
+        sb.from('wedding_wishes').select('*').eq('wedding_slug', curSlug).order('created_at', {ascending: false}).limit(20).then(function(res){
+          if (res && !res.error && res.data && res.data.length > 0) {
+            var withMsg = res.data.filter(function(w){ return (w.message || w.pesan || '').trim(); });
+            if (!withMsg.length) { if (!getAllWishSlides().length || $('#wishPlaceholderSlide')) showEmptyWishState(); return; }
+            if (wishStage) wishStage.innerHTML = '';
+            currentWishIndex = 0;
+            withMsg.forEach(function(w){
+              window.__addLiveWishToCarousel(w, false);
+            });
+            try { localStorage.setItem('wedding_wishes_' + curSlug, JSON.stringify(withMsg)); } catch(e){}
+          } else if ($('#wishPlaceholderSlide')) {
+            showEmptyWishState();
+          }
+        }, function(){
+          if ($('#wishPlaceholderSlide')) showEmptyWishState();
+        });
+      } else if (!getAllWishSlides().length && $('#wishPlaceholderSlide')) {
         showEmptyWishState();
       }
-    }, function(err){
-      console.warn('Supabase wishes load skipped (offline):', err && err.message ? err.message : err);
-      if ($('#wishPlaceholderSlide')) showEmptyWishState();
     });
-  } else if ($('#wishPlaceholderSlide')) {
-    // Database belum dikonfigurasi: jangan tampilkan "Memuat..." selamanya
-    showEmptyWishState();
-  }
 } catch(e){}
 
 updateDots();

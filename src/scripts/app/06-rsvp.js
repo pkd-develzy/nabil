@@ -45,6 +45,22 @@ if(form) {
     } catch(e){}
     if(prev && !p) { currentWishIndex = 0; ensureActiveWishSlide(); updateDots(); updateStageHeight(); }
 
+    // Simpan RSVP & Ucapan ke Cloudflare D1 via /api/rsvps
+    try {
+      fetch('/api/rsvps', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: nm,
+          attendance: h,
+          pax: n,
+          message: p
+        })
+      }).catch(function(err){
+        console.warn('Gagal sync RSVP ke Cloudflare D1:', err);
+      });
+    } catch(err){}
+
     // Simpan ke Supabase wedding_wishes jika server online
     try {
       var sb = window.getSupabaseClient ? window.getSupabaseClient() : null;
