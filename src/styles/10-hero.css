@@ -1,0 +1,20 @@
+/* ============ HERO ============ */
+.hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:clamp(140px,22vh,200px) 0 clamp(80px,12vh,120px)}
+.hero .frame{position:absolute;inset:14px;border:1px solid rgba(201,165,107,.5);border-radius:20px;pointer-events:none;z-index:1}
+.hero .frame::after{content:"";position:absolute;inset:6px;border-radius:15px;border:1px solid rgba(201,165,107,.26)}
+.hero .inner{width:100%}
+.bismillah{font-family:var(--font-ar,'Aref Ruqaa',serif);font-weight:400;font-size:clamp(1.05rem,4.9vw,2.3rem);line-height:1.9;color:var(--gold-soft)}
+.pre-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(1.08rem,3.8vw,1.38rem);color:var(--gold-soft);margin-top:.55rem}
+.names{display:block;font-family:var(--font-couple);font-weight:normal;text-transform:none;letter-spacing:0.02em;line-height:1.2}
+.name{display:block;font-family:var(--font-couple);font-weight:normal;text-transform:none;letter-spacing:0.02em;font-size:clamp(3.2rem,12vw,6.2rem);background:linear-gradient(100deg,#8a6730 0%,#e6d2a6 25%,#c9a56b 40%,#fff1c8 50%,#c9a56b 60%,#e6d2a6 75%,#8a6730 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;text-shadow:none;animation:shine 8s linear infinite alternate;filter:drop-shadow(0 3px 8px rgba(20,3,8,.75))}
+.amp{display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(1.75rem,6.8vw,2.9rem);color:var(--gold-soft);line-height:1;margin:.12em 0;letter-spacing:0;text-transform:none}
+.date{display:inline-flex;align-items:center;gap:clamp(12px,4vw,22px);margin-top:.75rem;padding:.5rem 1.6rem;border-radius:999px;background:rgba(42,7,18,.58);border:1px solid rgba(201,165,107,.45);color:var(--gold-soft)}
+.date span{font-size:.78rem;letter-spacing:.28em;text-transform:uppercase}
+.date b{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(1.9rem,7.5vw,2.8rem);line-height:1;color:var(--ivory)}
+.date i{width:1px;height:2.2rem;background:var(--gold)}
+.cue{margin-top:clamp(26px,5.5vh,52px);display:flex;flex-direction:column;align-items:center;gap:10px}
+.cue small{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.cue-line{position:relative;width:1px;height:44px;background:rgba(201,165,107,.35);overflow:hidden}
+.cue-line::after{content:"";position:absolute;left:-1.5px;top:0;width:4px;height:10px;border-radius:2px;background:var(--gold-soft);animation:drip 2.2s ease-in infinite}
+@keyframes drip{from{transform:translateY(-12px);opacity:1}to{transform:translateY(52px);opacity:0}}
+

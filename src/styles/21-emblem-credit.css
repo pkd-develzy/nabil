@@ -1,0 +1,48 @@
+/* ===== emblem kartu acara ===== */
+.ev-emblem{width:92px;height:auto;margin:-4px auto .4rem;overflow:visible;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
+.em-float{animation:emfloat 5s ease-in-out infinite alternate}
+@keyframes emfloat{from{transform:translateY(1px)}to{transform:translateY(-3px)}}
+.em-glow{transform-box:fill-box;transform-origin:center;animation:emglow 4s ease-in-out infinite alternate}
+@keyframes emglow{from{opacity:.45;transform:scale(.92)}to{opacity:.95;transform:scale(1.08)}}
+.em-cres{transform-box:view-box;transform-origin:48px 14px;animation:cres 6s ease-in-out infinite alternate}
+@keyframes cres{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.win{opacity:.4;animation:win 3.2s ease-in-out infinite alternate}
+.win.w2{animation-delay:-1.1s}.win.w3{animation-delay:-2.2s}
+@keyframes win{from{opacity:.3}to{opacity:.95}}
+.st{transform-box:fill-box;transform-origin:center}
+.st-a{animation:spin 42s linear infinite}
+.st-b{animation:spinr 30s linear infinite}
+.st-c{animation:spin 70s linear infinite}
+.st-core{transform-box:fill-box;transform-origin:center;animation:pulse 3.4s ease-in-out infinite alternate}
+
+/* ===== kredit pembuat & WA Pemesanan ===== */
+.credit{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:22px 20px calc(80px + env(safe-area-inset-bottom));background:var(--wine-950);border-top:1px solid rgba(201,165,107,.14);font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.04em;color:rgba(230,210,166,.5);text-align:center;position:relative;z-index:2}
+.credit a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:inherit;transition:transform 0.3s ease;}
+.credit a:hover{transform:scale(1.04);}
+.credit img{width:28px;height:28px;object-fit:contain;cursor:pointer;filter:drop-shadow(0 0 6px rgba(201,165,107,0.5));}
+.credit b{font-weight:500;color:rgba(230,210,166,.78)}
+
+.credit-wa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: rgba(37, 211, 102, 0.16);
+  border: 1px solid rgba(37, 211, 102, 0.5);
+  color: #25d366 !important;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+.credit-wa-btn svg { width: 16px; height: 16px; fill: currentColor; }
+.credit-wa-btn:hover {
+  background: #25d366;
+  color: #0b1f13 !important;
+  box-shadow: 0 0 16px rgba(37, 211, 102, 0.55);
+  transform: translateY(-2px);
+}
+

@@ -1,0 +1,3 @@
+html.js #page{transition:transform calc(2.8s*var(--k)) cubic-bezier(.65,0,.15,1)}
+html.locked #page{transform:translateY(8vh)}
+html.locked.pulling #page{transform:none}

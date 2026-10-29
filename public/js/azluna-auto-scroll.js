@@ -50,8 +50,36 @@
     return true;
   }
 
+  // State: Kunci tidak boleh menggeser sendiri jika belum selesai dibaca 1 kali
+  var hasFinishedOnce = false;
+  try {
+    if (sessionStorage.getItem('azluna_has_finished_once') === '1') {
+      hasFinishedOnce = true;
+    }
+  } catch(e){}
+
+  function checkCompletion() {
+    if (hasFinishedOnce) return;
+    if (!isInvitationOpened()) return;
+    var scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
+    var windowH = window.innerHeight || document.documentElement.clientHeight;
+    var docH = Math.max(
+      document.body.scrollHeight, document.documentElement.scrollHeight,
+      document.body.offsetHeight, document.documentElement.offsetHeight,
+      document.body.clientHeight, document.documentElement.clientHeight
+    );
+    // Jika pengguna sudah menggulir hingga ke dekat akhir halaman (selesai 1 kali)
+    if (scrollY + windowH >= docH - 180) {
+      hasFinishedOnce = true;
+      try { sessionStorage.setItem('azluna_has_finished_once', '1'); } catch(e){}
+    }
+  }
+  window.addEventListener('scroll', checkCompletion, { passive: true });
+
   function canScroll() {
     if (!isInvitationOpened()) return false;
+    // Kunci tidak boleh menggeser sendiri ketika belum sampai selesai 1 kali
+    if (!hasFinishedOnce) return false;
     if (isUserInteracting) return false;
 
     // Check bottom boundary

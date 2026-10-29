@@ -1,0 +1,21 @@
+/* ============ RSVP ============ */
+.form{text-align:left;margin-top:1.8rem;display:grid;gap:1.2rem;background:#fffaf1;border:1px solid var(--gold-deep);border-radius:22px;padding:clamp(24px,5.5vw,36px);position:relative;box-shadow:0 14px 40px rgba(58,9,22,.12);overflow:visible}
+.form::before{content:"";position:absolute;inset:7px;border-radius:16px;border:1px solid rgba(138,103,48,.35);pointer-events:none;z-index:2}
+.form>*{position:relative;z-index:3}
+.form>.card-flora-cluster{position:absolute;z-index:-1}
+.fl{display:block;font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;font-weight:500;color:var(--gold-deep);margin-bottom:.45rem}
+.fi,.sel,.ta{width:100%;font:400 1rem 'Jost',sans-serif;color:var(--wine-900);background:var(--ivory);border:1px solid rgba(138,103,48,.55);padding:.8rem .95rem;border-radius:10px}
+.ta{min-height:120px;resize:vertical}
+.fi:focus-visible,.sel:focus-visible,.ta:focus-visible{outline:2px solid var(--wine-700);outline-offset:1px}
+.radios{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.radios label{cursor:pointer}
+.radios input{position:absolute;opacity:0;pointer-events:none}
+.radios span{display:block;text-align:center;padding:.8rem .5rem;border:1px solid rgba(138,103,48,.55);border-radius:10px;font-size:.9rem;background:var(--ivory);transition:all .3s}
+.radios input:checked+span{background:var(--wine-800);color:var(--gold-soft);border-color:var(--wine-800)}
+.radios input:focus-visible+span{outline:2px solid var(--wine-700);outline-offset:2px}
+.result{margin-top:1.8rem;background:#fffaf1;border:1px solid var(--gold-deep);border-radius:22px;padding:clamp(22px,5vw,32px);text-align:left}
+.result[hidden]{display:none}
+.result h3{font-family:'Cinzel',serif;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-align:center;font-size:1.2rem;color:var(--wine-800)}
+.result pre{white-space:pre-wrap;word-wrap:break-word;font:400 .95rem/1.7 'Jost',sans-serif;margin:1rem 0 1.4rem;padding:1rem;border-radius:10px;background:var(--ivory);border:1px dashed rgba(138,103,48,.6);color:var(--wine-900)}
+.rbtn{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+

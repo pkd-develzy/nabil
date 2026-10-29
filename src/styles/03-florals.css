@@ -1,0 +1,226 @@
+/* ============ MULTI-LAYER BOTANICAL STAGING (FREEPIK LUXURY FLORALS) ============ */
+.ambient-floral-canvas{
+  position:absolute;
+  inset:0;
+  background:url('/images/florals/set/ambient-burgundy.webp') center/cover no-repeat;
+  opacity:0.24;
+  pointer-events:none;
+  z-index:0;
+}
+.dark .ambient-floral-canvas{opacity:0.28}
+.darker .ambient-floral-canvas{opacity:0.32}
+.light .ambient-floral-canvas{opacity:0.07}
+
+/* Wreath backdrop behind 3D Envelope */
+.env-wreath-backdrop{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:clamp(280px,64vw,500px);
+  aspect-ratio:1;
+  pointer-events:none;
+  z-index:-1;
+  opacity:0.92;
+  filter:drop-shadow(0 14px 38px rgba(0,0,0,0.65));
+  animation:floatWreath 12s ease-in-out infinite alternate;
+}
+@keyframes floatWreath{
+  0%{transform:translate(-50%,-50%) rotate(-1.5deg) scale(0.98)}
+  100%{transform:translate(-50%,-50%) rotate(2deg) scale(1.02)}
+}
+
+/* Envelope Letter Ornamental Floral Border */
+.paper-floral-border{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  pointer-events:none;
+  opacity:0.32;
+  z-index:0;
+  border-radius:8px;
+}
+
+/* Wax Seal Rose Master Bloom */
+.seal-rose-bloom{
+  position:absolute;
+  width:78%;
+  height:78%;
+  object-fit:contain;
+  pointer-events:none;
+  z-index:2;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+}
+
+/* Multi-Tier Arch Stage Backing Flowers */
+.arch-layer-halo{
+  position:absolute;
+  inset:-28%;
+  width:156%;
+  height:156%;
+  object-fit:contain;
+  pointer-events:none;
+  z-index:0;
+  opacity:0.75;
+  animation:spinSlow 120s linear infinite;
+}
+.arch-layer-wreath{
+  position:absolute;
+  inset:-14%;
+  width:128%;
+  height:128%;
+  object-fit:contain;
+  pointer-events:none;
+  z-index:1;
+  opacity:0.88;
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,0.5));
+}
+.arch-swag{
+  position:absolute;
+  left:50%;
+  bottom:-12%;
+  width:142%;
+  max-width:none;
+  height:auto;
+  translate:-50% 0;
+  transform-origin:50% 100%;
+  z-index:4;
+  pointer-events:none;
+  filter:drop-shadow(0 10px 22px rgba(20,3,8,.45));
+}
+@keyframes swagSway{from{transform:translateX(-50%) rotate(-.6deg)}to{transform:translateX(-50%) rotate(.6deg)}}
+.arch-layer-base{
+  position:absolute;
+  width:64%;
+  bottom:-8%;
+  object-fit:contain;
+  pointer-events:none;
+  z-index:2;
+  filter:drop-shadow(0 8px 18px rgba(0,0,0,0.55));
+}
+.arch-base-l{left:-18%;transform:scaleX(-1)}
+.arch-base-r{right:-18%}
+.arch-layer-peak{
+  position:absolute;
+  top:-24px;
+  left:50%;
+  transform:translateX(-50%);
+  width:clamp(52px,14vw,68px);
+  aspect-ratio:1;
+  object-fit:contain;
+  pointer-events:none;
+  z-index:5;
+  filter:drop-shadow(0 6px 14px rgba(0,0,0,0.68));
+  animation:peakBreathe 6s ease-in-out infinite alternate;
+}
+@keyframes peakBreathe{
+  0%{transform:translateX(-50%) translateY(0) scale(0.98)}
+  100%{transform:translateX(-50%) translateY(-3px) scale(1.04)}
+}
+
+/* Multi-Layer Top & Bottom Floral Meadow Rows (Barisan Bunga Mewah & Rimbun) */
+.sec-floral-border{
+  position:absolute;
+  left:0;
+  right:0;
+  height:clamp(80px,14vw,130px);
+  z-index:1;
+  pointer-events:none;
+  overflow:hidden;
+}
+.sec-floral-border.top{top:0;transform:scaleY(-1)}
+.sec-floral-border.bottom{bottom:0}
+.meadow-floral-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center bottom;
+  opacity:0.92;
+}
+
+/* Card & Envelope Rim Multi-Species Floral Clusters */
+.card-flora-cluster{
+  position:absolute;
+  width:clamp(104px,26vw,170px);
+  height:auto;
+  line-height:0;
+  z-index:-1;
+  pointer-events:none;
+}
+.card-flora-cluster.cf-tl{top:-52px;left:-46px}
+.card-flora-cluster{width:calc(clamp(104px,26vw,170px)*var(--cm,1))}
+.card-flora-cluster.cf-br{bottom:-46px;right:-40px}
+/* Mahkota rangkaian bunga di atas kartu acara */
+.card-crown{position:absolute;left:50%;top:0;width:min(68%,290px);height:auto;translate:-50% -62%;transform-origin:50% 100%;z-index:3;pointer-events:none;filter:drop-shadow(0 8px 16px rgba(20,3,8,.5))}
+@keyframes crownSway{from{transform:translate(-50%,-62%) rotate(-.8deg)}to{transform:translate(-50%,-62%) rotate(.8deg)}}
+/* ruang untuk mahkota bunga: jarak antar kartu cukup agar mahkota tidak menutupi kartu sebelumnya */
+.events{margin-top:clamp(64px,16vw,90px);row-gap:clamp(100px,26vw,130px)!important}
+.card-flora-cluster .card-flora-img{animation:sway3d 12s ease-in-out infinite alternate}
+.card-flora-cluster.cf-tl .card-flora-img{transform-origin:100% 100%}
+.card-flora-cluster.cf-br .card-flora-img{transform-origin:0 0;animation-delay:-5s}
+.card-flora-img{
+  display:block;
+  width:100%;
+  height:auto;
+  filter:drop-shadow(0 8px 18px rgba(20,3,8,.45));
+}
+.env-wrap{position:relative;overflow:visible}
+.env-wrap>.card-flora-cluster{width:clamp(110px,28vw,180px);z-index:-1}
+.env-wrap>.card-flora-cluster.cf-bl{width:clamp(84px,20vw,130px)}
+.env-wrap>.card-flora-cluster.cf-br{width:clamp(124px,32vw,200px)}
+
+/* Divider Flourish */
+.divider-flourish-svg{
+  width:clamp(160px,36vw,240px);
+  height:auto;
+  overflow:visible;
+  pointer-events:none;
+  filter:drop-shadow(0 2px 6px rgba(201,165,107,0.4));
+}
+
+/* Corner Watercolor Floral Frame (4 rangkaian berbeda per sudut, rimbun & menyatu) */
+.gl{
+  position:absolute;
+  width:var(--g);
+  height:auto;
+  z-index:1;
+  pointer-events:none;
+  overflow:visible;
+  line-height:0;
+}
+.gl.lg{--g:clamp(170px,40vw,420px)}
+.gl.sm{--g:clamp(150px,32vw,340px)}
+.gl{width:calc(var(--g)*var(--gm,1))}
+.gl.tl{top:0;left:0}
+.gl.tr{top:0;right:0}
+.gl.bl{bottom:0;left:0}
+.gl.br{bottom:0;right:0}
+/* corner: menempel di sudut (bisa dicerminkan dengan --fx:-1) */
+.gl.corner{transform:scaleX(var(--fx,1))}
+/* float: rangkaian bebas, sedikit keluar dari tepi & dimiringkan agar natural */
+.gl.float.tl{transform:translate(-20%,-14%) rotate(var(--rot,0deg)) scaleX(var(--fx,1))}
+.gl.float.tr{transform:translate(20%,-14%) rotate(var(--rot,0deg)) scaleX(var(--fx,1))}
+.gl.float.bl{transform:translate(-20%,14%) rotate(var(--rot,0deg)) scaleX(var(--fx,1))}
+.gl.float.br{transform:translate(20%,14%) rotate(var(--rot,0deg)) scaleX(var(--fx,1))}
+.gl-img{
+  display:block;
+  width:100%;
+  height:auto;
+  filter:drop-shadow(0 10px 24px rgba(20,3,8,.38));
+  animation:sway3d 11s ease-in-out infinite alternate;
+}
+.gl.tl .gl-img{transform-origin:0 0}
+.gl.tr .gl-img{transform-origin:100% 0;animation-delay:-3s}
+.gl.bl .gl-img{transform-origin:0 100%;animation-delay:-6s}
+.gl.br .gl-img{transform-origin:100% 100%;animation-delay:-8s}
+.gl.f-tall .gl-img{max-height:72vh;width:auto;max-width:100%}
+.light .gl-img{filter:drop-shadow(0 8px 16px rgba(58,9,22,.22))}
+@keyframes sway3d{
+  0%{transform:rotate(-.8deg) scale(.995)}
+  50%{transform:rotate(.2deg) scale(1.004)}
+  100%{transform:rotate(.9deg) scale(1.01)}
+}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+

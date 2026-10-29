@@ -1,0 +1,49 @@
+/* ===== LUXURY 403 SCREEN ===== */
+#screen403 {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: radial-gradient(ellipse at 50% 30%, #4d0f22 0%, #260610 80%);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--ivory);
+}
+.box-403 {
+  max-width: 520px;
+  padding: clamp(32px, 6vw, 48px) clamp(24px, 5vw, 36px);
+  background: rgba(38, 6, 16, 0.9);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 24px rgba(201,165,107,0.25);
+}
+.badge-403 {
+  display: inline-block;
+  padding: 4px 16px;
+  background: rgba(201, 165, 107, 0.2);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  font-family: 'Cinzel', serif;
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--gold-soft);
+  margin-bottom: 16px;
+}
+.title-403 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.4rem, 5vw, 1.9rem);
+  color: var(--gold-soft);
+  margin-bottom: 14px;
+}
+.text-403 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: #e6d2a6;
+  margin-bottom: 24px;
+}
+

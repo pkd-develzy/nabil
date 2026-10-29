@@ -1,0 +1,79 @@
+/* ============ BUTTONS (ROYAL PILL FILIGREE + SHIMMER WAVE) ============ */
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.95rem 1.85rem;font:500 .76rem 'Jost',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--wine-950);background:linear-gradient(135deg,var(--gold-soft),var(--gold) 55%,#b08848);border:1.5px solid var(--gold-deep);border-radius:999px;cursor:pointer;text-decoration:none;text-shadow:none;box-shadow:0 8px 22px rgba(20,3,8,.28),inset 0 1px 0 rgba(255,255,255,.55);transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease;animation:btnFloat 4.8s ease-in-out infinite alternate}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,250,230,.58) 50%,transparent 65%) no-repeat;background-size:240% 100%;background-position:140% 0;animation:sweep 6.5s ease-in-out infinite;pointer-events:none}
+.btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 12px 28px rgba(0,0,0,.42),0 0 18px rgba(201,165,107,.45)}
+.btn.ghost{background:rgba(42,7,18,.32);backdrop-filter:blur(6px);color:var(--gold-soft);border-color:var(--gold)}
+.light .btn.ghost{background:rgba(255,250,241,.75);color:var(--wine-800);border-color:var(--gold-deep)}
+.btn svg{width:16px;height:16px;flex:none}
+@keyframes btnFloat{from{transform:translateY(0)}to{transform:translateY(-2.5px)}}
+
+/* ============ LIVING MOTION TYPOGRAPHY & SAFE-ZONE READABILITY ============ */
+.inner{position:relative;z-index:5;isolation:isolate}
+.title,.salam-lt,.pname,.ev h3,.loc h3,.dress h3{background:linear-gradient(100deg,#b88c4a 0%,#fff3d1 28%,#c9a56b 48%,#fff9e6 55%,#c9a56b 72%,#9b7234 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:shine 7.5s linear infinite alternate,titleFloat 5.2s ease-in-out infinite alternate;filter:drop-shadow(0 2px 10px rgba(20,3,8,.42))}
+.light .title,.light .salam-lt,.light .dress h3{background:linear-gradient(100deg,#571024 0%,#8f2040 28%,#b07d35 50%,#6d142d 75%,#3f0919 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 6px rgba(201,165,107,.25))}
+@keyframes titleFloat{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+.bismillah,.salam-ar,.ayat-ar,.eyebrow-ar{animation:arabicGlow 4.6s ease-in-out infinite alternate}
+@keyframes arabicGlow{from{filter:drop-shadow(0 2px 8px rgba(201,165,107,.18));transform:translateY(0)}to{filter:drop-shadow(0 4px 18px rgba(230,210,166,.52));transform:translateY(-2.5px)}}
+.lead,.sub{animation:textBreathe 6s ease-in-out infinite alternate}
+@keyframes textBreathe{from{transform:translateY(0)}to{transform:translateY(-2px)}}
+
+/* ============ REVEAL (MUNCUL DARI KETIADAAN DENGAN ELEGANT) ============ */
+html.js .rv{
+  opacity:0;
+  transform:translate3d(0,36px,0) scale(0.96);
+  filter:blur(10px);
+  transition:opacity 1.6s cubic-bezier(.16,1,.3,1),transform 1.7s cubic-bezier(.16,1,.3,1),filter 1.6s cubic-bezier(.16,1,.3,1);
+  transition-delay:var(--d,0s);
+  will-change:opacity,transform,filter;
+}
+html.js .rv.in{
+  opacity:1;
+  transform:none;
+  filter:none;
+}
+
+/* Seluruh font & elemen Hero: awalnya hidden, lalu perlahan muncul dari ketiadaan */
+html.js .h{
+  opacity:0;
+  filter:blur(12px);
+  transform:translate3d(0,34px,0);
+  transition:opacity 1.6s cubic-bezier(.16,1,.3,1),transform 1.75s cubic-bezier(.16,1,.3,1),filter 1.6s cubic-bezier(.16,1,.3,1);
+  transition-delay:calc(var(--i,0)*0.26s*var(--k));
+  will-change:opacity,transform,filter;
+}
+html.js.revealed .h{
+  opacity:1;
+  filter:none;
+  transform:none;
+}
+
+/* Font nama utama mempelai di Hero: muncul dari bawah dengan megah & lembut */
+html.js .name-stage.h{
+  opacity:0;
+  filter:blur(14px);
+  transform:translate3d(0,54px,0) scale(0.93);
+  transition:opacity 1.9s cubic-bezier(.16,1,.3,1),transform 2.1s cubic-bezier(.16,1,.3,1),filter 1.9s cubic-bezier(.16,1,.3,1);
+  transition-delay:calc(0.7s*var(--k));
+}
+html.js.revealed .name-stage.h{
+  opacity:1;
+  filter:none;
+  transform:none;
+}
+html.js .name-stage.h .name{
+  display:inline-block;
+  opacity:0;
+  filter:blur(12px);
+  transform:translate3d(0,40px,0);
+  transition:opacity 1.7s cubic-bezier(.16,1,.3,1),transform 1.9s cubic-bezier(.16,1,.3,1),filter 1.7s cubic-bezier(.16,1,.3,1);
+  transition-delay:calc(0.85s*var(--k));
+}
+html.js.revealed .name-stage.h .name{
+  opacity:1;
+  filter:none;
+  transform:none;
+}
+
+
+/* Angka tegak (lining) untuk data: tanggal, jam, alamat, nama rekening, ucapan */
+.ev dd,.venue,.addr,.paddr,.pdesc,.pfull,.bank .an,.wish-text,.wish-name,.sl-l-full,.sl-to strong,.lead,.sub,.ayat-id{font-variant-numeric:lining-nums}

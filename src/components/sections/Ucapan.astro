@@ -1,0 +1,74 @@
+<!-- 8. KARTU UCAPAN (CAROUSEL REALTIME DATABASE) -->
+<section class="sec dark" id="ucapan" data-g="tl tr bl br" data-gs="sm">
+  <div class="ambient-floral-canvas" aria-hidden="true"></div>
+  <div class="sparkles" data-sparkles="14" aria-hidden="true"></div>
+  <div class="inner wide">
+    <div class="rv">
+      <p class="eyebrow-ar">دُعَاءٌ وَتَهْنِئَةٌ</p>
+      <p class="eyebrow">Untaian Doa &amp; Harapan</p>
+    </div>
+    <h2 class="title rv" style="--d:.1s">Kartu Ucapan Restu</h2>
+    <p class="lead rv" style="--d:.15s;max-width:600px;margin:0 auto">
+      Doa restu dan ketulusan hati para tamu undangan yang tersimpan dalam lembaran bahagia kami.
+    </p>
+
+    <!-- CAROUSEL WRAPPER (KIRI KANAN - 1 PER 1) -->
+    <div class="wish-carousel-wrap rv" id="wishCarouselWrap" style="--d:.2s">
+      <!-- Tombol Navigasi Kiri & Kanan -->
+      <button type="button" class="wish-nav-btn prev" id="btnWishPrev" aria-label="Ucapan Sebelumnya">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button type="button" class="wish-nav-btn next" id="btnWishNext" aria-label="Ucapan Berikutnya">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+
+      <!-- Stage Kartu (Ditampilkan 1 per 1 dari database) -->
+      <div class="wish-stage" id="wishStage">
+        <div class="wish-slide active" id="wishPlaceholderSlide">
+          <article class="wish-env-card">
+            <div class="wish-env-top">
+              <div class="wish-env-flap"></div>
+              <div class="wish-mini-seal" data-seal="">N&amp;I</div>
+            </div>
+            <div class="wish-paper" style="text-align:center;padding:28px 20px">
+              <p style="font-size:1.4rem;margin-bottom:8px">💌</p>
+              <strong class="wish-name" style="font-size:1.05rem">Memuat Doa &amp; Ucapan Tamu...</strong>
+              <p class="wish-text" style="margin-top:8px;font-style:normal">Doa restu tersimpan langsung di database.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- KONTROL BAWAH: PLAY, STOP, DOTS, PROGRESS, & STATUS -->
+      <div class="wish-controls-bottom">
+        <!-- Tombol Play & Stop -->
+        <div class="wish-playback-group" role="group" aria-label="Kontrol Gulir Otomatis">
+          <button type="button" class="wish-ctrl-btn active" id="btnWishPlay" aria-label="Putar Otomatis" title="Putar Gulir Otomatis">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <span>Play</span>
+          </button>
+          <button type="button" class="wish-ctrl-btn" id="btnWishStop" aria-label="Hentikan / Jeda Gulir" title="Hentikan Gulir">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+            <span>Stop</span>
+          </button>
+        </div>
+
+        <!-- Indikator Dots -->
+        <div class="wish-dots" id="wishDots" aria-label="Indikator slide ucapan">
+          <span class="wish-dot active" data-index="0"></span>
+        </div>
+
+        <!-- Progress Bar (Lambat) -->
+        <div class="wish-bar-wrap" title="Indikator Waktu Gulir Lambat">
+          <div class="wish-bar-fill" id="wishBarFill"></div>
+        </div>
+
+        <!-- Indikator Status Otomatis & Hitung Mundur 10 Detik -->
+        <div class="wish-status-badge" id="wishStatusBadge">
+          <span class="wish-status-dot pulse" id="wishStatusDot"></span>
+          <span class="wish-status-text" id="wishStatusText">Gulir Otomatis (Lambat)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

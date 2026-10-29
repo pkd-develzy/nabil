@@ -1,0 +1,11 @@
+/* ============ MUSIC BTN ============ */
+.music{position:fixed;right:16px;bottom:16px;z-index:60;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);background:rgba(58,9,22,.88);color:var(--gold-soft);display:none;place-items:center;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.4);overflow:hidden}
+.music.show{display:grid}
+.music-disc-rose{position:absolute;inset:2px;width:calc(100% - 4px);height:calc(100% - 4px);border-radius:50%;pointer-events:none;opacity:0.38;z-index:0;animation:spinSlow 20s linear infinite}
+.music.playing .music-disc-rose{opacity:0.65;animation:spinSlow 8s linear infinite}
+.music svg{position:relative;z-index:1;width:20px;height:20px}
+.music .off{display:none}
+.music[aria-pressed="false"] .on{display:none}
+.music[aria-pressed="false"] .off{display:block}
+.music.playing::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--gold);animation:ring 2.8s ease-out infinite}
+

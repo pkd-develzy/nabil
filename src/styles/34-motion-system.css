@@ -1,0 +1,54 @@
+/* ======================= MOTION SYSTEM =======================
+   1) Bunga: digerakkan oleh /js/azluna-wind.js (angin hidup). Animasi CSS lama dimatikan
+      agar tidak bertabrakan; pangkal batang (transform-origin) ditentukan di sini.
+   2) Komponen: setiap komponen punya gerak masuk sendiri (data-m) memakai properti
+      translate/scale/rotate terpisah, sehingga bisa digabung dengan animasi idle (transform). */
+.gl-img,.card-flora-img,.card-crown,.arch-swag{animation:none!important}
+.dress-bouquet,.fam-bouquet{transform-origin:50% 100%}
+.gl.tl .gl-img{transform-origin:0 0}
+.gl.tr .gl-img{transform-origin:100% 0}
+
+/* --- Gerak masuk per komponen --- */
+html.js .rv[data-m]{
+  transform:none;filter:none;
+  transition:opacity 1.1s cubic-bezier(.2,.8,.2,1),translate 1.25s cubic-bezier(.16,.84,.2,1),scale 1.25s cubic-bezier(.16,.84,.2,1),rotate 1.3s cubic-bezier(.16,.84,.2,1),filter 1.1s ease,clip-path 1.4s cubic-bezier(.65,0,.2,1);
+  transition-delay:var(--d,0s);
+}
+html.js .rv[data-m="rise"]{translate:0 56px}
+html.js .rv[data-m="drop"]{translate:0 -42px}
+html.js .rv[data-m="left"]{translate:-80px 0;rotate:-2.5deg}
+html.js .rv[data-m="right"]{translate:80px 0;rotate:2.5deg}
+html.js .rv[data-m="zoom"]{scale:.82}
+html.js .rv[data-m="pop"]{scale:.4;transition-timing-function:ease,ease,cubic-bezier(.34,1.7,.5,1),cubic-bezier(.34,1.6,.5,1),ease,ease}
+html.js .rv[data-m="spin"]{scale:.3;rotate:-160deg;transition-timing-function:ease,ease,cubic-bezier(.34,1.5,.5,1),cubic-bezier(.22,1.2,.36,1),ease,ease}
+html.js .rv[data-m="blur"]{filter:blur(12px);scale:1.08}
+html.js .rv[data-m="spread"]{scale:.62 1;filter:blur(6px)}
+html.js .rv[data-m="flip"]{rotate:x 75deg;translate:0 30px;transform-origin:50% 0}
+html.js .rv[data-m="unfold"]{rotate:y -38deg;translate:50px 0;transform-origin:0 50%}
+html.js .rv[data-m="swing"]{rotate:-9deg;transform-origin:50% 0;translate:0 -20px}
+html.js .rv[data-m="curtain"]{scale:0 1;transform-origin:50% 50%}
+html.js .rv[data-m="wipe"]{scale:0 1;transform-origin:0 50%}
+html.js .rv[data-m].in{opacity:1;translate:0 0;scale:1;rotate:0deg;filter:none}
+
+/* --- Gerak idle (terus hidup setelah muncul) --- */
+@keyframes idleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes idleBob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(4deg)}}
+@keyframes idleTilt{0%,100%{transform:rotate(-.6deg)}50%{transform:rotate(.6deg)}}
+@keyframes idleGlow{0%,100%{box-shadow:0 0 0 rgba(201,165,107,0)}50%{box-shadow:0 0 22px rgba(201,165,107,.45)}}
+@keyframes idleBreath{0%,100%{scale:1}50%{scale:1.06}}
+.ev{animation:idleFloat 7s ease-in-out infinite}
+.ev:nth-child(2){animation-duration:8.2s;animation-delay:-2.5s}
+.bank{animation:idleFloat 6.4s ease-in-out infinite}
+.bank:nth-child(2){animation-delay:-3.1s}
+.ayat{animation:idleFloat 9s ease-in-out infinite}
+.form{animation:idleFloat 10s ease-in-out infinite}
+.wish-carousel-wrap{animation:idleTilt 11s ease-in-out infinite}
+.loc .mapframe{animation:idleFloat 8s ease-in-out infinite}
+.loc:nth-child(2) .mapframe{animation-delay:-4s}
+.sw i{animation:idleBob 3.6s ease-in-out infinite}
+.sw i:nth-child(2){animation-delay:-.9s}.sw i:nth-child(3){animation-delay:-1.8s}.sw i:nth-child(4){animation-delay:-2.7s}
+.mono{animation:idleBreath 4.5s ease-in-out infinite}
+.amp-big{animation:idleBreath 5s ease-in-out infinite}
+.loc .btn,.bank .btn{animation:idleGlow 3.8s ease-in-out infinite}
+.sec:not(.hero) .eyebrow-ar{animation:idleFloat 6s ease-in-out infinite}
+html.rm .ev,html.rm .bank,html.rm .ayat,html.rm .form,html.rm .wish-carousel-wrap,html.rm .mapframe,html.rm .sw i,html.rm .mono,html.rm .amp-big,html.rm .btn,html.rm .eyebrow-ar{animation:none!important}

@@ -1,0 +1,29 @@
+/* ================= FLORAL KLIEN: WREATH, BOUQUET & LATAR KARTU ================= */
+/* Rangkaian bouquet (elegant-vintage-floral-arrangement...svg) */
+.dress-bouquet{display:block;width:min(74vw,340px);height:auto;margin:0 auto 6px;filter:drop-shadow(0 8px 16px rgba(58,9,22,.25))}
+.fam-bouquet{display:block;width:min(80vw,380px);height:auto;margin:1.8rem auto -10px;filter:drop-shadow(0 8px 20px rgba(0,0,0,.45))}
+/* Latar kartu: 279747897_...svg (gelombang burgundy) + lapisan gelap agar teks tetap kontras */
+.ev>.card-bg,.bank>.card-bg,.wish-env-card>.card-bg,.cd div{
+  background:
+    linear-gradient(165deg,rgba(92,18,40,.62) 0%,rgba(46,8,20,.74) 60%,rgba(26,4,11,.86) 100%),
+    url('/images/florals/279747897_01eb49de-6803-4640-a406-d63ba2d0e9e0.svg') center/cover no-repeat,
+    var(--wine-900)!important;
+}
+.cd div{background-size:auto,300% auto,auto!important}
+
+/* Kartu: latar dipindah ke .card-bg agar rangkaian bunga benar-benar berada DI BELAKANG kartu
+   (kartu membuat stacking context sendiri, jadi z-index:-1 saja tetap tampil di atas latar kartu) */
+.ev,.bank,.form,.ayat,.wish-env-card{isolation:isolate;background:transparent!important}
+.card-bg{position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none}
+.form>.card-bg{background:#fffaf1}
+.ayat>.card-bg{background:linear-gradient(180deg,#fffdf8,#f7efe0)}
+.card-flora-cluster{z-index:-2!important}
+
+/* Lapisan dekorasi kartu tidak boleh ikut aturan umum seperti .ev>*{position:relative} */
+.card-bg{position:absolute!important;inset:0!important;z-index:-1!important}
+.card-crown{position:absolute!important;z-index:4!important}
+.card-flora-cluster{position:absolute!important}
+/* Penutup: beri ruang di bawah agar bunga sudut tidak menimpa nama keluarga */
+#penutup{padding-top:clamp(170px,50vw,300px);padding-bottom:clamp(200px,58vw,340px)}
+#penutup .fam{position:relative;z-index:6;padding:14px 18px;border-radius:18px;background:radial-gradient(ellipse at 50% 50%,rgba(26,4,11,.72) 0%,rgba(26,4,11,.45) 60%,rgba(26,4,11,0) 100%)}
+

@@ -1,0 +1,43 @@
+/* ================= TEXT LEGIBILITY (WAJIB TERBACA DI SEMUA BROWSER) =================
+   Teks emas gradien (background-clip:text + color:transparent) menghilang di Safari iOS
+   dan beberapa browser Android saat dikombinasikan dengan animasi/transform/filter.
+   Ganti dengan warna solid + glow, dan perkuat kontras label-label tipis. */
+.title,.salam-lt,.pname,.ev h3,.loc h3,.dress h3,.c-names,.name{
+  background:none!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;
+  -webkit-text-fill-color:currentColor!important;
+}
+.c-names, .name, .names, .pname, .sl-l-names, .cl-names .name{
+  font-family:'Hugh is Life', 'Hugh is Life Personal Use', cursive, serif !important;
+  text-transform:none !important;
+  font-style:normal !important;
+  font-weight:normal !important;
+}
+.title,.salam-lt,.pname,.ev h3,.loc h3,.dress h3{
+  color:#f3dcaa!important;
+  text-shadow:0 1px 2px rgba(20,3,8,.85),0 0 18px rgba(20,3,8,.55),0 0 22px rgba(201,165,107,.28)!important;
+}
+.light .title,.light .salam-lt,.light .dress h3{
+  color:#6a1129!important;
+  text-shadow:0 1px 0 rgba(255,250,240,.9),0 0 14px rgba(255,248,236,.95),0 0 26px rgba(255,248,236,.8)!important;
+}
+.c-names,.name{
+  color:#f6e0b0!important;
+  text-shadow:0 2px 3px rgba(20,3,8,.85),0 0 22px rgba(20,3,8,.6),0 0 30px rgba(201,165,107,.35)!important;
+}
+/* Label & teks kecil di bagian gelap: lebih terang + bayangan agar terbaca di atas bunga */
+.dark .eyebrow,.darker .eyebrow,.dark .eyebrow-ar,.darker .eyebrow-ar,.hero .eyebrow-ar,
+.cue small,.pre-title,.amp,.amp-big,.paddr,.pdesc,.pdesc b,.fam,.fam small,.fam span,.dark .sub,.darker .sub,.dark .lead,.darker .lead,.doa{
+  color:#f6e3bb!important;
+  text-shadow:0 1px 2px rgba(20,3,8,.9),0 0 12px rgba(20,3,8,.75),0 0 24px rgba(20,3,8,.45)!important;
+}
+.paddr,.pdesc{color:#f1e2cc!important}
+.amp-big{filter:none!important}
+/* Label di bagian terang: lebih gelap + halo krem agar terbaca di atas bunga */
+.light .eyebrow,.light .eyebrow-ar{color:#7a4a17!important}
+.light .eyebrow,.light .eyebrow-ar,.light .lead,.light .sub,.light .salam-ar{
+  text-shadow:0 0 10px rgba(255,250,240,.95),0 0 20px rgba(255,248,236,.85)!important;
+}
+.light .lead,.light .sub{color:#4a0d1d!important}
+.credit,.credit span{color:rgba(240,224,192,.9)!important}
+.credit b{color:#f0d9a8!important}
+
