@@ -1,0 +1,63 @@
+/* ==========================================================================
+   AZLUNA INVITATIONS - WEDDING TYPOGRAPHY & FONT SUITE
+   Koleksi Font Resmi Google Fonts Bertema Undangan Pernikahan (Wedding Invitations)
+   Kategori: Royal Luxury Serif, Romantic Calligraphy Script, Haute Couture, & Clean Modern Body
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Aref+Ruqaa:wght@400;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Castoro+Titling&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Serif+Display:ital@0;1&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Italianno&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Marcellus&family=MonteCarlo&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Noto+Naskh+Arabic:wght@400;500;600&family=Noto+Sans+Javanese:wght@400;600&family=Parisienne&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Prata&family=Reem+Kufi:wght@400;500;600&display=swap');
+
+:root {
+  /* Preset Font Wedding Collections */
+  --font-wedding-cinzel: 'Cinzel', serif;
+  --font-wedding-cinzel-deco: 'Cinzel Decorative', serif;
+  --font-wedding-cormorant: 'Cormorant Garamond', serif;
+  --font-wedding-playfair: 'Playfair Display', serif;
+  --font-wedding-great-vibes: 'Great Vibes', cursive;
+  --font-wedding-alex-brush: 'Alex Brush', cursive;
+  --font-wedding-allura: 'Allura', cursive;
+  --font-wedding-pinyon: 'Pinyon Script', cursive;
+  --font-wedding-parisienne: 'Parisienne', cursive;
+  --font-wedding-italianno: 'Italianno', cursive;
+  --font-wedding-montecarlo: 'MonteCarlo', cursive;
+  --font-wedding-prata: 'Prata', serif;
+  --font-wedding-marcellus: 'Marcellus', serif;
+  --font-wedding-dm-serif: 'DM Serif Display', serif;
+  --font-wedding-bodoni: 'Bodoni Moda', serif;
+  --font-wedding-castoro: 'Castoro Titling', serif;
+  
+  /* Body Fonts */
+  --font-wedding-jost: 'Jost', sans-serif;
+  --font-wedding-montserrat: 'Montserrat', sans-serif;
+  --font-wedding-jakarta: 'Plus Jakarta Sans', sans-serif;
+  --font-wedding-lora: 'Lora', serif;
+  --font-wedding-eb-garamond: 'EB Garamond', serif;
+
+  /* Calligraphy & Traditional */
+  --font-wedding-aref: 'Aref Ruqaa', serif;
+  --font-wedding-kufi: 'Reem Kufi', sans-serif;
+  --font-wedding-javanese: 'Noto Sans Javanese', serif;
+}
+
+/* Helper utility classes untuk font preview */
+.font-cinzel { font-family: var(--font-wedding-cinzel) !important; }
+.font-cinzel-deco { font-family: var(--font-wedding-cinzel-deco) !important; }
+.font-cormorant { font-family: var(--font-wedding-cormorant) !important; }
+.font-playfair { font-family: var(--font-wedding-playfair) !important; }
+.font-great-vibes { font-family: var(--font-wedding-great-vibes) !important; }
+.font-alex-brush { font-family: var(--font-wedding-alex-brush) !important; }
+.font-allura { font-family: var(--font-wedding-allura) !important; }
+.font-pinyon { font-family: var(--font-wedding-pinyon) !important; }
+.font-parisienne { font-family: var(--font-wedding-parisienne) !important; }
+.font-italianno { font-family: var(--font-wedding-italianno) !important; }
+.font-montecarlo { font-family: var(--font-wedding-montecarlo) !important; }
+.font-prata { font-family: var(--font-wedding-prata) !important; }
+.font-marcellus { font-family: var(--font-wedding-marcellus) !important; }
+.font-dm-serif { font-family: var(--font-wedding-dm-serif) !important; }
+.font-bodoni { font-family: var(--font-wedding-bodoni) !important; }
+.font-castoro { font-family: var(--font-wedding-castoro) !important; }
+
+.font-jost { font-family: var(--font-wedding-jost) !important; }
+.font-montserrat { font-family: var(--font-wedding-montserrat) !important; }
+.font-jakarta { font-family: var(--font-wedding-jakarta) !important; }
+.font-lora { font-family: var(--font-wedding-lora) !important; }
+.font-eb-garamond { font-family: var(--font-wedding-eb-garamond) !important; }

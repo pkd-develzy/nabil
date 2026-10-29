@@ -1,0 +1,16 @@
+{
+  "name": "undangan-ahmad-nabil-kholili",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Undangan Pernikahan Digital Ahmad Nabil Kholili & Fadilatul Izza - Tema Royal Burgundy & Gold",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/vercel": "^8.0.0",
+    "astro": "^5.2.0"
+  }
+}

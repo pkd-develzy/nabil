@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#571024"/>
+      <stop offset="50%" stop-color="#3a0916"/>
+      <stop offset="100%" stop-color="#1f050d"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff1c8"/>
+      <stop offset="40%" stop-color="#c9a56b"/>
+      <stop offset="100%" stop-color="#8a6730"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <rect x="3" y="3" width="58" height="58" rx="13" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.8"/>
+  <rect x="7" y="7" width="50" height="50" rx="10" fill="none" stroke="url(#gold)" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.6"/>
+  <!-- Diamond Ornament -->
+  <polygon points="32,9 35,12 32,15 29,12" fill="url(#gold)"/>
+  <polygon points="32,49 35,52 32,55 29,52" fill="url(#gold)"/>
+  <!-- Monogram N & I -->
+  <text x="32" y="38" font-family="'Cinzel', 'Cinzel Decorative', 'Georgia', serif" font-size="21" font-weight="700" fill="url(#gold)" text-anchor="middle" letter-spacing="1">N&amp;I</text>
+</svg>
