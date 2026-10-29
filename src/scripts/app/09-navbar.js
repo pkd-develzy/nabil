@@ -26,6 +26,7 @@ if(nav) {
       var targetEl = document.querySelector(targetId);
       if(targetEl){
         e.preventDefault();
+        if (window.__azlunaFinishAutoScroll) window.__azlunaFinishAutoScroll();
         if (window.__azlunaPauseAutoScroll) window.__azlunaPauseAutoScroll();
         var rect = targetEl.getBoundingClientRect();
         var targetY = window.pageYOffset + rect.top - 10;

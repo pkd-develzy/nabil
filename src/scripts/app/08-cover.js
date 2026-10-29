@@ -7,15 +7,24 @@ function pull(){
   if(pulled)return;pulled=true;
   timers.forEach(clearTimeout);timers=[];clearTimeout(seqT);seq=[];
   stopTilt();
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
   if($('#music')) $('#music').classList.add('show');
   if(cover) cover.classList.add('pulling');
   html.classList.add('pulling');
-  setTimeout(function(){html.classList.add('revealed')},420*K);
+  setTimeout(function(){
+    window.scrollTo(0, 0);
+    html.classList.add('revealed');
+  },420*K);
   setTimeout(function(){
     if(cover) cover.style.display='none';
     html.classList.remove('locked');
-    window.scrollTo(0,0);
-    try{page.focus({preventScroll:true})}catch(e){}
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.__azlunaInvitationReady = true;
+    window.dispatchEvent(new CustomEvent('azluna:invitation-ready'));
   },2600*K);
 }
 

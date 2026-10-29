@@ -1,148 +1,142 @@
 /**
- * Azluna Cinematic Auto-Scroll Engine
- * - Smooth elegant scrolling down the invitation page
- * - Pauses on any user interaction (touch, click, wheel, keydown)
- * - Automatically resumes after 3 seconds of inactivity
- * - Stops gracefully near the bottom of the page
+ * Azluna Cinematic Auto-Scroll Guided Tour Engine
+ * - Reset otomatis ke tampilan paling pertama saat undangan dibuka.
+ * - Wajib scroll otomatis secara elegan dari atas ke bawah.
+ * - Selama auto-scroll berjalan, layar tidak boleh di-scroll manual sendiri.
+ * - Begitu auto-scroll selesai sampai ke penutup, kontrol manual dibuka penuh (boleh scroll sendiri).
  */
 (function() {
   'use strict';
 
-  var isUserInteracting = false;
-  var inactivityTimer = null;
+  var isAutoScrolling = false;
+  var isAutoScrollFinished = false;
   var rafId = null;
   var lastTimestamp = null;
-  var speedPxPerSec = 48; // Smooth, readable, elegant velocity
+  var speedPxPerSec = 44; // Kecepatan elegan, tenang, dan terbaca dengan nyaman
+  var startTimer = null;
 
   function isInvitationOpened() {
-    // 1. Cover Burgundy / Fresh Magic / [slug]
+    if (window.__azlunaInvitationReady) return true;
     var cover = document.getElementById('cover');
     if (cover) {
-      if (cover.style.display === 'none' || cover.classList.contains('pulled') || cover.classList.contains('leaving') || cover.classList.contains('gone')) {
+      if (cover.style.display === 'none' || cover.classList.contains('gone') || cover.classList.contains('pulled')) {
         return true;
       }
       return false;
     }
-
-    // 2. Gate Peach Senja / Sakura Luxury / Heritage Sage / Sky Blue
-    var gate = document.getElementById('gate');
-    if (gate) {
-      if (gate.classList.contains('gone') || gate.style.display === 'none' || gate.getAttribute('aria-hidden') === 'true') {
-        return true;
-      }
+    if (document.documentElement.classList.contains('locked') || document.body.classList.contains('locked')) {
       return false;
     }
-
-    // 3. Modal / Envelope in Midnight Celestial / Adat Jawa / Traditional Java
-    var amplop = document.getElementById('envelopeModal') || document.getElementById('coverAmplop') || document.getElementById('celestialEnvelope') || document.querySelector('.envelope-modal');
-    if (amplop) {
-      if (amplop.classList.contains('is-opened') || amplop.classList.contains('opened') || amplop.style.display === 'none' || amplop.classList.contains('hidden') || amplop.classList.contains('gone')) {
-        return true;
-      }
-      return false;
-    }
-
-    // 4. Body / HTML locked class check
-    if (document.documentElement.classList.contains('locked') || document.body.classList.contains('is-locked') || document.body.classList.contains('locked')) {
-      return false;
-    }
-
     return true;
   }
 
-  // State: Kunci tidak boleh menggeser sendiri jika belum selesai dibaca 1 kali
-  var hasFinishedOnce = false;
-  try {
-    if (sessionStorage.getItem('azluna_has_finished_once') === '1') {
-      hasFinishedOnce = true;
-    }
-  } catch(e){}
-
-  function checkCompletion() {
-    if (hasFinishedOnce) return;
+  function startAutoScroll() {
+    if (isAutoScrolling || isAutoScrollFinished) return;
     if (!isInvitationOpened()) return;
-    var scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
-    var windowH = window.innerHeight || document.documentElement.clientHeight;
-    var docH = Math.max(
-      document.body.scrollHeight, document.documentElement.scrollHeight,
-      document.body.offsetHeight, document.documentElement.offsetHeight,
-      document.body.clientHeight, document.documentElement.clientHeight
-    );
-    // Jika pengguna sudah menggulir hingga ke dekat akhir halaman (selesai 1 kali)
-    if (scrollY + windowH >= docH - 180) {
-      hasFinishedOnce = true;
-      try { sessionStorage.setItem('azluna_has_finished_once', '1'); } catch(e){}
-    }
+
+    // Pastikan scroll berada tepat di tampilan paling pertama
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    isAutoScrolling = true;
+    lastTimestamp = null;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(step);
   }
-  window.addEventListener('scroll', checkCompletion, { passive: true });
 
-  function canScroll() {
-    if (!isInvitationOpened()) return false;
-    // Kunci tidak boleh menggeser sendiri ketika belum sampai selesai 1 kali
-    if (!hasFinishedOnce) return false;
-    if (isUserInteracting) return false;
-
-    // Check bottom boundary
-    var scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
-    var windowH = window.innerHeight || document.documentElement.clientHeight;
-    var docH = Math.max(
-      document.body.scrollHeight, document.documentElement.scrollHeight,
-      document.body.offsetHeight, document.documentElement.offsetHeight,
-      document.body.clientHeight, document.documentElement.clientHeight
-    );
-
-    // Stop within 15px of page end
-    if (scrollY + windowH >= docH - 15) {
-      return false;
+  function finishAutoScroll() {
+    isAutoScrolling = false;
+    isAutoScrollFinished = true;
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
     }
-
-    return true;
+    // Scroll manual pengguna sekarang diizinkan sepenuhnya
+    window.__azlunaManualScrollUnlocked = true;
   }
 
   function step(timestamp) {
+    if (!isAutoScrolling || isAutoScrollFinished) return;
     if (!lastTimestamp) lastTimestamp = timestamp;
     var delta = timestamp - lastTimestamp;
     lastTimestamp = timestamp;
 
-    if (canScroll()) {
-      var moveBy = (speedPxPerSec * delta) / 1000;
-      // Clamp step to avoid jumps on tab switch / lag
-      if (moveBy > 0 && moveBy < 6) {
-        window.scrollBy(0, moveBy);
-      }
+    var scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
+    var windowH = window.innerHeight || document.documentElement.clientHeight;
+    var docH = Math.max(
+      document.body.scrollHeight, document.documentElement.scrollHeight,
+      document.body.offsetHeight, document.documentElement.offsetHeight,
+      document.body.clientHeight, document.documentElement.clientHeight
+    );
+
+    // Cek apakah sudah sampai di akhir halaman (selesai 1 kali tour)
+    if (scrollY + windowH >= docH - 30) {
+      finishAutoScroll();
+      return;
+    }
+
+    var moveBy = (speedPxPerSec * delta) / 1000;
+    if (moveBy > 0 && moveBy < 8) {
+      window.scrollBy(0, moveBy);
     }
 
     rafId = requestAnimationFrame(step);
   }
 
-  function registerInteraction() {
-    isUserInteracting = true;
-    lastTimestamp = null;
-    if (inactivityTimer) {
-      clearTimeout(inactivityTimer);
+  // Larang scroll manual sendiri selama auto-scroll otomatis sedang berjalan
+  function handleManualScrollAttempt(e) {
+    if (isAutoScrolling && !isAutoScrollFinished) {
+      // Izinkan klik dan tap normal, tetapi cegah drag/wheel manual yang mengacaukan auto-scroll
+      if (e.cancelable && (e.type === 'touchmove' || e.type === 'wheel')) {
+        e.preventDefault();
+      }
     }
-    // 3 seconds of inactivity before continuing elegant auto-scroll
-    inactivityTimer = setTimeout(function() {
-      isUserInteracting = false;
-      lastTimestamp = null;
-    }, 3000);
   }
 
-  // Interactivity detection: touch, mouse, wheel, keys
-  var userEvents = ['touchstart', 'touchmove', 'touchend', 'pointerdown', 'mousedown', 'wheel', 'keydown'];
-  userEvents.forEach(function(evt) {
-    window.addEventListener(evt, registerInteraction, { passive: true });
-  });
+  function handleKeyScroll(e) {
+    if (isAutoScrolling && !isAutoScrollFinished) {
+      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].indexOf(e.key) !== -1) {
+        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+        if (e.cancelable) e.preventDefault();
+      }
+    }
+  }
 
-  // Start RAF
-  rafId = requestAnimationFrame(step);
+  window.addEventListener('wheel', handleManualScrollAttempt, { passive: false });
+  window.addEventListener('touchmove', handleManualScrollAttempt, { passive: false });
+  window.addEventListener('keydown', handleKeyScroll, { passive: false });
 
+  // Pemicu saat undangan dibuka
+  function onInvitationOpened() {
+    // Reset instan ke tampilan pertama
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Beri jeda 1.2 detik agar tamu menikmati Hero & animasi nama yang baru muncul
+    if (startTimer) clearTimeout(startTimer);
+    startTimer = setTimeout(function() {
+      startAutoScroll();
+    }, 1200);
+  }
+
+  window.addEventListener('azluna:invitation-ready', onInvitationOpened);
+
+  // Polling fallback jika event terlewat
+  var checkOpenInterval = setInterval(function() {
+    if (isInvitationOpened()) {
+      clearInterval(checkOpenInterval);
+      if (!isAutoScrolling && !isAutoScrollFinished) {
+        onInvitationOpened();
+      }
+    }
+  }, 300);
+
+  // API eksternal
+  window.__azlunaFinishAutoScroll = finishAutoScroll;
   window.__azlunaPauseAutoScroll = function() {
-    registerInteraction();
-  };
-
-  window.__azlunaResumeAutoScroll = function() {
-    isUserInteracting = false;
-    lastTimestamp = null;
+    // Jika user mengklik navbar menu, langsung selesaikan auto-scroll dan buka kontrol manual
+    finishAutoScroll();
   };
 })();
