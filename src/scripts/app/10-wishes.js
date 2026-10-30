@@ -302,12 +302,24 @@ function ensureActiveWishSlide() {
 }
 
 function showEmptyWishState() {
-  var placeholder = $('#wishPlaceholderSlide');
-  if (!placeholder) return;
-  var wishNm = placeholder.querySelector('.wish-name');
-  var wishTxt = placeholder.querySelector('.wish-text');
-  if (wishNm) wishNm.textContent = 'Belum Ada Ucapan';
-  if (wishTxt) wishTxt.textContent = 'Jadilah yang pertama memberikan doa restu untuk kedua mempelai melalui formulir RSVP di atas!';
+  if (wishStage) {
+    wishStage.innerHTML = '<div class="wish-slide active" id="wishPlaceholderSlide">' +
+      '<article class="wish-env-card">' +
+        '<div class="wish-env-top">' +
+          '<div class="wish-env-flap"></div>' +
+          '<div class="wish-mini-seal" data-seal="">' + (CONFIG.seal || 'N&I') + '</div>' +
+        '</div>' +
+        '<div class="wish-paper" style="text-align:center;padding:28px 20px">' +
+          '<p style="font-size:1.4rem;margin-bottom:8px">💌</p>' +
+          '<strong class="wish-name" style="font-size:1.05rem">Belum Ada Ucapan</strong>' +
+          '<p class="wish-text" style="margin-top:8px;font-style:normal">Jadilah yang pertama memberikan doa restu untuk kedua mempelai melalui formulir RSVP di atas!</p>' +
+        '</div>' +
+      '</article>' +
+    '</div>';
+    currentWishIndex = 0;
+    updateDots();
+    updateStageHeight();
+  }
 }
 
 // Helper menambahkan ucapan live
@@ -389,14 +401,14 @@ try {
     });
   } catch(e){ cachedWishes = []; }
 
-  // Prioritas: Ambil ucapan dari Cloudflare D1 (/api/rsvps)
+  // Ambil ucapan resmi dari Cloudflare D1 (/api/rsvps)
   fetch('/api/rsvps')
     .then(function(res){
       if (!res.ok) throw new Error('Status: ' + res.status);
       return res.json();
     })
     .then(function(json){
-      if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
+      if (json && json.success && Array.isArray(json.data)) {
         var withMsg = json.data.filter(function(w){ return (w.message || '').trim(); }).map(function(item){
           return {
             name: item.name,
@@ -407,6 +419,7 @@ try {
             created_at: item.created_at
           };
         });
+
         if (withMsg.length > 0) {
           if (wishStage) wishStage.innerHTML = '';
           currentWishIndex = 0;
@@ -414,33 +427,16 @@ try {
             window.__addLiveWishToCarousel(w, false);
           });
           try { localStorage.setItem('wedding_wishes_' + curSlug, JSON.stringify(withMsg)); } catch(e){}
-        } else if (!getAllWishSlides().length || $('#wishPlaceholderSlide')) {
+        } else {
+          // Database kosong: Hapus cache di browser dan tampilkan state kosong
+          try { localStorage.removeItem('wedding_wishes_' + curSlug); } catch(e){}
           showEmptyWishState();
         }
       }
     })
     .catch(function(err){
-      console.warn('Load wishes dari D1 dilewati (fallback ke cache/supabase):', err);
-      // Fallback Supabase jika ada
-      var sb = window.getSupabaseClient ? window.getSupabaseClient() : null;
-      if (sb) {
-        sb.from('wedding_wishes').select('*').eq('wedding_slug', curSlug).order('created_at', {ascending: false}).limit(20).then(function(res){
-          if (res && !res.error && res.data && res.data.length > 0) {
-            var withMsg = res.data.filter(function(w){ return (w.message || w.pesan || '').trim(); });
-            if (!withMsg.length) { if (!getAllWishSlides().length || $('#wishPlaceholderSlide')) showEmptyWishState(); return; }
-            if (wishStage) wishStage.innerHTML = '';
-            currentWishIndex = 0;
-            withMsg.forEach(function(w){
-              window.__addLiveWishToCarousel(w, false);
-            });
-            try { localStorage.setItem('wedding_wishes_' + curSlug, JSON.stringify(withMsg)); } catch(e){}
-          } else if ($('#wishPlaceholderSlide')) {
-            showEmptyWishState();
-          }
-        }, function(){
-          if ($('#wishPlaceholderSlide')) showEmptyWishState();
-        });
-      } else if (!getAllWishSlides().length && $('#wishPlaceholderSlide')) {
+      console.warn('Load wishes dari D1:', err);
+      if (!getAllWishSlides().length) {
         showEmptyWishState();
       }
     });
