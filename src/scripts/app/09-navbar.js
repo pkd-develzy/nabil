@@ -1,5 +1,36 @@
-/* ---------- FLOATING NAVBAR SCROLLSPY ---------- */
+/* ---------- FLOATING NAVBAR SCROLLSPY & LOVE TOGGLE ---------- */
 var nav = $('#navBar');
+var navWrapper = $('#navWrapper');
+var loveBtn = $('#navLoveBtn');
+
+function closeMobileMenu() {
+  if (navWrapper) navWrapper.classList.remove('menu-open');
+  if (loveBtn) {
+    loveBtn.classList.remove('open');
+    loveBtn.setAttribute('aria-expanded', 'false');
+  }
+}
+
+function toggleMobileMenu(e) {
+  if (e) e.stopPropagation();
+  if (!navWrapper || !loveBtn) return;
+  var isOpen = navWrapper.classList.toggle('menu-open');
+  loveBtn.classList.toggle('open', isOpen);
+  loveBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+
+if (loveBtn) {
+  loveBtn.addEventListener('click', toggleMobileMenu);
+}
+
+document.addEventListener('click', function(e) {
+  if (navWrapper && navWrapper.classList.contains('menu-open')) {
+    if (!navWrapper.contains(e.target)) {
+      closeMobileMenu();
+    }
+  }
+});
+
 if(nav) {
   var navItems = $$('.nav-item', nav);
 
@@ -26,6 +57,7 @@ if(nav) {
       var targetEl = document.querySelector(targetId);
       if(targetEl){
         e.preventDefault();
+        closeMobileMenu();
         if (window.__azlunaFinishAutoScroll) window.__azlunaFinishAutoScroll();
         if (window.__azlunaPauseAutoScroll) window.__azlunaPauseAutoScroll();
         var rect = targetEl.getBoundingClientRect();
