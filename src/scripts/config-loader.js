@@ -28,7 +28,17 @@
   try {
     var cached = localStorage.getItem('wedding_config_' + currentSlug);
     if(cached) {
-      deepMerge(CONFIG, JSON.parse(cached));
+      var parsed = JSON.parse(cached);
+      if(parsed && parsed.playlist && Array.isArray(parsed.playlist)) {
+        parsed.playlist = parsed.playlist.filter(function(item) {
+          return item && item.indexOf('Royal Burgundy') === -1 && item.indexOf('The_Grace_of_Union') === -1;
+        });
+        if(!parsed.playlist.length) delete parsed.playlist;
+      }
+      if(parsed && parsed.musicSrc && (parsed.musicSrc.indexOf('Royal Burgundy') !== -1 || parsed.musicSrc.indexOf('The_Grace_of_Union') !== -1)) {
+        delete parsed.musicSrc;
+      }
+      deepMerge(CONFIG, parsed);
       if(CONFIG.musicSrc) CONFIG.musicSrc = normalizeMusic(CONFIG.musicSrc);
     }
   } catch(e){}

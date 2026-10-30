@@ -63,10 +63,17 @@ var Music=(function(){
   var useSynth = false;
 
   function getPlaylist() {
-    if (CONFIG && CONFIG.playlist && Array.isArray(CONFIG.playlist) && CONFIG.playlist.length) {
-      return CONFIG.playlist;
-    }
-    return defaultPlaylist;
+    var list = (CONFIG && CONFIG.playlist && Array.isArray(CONFIG.playlist) && CONFIG.playlist.length)
+      ? CONFIG.playlist
+      : (CONFIG && CONFIG.musicSrc ? [CONFIG.musicSrc] : defaultPlaylist);
+    
+    // Pastikan tidak menggunakan berkas usang yang sudah dihapus
+    var filtered = list.filter(function(item) {
+      if (!item) return false;
+      var str = String(item);
+      return str.indexOf('Royal Burgundy') === -1 && str.indexOf('The_Grace_of_Union') === -1;
+    });
+    return filtered.length ? filtered : defaultPlaylist;
   }
 
   function startSynth(){
@@ -85,15 +92,21 @@ var Music=(function(){
     if (!audioEl) {
       audioEl = new Audio();
       audioEl.volume = 0.6;
-      audioEl.loop = false; // Memungkinkan event 'ended' terpicu saat lagu selesai
+      audioEl.preload = 'auto';
+      audioEl.loop = (list.length === 1);
       audioEl.addEventListener('ended', function() {
-        // Otomatis ganti ke lagu berikutnya ketika lagu saat ini selesai
         var l = getPlaylist();
-        currentTrackIndex = (currentTrackIndex + 1) % l.length;
-        playTrack(currentTrackIndex);
+        if (l.length > 1) {
+          currentTrackIndex = (currentTrackIndex + 1) % l.length;
+          playTrack(currentTrackIndex);
+        } else {
+          audioEl.currentTime = 0;
+          audioEl.play().catch(function(){});
+        }
       });
     }
 
+    audioEl.loop = (list.length === 1);
     var encoded = encodeURI(track).replace(/%25([0-9A-F]{2})/gi, '%$1');
     audioEl.src = encoded;
     audioEl.dataset.src = track;
@@ -106,7 +119,6 @@ var Music=(function(){
         ui();
         return;
       }
-      // Bila berkas audio gagal dimuat, coba putar lagu berikutnya di playlist
       var l = getPlaylist();
       if (l.length > 1) {
         currentTrackIndex = (currentTrackIndex + 1) % l.length;
