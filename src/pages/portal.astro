@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/fonts-wedding.css">
-  <style>
+  <style is:global>
     :root {
       --wine-950: #1b030b;
       --wine-900: #2a0712;
@@ -88,7 +88,7 @@
       padding: 0.85rem 1.6rem;
       min-height: 46px;
       font: 500 0.8rem 'Jost', sans-serif;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--wine-950);
       background: linear-gradient(135deg, var(--gold-soft), var(--gold) 55%, var(--gold-deep));
@@ -99,6 +99,7 @@
       box-shadow: 0 8px 20px rgba(10, 1, 4, 0.4);
       transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
       touch-action: manipulation;
+      white-space: nowrap;
     }
     .btn:hover {
       transform: translateY(-2px);
@@ -107,31 +108,61 @@
     }
     .btn:active { transform: translateY(0); }
     .btn-wa {
-      background: linear-gradient(135deg, #25D366, #128C7E);
-      color: #ffffff;
-      border-color: #25D366;
-      box-shadow: 0 8px 20px rgba(18, 140, 126, 0.4);
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(37, 211, 102, 0.7) !important;
+      box-shadow: 0 6px 16px rgba(18, 140, 126, 0.4) !important;
+      font-weight: 600;
     }
     .btn-wa:hover {
-      box-shadow: 0 12px 28px rgba(18, 140, 126, 0.6), 0 0 18px rgba(37, 211, 102, 0.5);
+      box-shadow: 0 10px 24px rgba(18, 140, 126, 0.6), 0 0 18px rgba(37, 211, 102, 0.5) !important;
+      filter: brightness(1.08) !important;
     }
     .btn-outline {
-      background: rgba(42, 7, 18, 0.5);
-      border: 1px solid var(--gold);
-      color: var(--gold-soft);
-      backdrop-filter: blur(6px);
+      background: rgba(42, 7, 18, 0.65) !important;
+      border: 1px solid rgba(201, 165, 107, 0.45) !important;
+      color: var(--gold-soft) !important;
+      backdrop-filter: blur(8px);
     }
     .btn-outline:hover {
-      background: rgba(201, 165, 107, 0.15);
-      color: #ffffff;
+      background: rgba(201, 165, 107, 0.22) !important;
+      border-color: var(--gold) !important;
+      color: #ffffff !important;
+      box-shadow: 0 6px 18px rgba(201, 165, 107, 0.3) !important;
     }
     .btn-sm {
-      min-height: 38px;
-      padding: 0.5rem 0.9rem;
-      font-size: 0.74rem;
-      letter-spacing: 0.1em;
+      min-height: 36px !important;
+      padding: 0.42rem 0.9rem !important;
+      font-size: 0.74rem !important;
+      letter-spacing: 0.06em !important;
+      border-radius: 10px !important;
+      gap: 5px !important;
     }
-    .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    .btn-danger-sm {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255, 82, 119, 0.12);
+      border: 1px solid rgba(255, 82, 119, 0.35);
+      color: #ff859d;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .btn-danger-sm:hover {
+      background: rgba(255, 82, 119, 0.28);
+      border-color: #ff5277;
+      color: #ffffff;
+      transform: translateY(-1.5px);
+      box-shadow: 0 4px 14px rgba(255, 82, 119, 0.45);
+    }
+    .btn-danger-sm svg { width: 15px; height: 15px; }
 
     /* Cards */
     .card {
@@ -299,70 +330,159 @@
     /* Guest Table & Responsive Card Styling */
     .table-container {
       overflow-x: auto;
-      margin-top: 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(201, 165, 107, 0.2);
+      margin-top: 16px;
+      border-radius: 16px;
+      border: 1.5px solid rgba(201, 165, 107, 0.35);
+      background: rgba(22, 3, 9, 0.9);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 245, 220, 0.12);
     }
     .guest-table {
       width: 100%;
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
       text-align: left;
       font-size: 0.88rem;
     }
     .guest-table th {
-      background: rgba(25, 4, 10, 0.85);
+      background: rgba(16, 2, 6, 0.96);
       color: var(--gold-soft);
       font-family: 'Cinzel', serif;
       font-size: 0.74rem;
-      letter-spacing: 0.14em;
+      font-weight: 600;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(201, 165, 107, 0.3);
+      padding: 16px 18px;
+      border-bottom: 1.5px solid rgba(201, 165, 107, 0.35);
       white-space: nowrap;
     }
     .guest-table td {
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(201, 165, 107, 0.15);
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(201, 165, 107, 0.14);
       vertical-align: middle;
+      transition: background 0.2s ease;
+    }
+    .guest-table tr:last-child td {
+      border-bottom: none;
     }
     .guest-table tr:hover td {
-      background: rgba(201, 165, 107, 0.05);
+      background: rgba(201, 165, 107, 0.07);
+    }
+    .td-num {
+      width: 52px;
+      text-align: center;
+    }
+    .num-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(201, 165, 107, 0.12);
+      border: 1px solid rgba(201, 165, 107, 0.28);
+      color: var(--gold-soft);
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .guest-name-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+    .guest-name-text {
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #fffdf5;
+      letter-spacing: 0.02em;
+    }
+    .guest-phone-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #25D366;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.86rem;
+      background: rgba(37, 211, 102, 0.08);
+      border: 1px solid rgba(37, 211, 102, 0.25);
+      padding: 4px 10px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .guest-phone-link:hover {
+      background: rgba(37, 211, 102, 0.2);
+      border-color: #25D366;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .no-phone {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: rgba(242, 224, 190, 0.45);
+      font-style: italic;
     }
     .mobile-label { display: none; }
     .action-btn-group {
       display: flex;
       justify-content: flex-end;
-      gap: 6px;
+      align-items: center;
+      gap: 7px;
       flex-wrap: nowrap;
     }
 
     .badge {
-      display: inline-block;
-      padding: 4px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
       border-radius: 999px;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
       font-weight: 500;
       text-transform: uppercase;
       user-select: none;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      font-family: 'Jost', sans-serif;
+      cursor: pointer;
     }
     .badge-sent {
-      background: rgba(37, 211, 102, 0.2);
-      color: #62ebb0;
-      border: 1px solid rgba(37, 211, 102, 0.4);
-      cursor: pointer;
+      background: rgba(37, 211, 102, 0.16);
+      color: #4ade80;
+      border-color: rgba(37, 211, 102, 0.45);
+    }
+    .badge-sent:hover {
+      background: rgba(37, 211, 102, 0.28);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 10px rgba(37, 211, 102, 0.3);
     }
     .badge-unsent {
-      background: rgba(201, 165, 107, 0.18);
+      background: rgba(201, 165, 107, 0.14);
       color: var(--gold-soft);
-      border: 1px solid rgba(201, 165, 107, 0.4);
-      cursor: pointer;
+      border-color: rgba(201, 165, 107, 0.35);
+    }
+    .badge-unsent:hover {
+      background: rgba(201, 165, 107, 0.25);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 10px rgba(201, 165, 107, 0.25);
+    }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 6px rgba(201, 165, 107, 0.7);
     }
     .badge-cat {
-      background: rgba(87, 16, 36, 0.6);
-      color: var(--ivory);
-      border: 1px solid rgba(201, 165, 107, 0.3);
-      margin-left: 6px;
+      background: rgba(87, 16, 36, 0.7);
+      color: var(--gold-soft);
+      border: 1px solid rgba(201, 165, 107, 0.35);
+      padding: 2px 9px;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      cursor: default;
     }
 
     /* Modal Login */
@@ -1221,31 +1341,51 @@
       var html = '';
       filtered.forEach(function(g, idx){
         var link = buildGuestUrl(g.name);
+        var cleanPhone = g.phone ? g.phone.replace(/[^0-9]/g, '') : '';
         var statusBadge = g.sent ?
-          '<span class="badge badge-sent" title="Klik untuk ubah status" onclick="toggleSentStatus(\'' + g.id + '\')">✓ Terkirim</span>' :
-          '<span class="badge badge-unsent" title="Klik untuk ubah status" onclick="toggleSentStatus(\'' + g.id + '\')">&bull; Belum Kirim</span>';
+          '<button type="button" class="badge badge-sent" title="Klik untuk ubah status" onclick="toggleSentStatus(\'' + g.id + '\')"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Terkirim</button>' :
+          '<button type="button" class="badge badge-unsent" title="Klik untuk ubah status" onclick="toggleSentStatus(\'' + g.id + '\')"><span class="status-dot"></span> Belum Kirim</button>';
 
         html += '<tr class="guest-row">' +
-          '<td class="td-num" style="color:rgba(242,224,190,0.6)">' + (idx + 1) + '</td>' +
+          '<td class="td-num">' +
+            '<span class="num-badge">' + (idx + 1) + '</span>' +
+          '</td>' +
           '<td class="td-name">' +
-            '<div>' +
-              '<strong class="guest-name-text">' + escapeHtml(g.name) + '</strong>' +
+            '<div class="guest-name-cell">' +
+              '<span class="guest-name-text">' + escapeHtml(g.name) + '</span>' +
               '<span class="badge badge-cat">' + escapeHtml(g.category) + '</span>' +
             '</div>' +
           '</td>' +
           '<td class="td-phone">' +
-            '<span class="mobile-label">WhatsApp:</span>' +
-            (g.phone ? '<a href="tel:' + g.phone + '" style="color:var(--gold-soft);text-decoration:none;font-weight:500">' + g.phone + '</a>' : '<span style="opacity:0.4">Tanpa Nomor</span>') +
+            '<span class="mobile-label">WhatsApp</span>' +
+            (cleanPhone ?
+              '<a href="https://wa.me/' + cleanPhone + '" target="_blank" class="guest-phone-link" title="Chat WhatsApp">' +
+                '<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>' +
+                '<span>' + escapeHtml(g.phone) + '</span>' +
+              '</a>' :
+              '<span class="no-phone">Tanpa Nomor</span>'
+            ) +
           '</td>' +
           '<td class="td-status">' +
-            '<span class="mobile-label">Status:</span>' + statusBadge +
+            '<span class="mobile-label">Status</span>' + statusBadge +
           '</td>' +
           '<td class="td-actions">' +
             '<div class="action-btn-group">' +
-              '<button type="button" class="btn btn-wa btn-sm" onclick="quickSendWA(\'' + g.id + '\')" title="Kirim via WhatsApp">Kirim WA</button>' +
-              '<button type="button" class="btn btn-outline btn-sm" onclick="quickCopyLink(\'' + g.id + '\')" title="Salin Tautan">Link</button>' +
-              '<a href="' + link + '" target="_blank" class="btn btn-outline btn-sm" title="Buka Undangan">Buka</a>' +
-              '<button type="button" class="btn btn-outline btn-sm" style="border-color:#ff5277;color:#ff859d" onclick="deleteGuest(\'' + g.id + '\')" title="Hapus">✕</button>' +
+              '<button type="button" class="btn btn-wa btn-sm" onclick="quickSendWA(\'' + g.id + '\')" title="Kirim via WhatsApp">' +
+                '<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>' +
+                '<span>Kirim WA</span>' +
+              '</button>' +
+              '<button type="button" class="btn btn-outline btn-sm" onclick="quickCopyLink(\'' + g.id + '\')" title="Salin Tautan">' +
+                '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>' +
+                '<span>Link</span>' +
+              '</button>' +
+              '<a href="' + link + '" target="_blank" class="btn btn-outline btn-sm" title="Buka Undangan">' +
+                '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>' +
+                '<span>Buka</span>' +
+              '</a>' +
+              '<button type="button" class="btn-danger-sm" onclick="deleteGuest(\'' + g.id + '\')" title="Hapus">' +
+                '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
+              '</button>' +
             '</div>' +
           '</td>' +
         '</tr>';
