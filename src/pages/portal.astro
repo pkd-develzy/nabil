@@ -1216,6 +1216,134 @@
       border-radius: 16px;
       border: 1px dashed rgba(201, 165, 107, 0.3);
     }
+
+    /* ==========================================================================
+       ROYAL BURGUNDY & GOLD CUSTOM MODAL (ALERT / CONFIRM / PROMPT)
+       ========================================================================== */
+    .app-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 2, 7, 0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .app-modal-backdrop.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .app-modal-dialog {
+      background: radial-gradient(circle at 50% 0%, #3e0b1d 0%, var(--wine-950) 85%);
+      border: 1.5px solid var(--gold);
+      border-radius: 26px;
+      max-width: 440px;
+      width: 100%;
+      padding: 34px 26px 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(201, 165, 107, 0.22);
+      text-align: center;
+      position: relative;
+      transform: scale(0.9) translateY(14px);
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      box-sizing: border-box;
+    }
+    .app-modal-backdrop.show .app-modal-dialog {
+      transform: scale(1) translateY(0);
+    }
+    .app-modal-seal {
+      width: 56px;
+      height: 56px;
+      margin: -62px auto 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4d0d21, #1e030b);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-soft);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(201, 165, 107, 0.4);
+    }
+    .app-modal-seal.seal-danger {
+      border-color: #ef4444;
+      background: linear-gradient(135deg, #7f1d1d, #2a0712);
+      color: #fca5a5;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(239, 68, 68, 0.45);
+    }
+    .app-modal-seal.seal-success {
+      border-color: #10b981;
+      background: linear-gradient(135deg, #065f46, #1e030b);
+      color: #6ee7b7;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(16, 185, 129, 0.45);
+    }
+    .app-modal-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: var(--gold-soft);
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .app-modal-message {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.94rem;
+      color: rgba(250, 243, 232, 0.92);
+      line-height: 1.6;
+      margin-bottom: 24px;
+      word-break: break-word;
+      white-space: pre-wrap;
+      font-weight: 300;
+    }
+    .app-modal-input-wrap {
+      margin-bottom: 22px;
+    }
+    .app-modal-input {
+      width: 100%;
+      background: rgba(25, 3, 10, 0.75);
+      border: 1.5px solid rgba(201, 165, 107, 0.45);
+      border-radius: 12px;
+      padding: 11px 16px;
+      color: #ffffff;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      text-align: center;
+      transition: all 0.25s ease;
+      box-sizing: border-box;
+    }
+    .app-modal-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201, 165, 107, 0.3);
+      background: rgba(35, 5, 14, 0.9);
+    }
+    .app-modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .app-modal-btn {
+      min-width: 110px;
+      padding: 0.55rem 1.4rem !important;
+      font-size: 0.8rem !important;
+    }
+    .app-modal-btn.btn-danger-confirm {
+      background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%) !important;
+      border: 1.5px solid #ef4444 !important;
+      color: #ffffff !important;
+      box-shadow: 0 6px 18px rgba(185, 28, 28, 0.45), 0 0 14px rgba(239, 68, 68, 0.3) !important;
+    }
+    .app-modal-btn.btn-danger-confirm:hover {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(220, 38, 38, 0.55), 0 0 18px rgba(239, 68, 68, 0.4) !important;
+    }
   </style>
 </head>
 <body>
@@ -1504,6 +1632,29 @@
 
   </div>
 
+  <!-- Royal Burgundy & Gold Custom Modal (Replaces Native Alert, Confirm, Prompt) -->
+  <div id="appModal" class="app-modal-backdrop" aria-hidden="true">
+    <div class="app-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="appModalTitle">
+      <div class="app-modal-seal" id="appModalSeal">
+        <span id="appModalIcon">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </span>
+      </div>
+
+      <h3 class="app-modal-title" id="appModalTitle">Konfirmasi</h3>
+      <div class="app-modal-message" id="appModalMessage">Apakah Anda yakin?</div>
+
+      <div id="appModalInputWrap" class="app-modal-input-wrap" style="display:none">
+        <input type="text" id="appModalInput" class="app-modal-input" placeholder="" autocomplete="off" />
+      </div>
+
+      <div class="app-modal-actions" id="appModalActions">
+        <button type="button" class="btn btn-outline btn-sm app-modal-btn" id="appModalCancelBtn">Batal</button>
+        <button type="button" class="btn btn-sm app-modal-btn" id="appModalConfirmBtn">Lanjutkan</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div id="toast">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1512,6 +1663,136 @@
 
   <!-- SCRIPT LOGIKA PORTAL -->
   <script is:inline>
+    // =========================================================================
+    // SISTEM MODAL POPUP & NOTIFIKASI TEMA ROYAL BURGUNDY & GOLD
+    // =========================================================================
+    function showAppModal(opts) {
+      var modalEl = document.getElementById('appModal');
+      var sealEl = document.getElementById('appModalSeal');
+      var iconEl = document.getElementById('appModalIcon');
+      var titleEl = document.getElementById('appModalTitle');
+      var msgEl = document.getElementById('appModalMessage');
+      var inputWrapEl = document.getElementById('appModalInputWrap');
+      var inputEl = document.getElementById('appModalInput');
+      var confirmBtn = document.getElementById('appModalConfirmBtn');
+      var cancelBtn = document.getElementById('appModalCancelBtn');
+
+      if (!modalEl) return;
+
+      var type = opts.type || 'info';
+      sealEl.className = 'app-modal-seal' + (type === 'danger' ? ' seal-danger' : (type === 'success' ? ' seal-success' : ''));
+
+      var iconSvg = '';
+      if (type === 'danger') {
+        iconSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
+      } else if (type === 'warning') {
+        iconSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+      } else if (type === 'success') {
+        iconSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+      } else if (type === 'input') {
+        iconSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+      } else {
+        iconSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+      }
+      iconEl.innerHTML = iconSvg;
+
+      titleEl.textContent = opts.title || 'Pemberitahuan';
+      msgEl.textContent = opts.message || '';
+
+      if (opts.isPrompt) {
+        inputWrapEl.style.display = 'block';
+        inputEl.value = opts.defaultValue || '';
+        inputEl.placeholder = opts.placeholder || 'Ketik di sini...';
+        setTimeout(function() { inputEl.focus(); inputEl.select(); }, 120);
+      } else {
+        inputWrapEl.style.display = 'none';
+      }
+
+      cancelBtn.style.display = opts.showCancel ? 'inline-flex' : 'none';
+      cancelBtn.textContent = opts.cancelText || 'Batal';
+
+      confirmBtn.textContent = opts.confirmText || (opts.showCancel ? 'Ya, Lanjutkan' : 'Mengerti');
+      confirmBtn.className = 'btn btn-sm app-modal-btn' + (type === 'danger' ? ' btn-danger-confirm' : '');
+
+      modalEl.classList.add('show');
+
+      function cleanup() {
+        modalEl.classList.remove('show');
+        confirmBtn.onclick = null;
+        cancelBtn.onclick = null;
+        inputEl.onkeydown = null;
+      }
+
+      confirmBtn.onclick = function() {
+        var val = opts.isPrompt ? inputEl.value : true;
+        cleanup();
+        if (opts.onConfirm) opts.onConfirm(val);
+      };
+
+      cancelBtn.onclick = function() {
+        cleanup();
+        if (opts.onCancel) opts.onCancel();
+      };
+
+      if (opts.isPrompt) {
+        inputEl.onkeydown = function(e) {
+          if (e.key === 'Enter') {
+            confirmBtn.click();
+          } else if (e.key === 'Escape') {
+            cancelBtn.click();
+          }
+        };
+      }
+    }
+
+    function appAlert(msg, title, type) {
+      return new Promise(function(resolve) {
+        showAppModal({
+          title: title || 'Pemberitahuan',
+          message: msg,
+          type: type || 'info',
+          showCancel: false,
+          confirmText: 'Mengerti',
+          onConfirm: function() { resolve(); }
+        });
+      });
+    }
+
+    function appConfirm(msg, title, type, confirmText, cancelText) {
+      return new Promise(function(resolve) {
+        showAppModal({
+          title: title || 'Konfirmasi',
+          message: msg,
+          type: type || 'question',
+          showCancel: true,
+          confirmText: confirmText || 'Ya, Lanjutkan',
+          cancelText: cancelText || 'Batal',
+          onConfirm: function() { resolve(true); },
+          onCancel: function() { resolve(false); }
+        });
+      });
+    }
+
+    function appPrompt(msg, defaultValue, title) {
+      return new Promise(function(resolve) {
+        showAppModal({
+          title: title || 'Kirim Respon',
+          message: msg,
+          type: 'input',
+          isPrompt: true,
+          defaultValue: defaultValue || '',
+          showCancel: true,
+          confirmText: 'Kirim',
+          cancelText: 'Batal',
+          onConfirm: function(val) { resolve(val); },
+          onCancel: function() { resolve(null); }
+        });
+      });
+    }
+
+    // Override native alert & confirm agar popup bawaan browser tidak pernah muncul
+    window.alert = function(msg) { appAlert(msg); };
+
     // Konfigurasi Kunci Acara & State
     var PORTAL_AUTH_KEY = 'azluna_portal_auth_nabil';
     var GUESTS_STORAGE_KEY = 'azluna_guest_list_nabil';
@@ -1570,10 +1851,13 @@
     }
 
     function handleLogout() {
-      if (confirm('Apakah Anda ingin keluar dari portal?')) {
-        localStorage.removeItem(PORTAL_AUTH_KEY);
-        location.reload();
-      }
+      appConfirm('Apakah Anda yakin ingin keluar dari portal pengantin?', 'Keluar Portal', 'question', 'Ya, Keluar', 'Batal')
+        .then(function(confirmed) {
+          if (confirmed) {
+            localStorage.removeItem(PORTAL_AUTH_KEY);
+            location.reload();
+          }
+        });
     }
 
     // 2. KELOLA DATA TAMU DI LOCALSTORAGE & CLOUDFLARE D1
@@ -1752,7 +2036,7 @@
       var msg = document.getElementById('messagePreview').value.trim();
 
       if (!name) {
-        alert('Mohon masukkan nama tamu undangan terlebih dahulu.');
+        appAlert('Mohon masukkan nama tamu undangan terlebih dahulu.', 'Nama Belum Diisi', 'warning');
         document.getElementById('guestName').focus();
         return;
       }
@@ -1794,9 +2078,9 @@
       try {
         var ok = document.execCommand('copy');
         if (ok) showToast(successMsg);
-        else alert('Silakan salin teks manual:\n' + text);
+        else appPrompt('Silakan salin manual:', text, 'Salin Teks');
       } catch (err) {
-        prompt('Silakan salin manual:', text);
+        appPrompt('Silakan salin manual:', text, 'Salin Teks');
       }
       document.body.removeChild(ta);
     }
@@ -1858,7 +2142,7 @@
       var name = document.getElementById('guestName').value.trim();
       var phone = formatWhatsAppNumber(document.getElementById('guestPhone').value.trim());
       if (!name) {
-        alert('Mohon masukkan nama tamu undangan.');
+        appAlert('Mohon masukkan nama tamu undangan.', 'Nama Belum Diisi', 'warning');
         document.getElementById('guestName').focus();
         return;
       }
@@ -2019,31 +2303,45 @@
     }
 
     function deleteGuest(id) {
-      if (confirm('Hapus tamu ini dari daftar?')) {
-        var list = getStoredGuests().filter(function(g){ return g.id !== id; });
-        saveStoredGuests(list);
-        showToast('Tamu telah dihapus.');
-        // Hapus dari Cloudflare D1
-        fetch('/api/guests?id=' + encodeURIComponent(id), {
-          method: 'DELETE'
-        }).catch(function(err){
-          console.warn('Gagal menghapus dari D1:', err);
+      var list = getStoredGuests();
+      var item = list.find(function(g){ return g.id === id; });
+      var name = item ? item.name : 'tamu ini';
+
+      appConfirm('Apakah Anda yakin ingin menghapus "' + name + '" dari daftar tamu undangan?', 'Hapus Tamu', 'danger', 'Ya, Hapus', 'Batal')
+        .then(function(confirmed) {
+          if (!confirmed) return;
+          var updated = getStoredGuests().filter(function(g){ return g.id !== id; });
+          saveStoredGuests(updated);
+          showToast('Tamu ' + name + ' telah dihapus.');
+          renderGuestTable();
+          // Hapus dari Cloudflare D1
+          fetch('/api/guests?id=' + encodeURIComponent(id), {
+            method: 'DELETE'
+          }).catch(function(err){
+            console.warn('Gagal menghapus dari D1:', err);
+          });
         });
-      }
     }
 
     function clearAllGuests() {
-      if (confirm('PERINGATAN: Apakah Anda yakin ingin menghapus SEMUA daftar tamu?')) {
-        localStorage.removeItem(GUESTS_STORAGE_KEY);
-        renderGuestTable();
-        showToast('Semua tamu berhasil dibersihkan.');
+      var list = getStoredGuests();
+      if (!list.length) {
+        appAlert('Daftar tamu saat ini masih kosong.', 'Daftar Kosong', 'info');
+        return;
       }
+      appConfirm('PERINGATAN: Apakah Anda yakin ingin menghapus SEMUA data tamu undangan? Tindakan ini permanen dan tidak dapat dibatalkan.', 'Hapus Semua Tamu', 'danger', 'Hapus Semua', 'Batal')
+        .then(function(confirmed) {
+          if (!confirmed) return;
+          localStorage.removeItem(GUESTS_STORAGE_KEY);
+          renderGuestTable();
+          showToast('Semua tamu berhasil dibersihkan.');
+        });
     }
 
     function exportRecapText() {
       var list = getStoredGuests();
       if (!list.length) {
-        alert('Daftar tamu masih kosong.');
+        appAlert('Daftar tamu saat ini masih kosong.', 'Daftar Kosong', 'info');
         return;
       }
       var text = "REKAPITULASI TAMU UNDANGAN NABIL & IZZA\n";
@@ -2248,18 +2546,25 @@
       var item = (RSVP_LIST || []).find(function(x){ return String(x.id) === String(id); });
       if (!item) return;
 
-      // Cari nomor tamu di daftar tamu jika cocok namanya
       var matchedGuest = (GUEST_LIST || []).find(function(g){
         return (g.name || '').trim().toLowerCase() === (item.name || '').trim().toLowerCase();
       });
       var phone = matchedGuest && matchedGuest.phone ? matchedGuest.phone : '';
 
       if (!phone) {
-        phone = prompt('Kirim balasan terima kasih ke WhatsApp ' + item.name + '.\nMasukkan nomor WhatsApp tujuan (contoh: 08123456789):', '');
-        if (!phone) return;
+        appPrompt('Kirim balasan terima kasih ke WhatsApp ' + item.name + '.\nMasukkan nomor WhatsApp tujuan (contoh: 08123456789):', '08', 'Balas WhatsApp')
+          .then(function(inputPhone) {
+            if (!inputPhone) return;
+            executeSendWaReply(inputPhone, item);
+          });
+        return;
       }
 
-      phone = phone.replace(/[^0-9]/g, '');
+      executeSendWaReply(phone, item);
+    }
+
+    function executeSendWaReply(rawPhone, item) {
+      var phone = rawPhone.replace(/[^0-9]/g, '');
       if (phone.startsWith('0')) {
         phone = '62' + phone.substring(1);
       }
@@ -2283,7 +2588,7 @@
       if (!cardEl) return;
 
       if (typeof html2canvas !== 'function') {
-        alert('Modul download gambar sedang dimuat dari CDN. Silakan coba kembali sesaat lagi.');
+        appAlert('Modul download gambar sedang dimuat dari CDN. Silakan coba kembali sesaat lagi.', 'Menyiapkan Gambar', 'info');
         return;
       }
 
@@ -2319,7 +2624,7 @@
         if (footerEl) footerEl.style.display = prevDisplay;
         if (exportBrand && exportBrand.parentNode) exportBrand.parentNode.removeChild(exportBrand);
         console.error('Gagal export kartu:', err);
-        alert('Gagal mendownload kartu ucapan: ' + err.message);
+        appAlert('Gagal mendownload kartu ucapan: ' + err.message, 'Gagal Download', 'warning');
       });
     }
 
@@ -2356,7 +2661,7 @@
       })
       .catch(function(err){
         console.error('Gagal toggle visibilitas:', err);
-        alert('Gagal mengubah status: ' + err.message);
+        appAlert('Gagal mengubah status: ' + err.message, 'Gagal Mengubah Status', 'warning');
         // Revert switch on error
         var switchInput = document.getElementById('switch-input-' + id);
         if (switchInput) switchInput.checked = !isChecked;
@@ -2373,28 +2678,30 @@
     function deleteRsvp(id) {
       var item = (RSVP_LIST || []).find(function(x){ return String(x.id) === String(id); });
       var name = item ? item.name : 'tamu ini';
-      if (!confirm('Apakah Anda yakin ingin menghapus konfirmasi RSVP dari ' + name + '?')) {
-        return;
-      }
-      fetch('/api/rsvps?id=' + encodeURIComponent(id), {
-        method: 'DELETE'
-      })
-      .then(function(res){
-        if (!res.ok) throw new Error('Status: ' + res.status);
-        return res.json();
-      })
-      .then(function(json){
-        if (json && json.success) {
-          showToast('RSVP ' + name + ' berhasil dihapus.');
-          RSVP_LIST = RSVP_LIST.filter(function(r){ return String(r.id) !== String(id); });
-          renderRsvpCards();
-        } else {
-          alert('Gagal menghapus: ' + (json.error || 'Terjadi kesalahan'));
-        }
-      })
-      .catch(function(err){
-        alert('Gagal menghapus RSVP: ' + err.message);
-      });
+
+      appConfirm('Apakah Anda yakin ingin menghapus konfirmasi RSVP & doa dari "' + name + '"?', 'Hapus RSVP & Ucapan', 'danger', 'Ya, Hapus', 'Batal')
+        .then(function(confirmed) {
+          if (!confirmed) return;
+          fetch('/api/rsvps?id=' + encodeURIComponent(id), {
+            method: 'DELETE'
+          })
+          .then(function(res){
+            if (!res.ok) throw new Error('Status: ' + res.status);
+            return res.json();
+          })
+          .then(function(json){
+            if (json && json.success) {
+              showToast('RSVP ' + name + ' berhasil dihapus.');
+              RSVP_LIST = RSVP_LIST.filter(function(r){ return String(r.id) !== String(id); });
+              renderRsvpCards();
+            } else {
+              appAlert('Gagal menghapus: ' + (json.error || 'Terjadi kesalahan'), 'Gagal Menghapus', 'warning');
+            }
+          })
+          .catch(function(err){
+            appAlert('Gagal menghapus RSVP: ' + err.message, 'Gagal Menghapus', 'warning');
+          });
+        });
     }
 
     function formatTimeAgo(isoDate) {
