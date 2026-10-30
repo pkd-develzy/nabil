@@ -65,7 +65,7 @@ export async function POST(context) {
       return jsonResponse({ error: 'Database D1 tidak ditemukan pada runtime Cloudflare' }, 500);
     }
 
-    const body = await context.request.json();
+    const body = await context.request.json().catch(() => ({}));
 
     // Support toggle action via POST as fallback
     if (body.action === 'toggle' && body.id) {
@@ -78,12 +78,14 @@ export async function POST(context) {
       return jsonResponse({ success: true, is_visible: isVisible });
     }
 
-    const name = (body.name || '').trim();
-    const city = (body.city || body.asal || '').trim();
-    const category = (body.category || body.kategori || 'Umum').trim();
-    const attendance = body.attendance || 'Hadir';
-    const pax = parseInt(body.pax, 10) || 1;
-    const message = (body.message || '').trim();
+    const name = (body.name || '').trim().slice(0, 100);
+    const city = (body.city || body.asal || '').trim().slice(0, 80);
+    const category = (body.category || body.kategori || 'Umum').trim().slice(0, 60);
+    const rawAtt = (body.attendance || '').trim().toLowerCase();
+    const attendance = (rawAtt === 'hadir' || rawAtt === 'insya allah hadir') ? 'Hadir' : 'Berhalangan';
+    const parsedPax = parseInt(body.pax, 10);
+    const pax = isNaN(parsedPax) ? 1 : Math.max(1, Math.min(20, parsedPax));
+    const message = (body.message || '').trim().slice(0, 1000);
 
     if (!name) {
       return jsonResponse({ error: 'Nama pengirim wajib diisi' }, 400);
@@ -128,12 +130,12 @@ export async function PATCH(context) {
       return jsonResponse({ error: 'Database D1 tidak ditemukan pada runtime Cloudflare' }, 500);
     }
 
-    const body = await context.request.json();
+    const body = await context.request.json().catch(() => ({}));
     const id = Number(body.id);
     const isVisible = body.is_visible ? 1 : 0;
 
-    if (!id) {
-      return jsonResponse({ error: 'ID RSVP wajib disertakan' }, 400);
+    if (!id || isNaN(id) || id <= 0) {
+      return jsonResponse({ error: 'ID RSVP valid wajib disertakan' }, 400);
     }
 
     const db = getDb(d1);

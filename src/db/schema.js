@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text, integer, index } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
 
 export const guests = sqliteTable('guests', {
@@ -8,7 +8,10 @@ export const guests = sqliteTable('guests', {
   phone: text('phone'),
   sent: integer('sent').default(0),
   createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`)
-});
+}, (table) => [
+  index('idx_guests_name').on(table.name),
+  index('idx_guests_created').on(table.createdAt)
+]);
 
 export const rsvps = sqliteTable('rsvps', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
@@ -20,5 +23,8 @@ export const rsvps = sqliteTable('rsvps', {
   message: text('message'),
   isVisible: integer('is_visible').default(1),
   createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`)
-});
+}, (table) => [
+  index('idx_rsvps_created').on(table.createdAt),
+  index('idx_rsvps_visible_created').on(table.isVisible, table.createdAt)
+]);
 

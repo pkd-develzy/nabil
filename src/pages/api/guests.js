@@ -53,11 +53,11 @@ export async function POST(context) {
       return jsonResponse({ error: 'Database D1 tidak ditemukan pada runtime Cloudflare' }, 500);
     }
 
-    const body = await context.request.json();
-    const id = body.id || Date.now().toString();
-    const name = (body.name || '').trim();
-    const category = body.category || 'Umum';
-    const phone = body.phone || '';
+    const body = await context.request.json().catch(() => ({}));
+    const id = (body.id || Date.now().toString()).trim().slice(0, 80);
+    const name = (body.name || '').trim().slice(0, 100);
+    const category = (body.category || 'Umum').trim().slice(0, 60);
+    const phone = (body.phone || '').trim().replace(/[^0-9]/g, '').slice(0, 25);
     const sent = body.sent ? 1 : 0;
 
     if (!name) {
