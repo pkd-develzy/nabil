@@ -364,6 +364,109 @@
       margin-top: 4px;
     }
 
+    /* ==========================================================================
+       PORTAL MAIN TABS SYSTEM (MENU TOMBOL ATAS)
+       ========================================================================== */
+    .portal-nav-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+      background: rgba(22, 3, 9, 0.85);
+      border: 1.5px solid rgba(201, 165, 107, 0.35);
+      border-radius: 18px;
+      padding: 6px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .portal-nav-tab {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 12px;
+      min-height: 48px;
+      background: transparent;
+      border: none;
+      border-radius: 12px;
+      color: var(--gold-soft);
+      font-family: 'Cinzel', serif;
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      touch-action: manipulation;
+      width: 100%;
+      box-sizing: border-box;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .portal-nav-tab svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+    .portal-nav-tab:hover {
+      background: rgba(201, 165, 107, 0.18);
+      color: #ffffff;
+    }
+    .portal-nav-tab.active {
+      background: linear-gradient(135deg, var(--gold-soft) 0%, var(--gold) 55%, var(--gold-deep) 100%);
+      color: var(--wine-950);
+      font-weight: 700;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 14px rgba(201, 165, 107, 0.3);
+      transform: translateY(-1px);
+    }
+    .portal-nav-tab.active svg {
+      color: var(--wine-950);
+      transform: scale(1.1);
+    }
+    .nav-tab-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 7px;
+      font-size: 0.72rem;
+      font-family: 'Jost', sans-serif;
+      font-weight: 700;
+      border-radius: 999px;
+      background: rgba(201, 165, 107, 0.22);
+      color: inherit;
+      border: 1px solid rgba(201, 165, 107, 0.4);
+      margin-left: 4px;
+    }
+    .portal-nav-tab.active .nav-tab-badge {
+      background: var(--wine-950);
+      color: var(--gold-soft);
+      border-color: rgba(38, 6, 16, 0.8);
+    }
+    .portal-tab-pane {
+      display: none;
+      width: 100%;
+      box-sizing: border-box;
+      animation: tabFadeIn 0.25s ease-out forwards;
+    }
+    .portal-tab-pane.active {
+      display: block;
+    }
+    .portal-tab-pane > .card {
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* Guest Table & Responsive Card Styling */
     .table-container {
       margin-top: 16px;
@@ -715,6 +818,35 @@
         justify-content: center !important;
       }
 
+      /* Menu Tombol Navigasi Tab di Layar Mobile (2 baris x 2 kolom, lebar 100% sama presisi) */
+      .portal-nav-tabs {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        padding: 6px !important;
+        margin-bottom: 16px !important;
+        border-radius: 14px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .portal-nav-tab {
+        padding: 8px 6px !important;
+        min-height: 44px !important;
+        font-size: 0.74rem !important;
+        gap: 5px !important;
+        border-radius: 10px !important;
+        white-space: normal !important;
+        text-align: center !important;
+        line-height: 1.2 !important;
+      }
+      .portal-nav-tab svg {
+        width: 14px !important;
+        height: 14px !important;
+      }
+      .nav-tab-badge {
+        padding: 1px 5px !important;
+        font-size: 0.65rem !important;
+      }
+
       /* Stats: 2x2 grid */
       .stats-grid {
         grid-template-columns: 1fr 1fr !important;
@@ -1016,11 +1148,21 @@
     @media (max-width: 480px) {
       .portal-wrap {
         padding: 12px 10px !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
       }
       .card {
         padding: 14px 12px !important;
         border-radius: 16px !important;
         margin-bottom: 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .portal-tab-pane {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
       }
       .template-pills {
         grid-template-columns: 1fr !important;
@@ -1553,7 +1695,7 @@
         </div>
       </div>
       <div class="portal-header-actions">
-        <a href="#sectionRsvps" class="btn btn-outline btn-sm">
+        <a href="#paneRsvps" class="btn btn-outline btn-sm" onclick="switchPortalTab('paneRsvps'); return false;">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           Lihat RSVP
         </a>
@@ -1588,9 +1730,30 @@
       </div>
     </div>
 
-    <!-- Main Grid: Form Pembuatan & Preview Pesan -->
-    <div class="grid-2">
-      <!-- Sisi Kiri: Form Input Tamu -->
+    <!-- Menu Tombol Navigasi Tab di Atas (Equal Width 100%, Mobile 2x2 Grid) -->
+    <nav class="portal-nav-tabs" role="tablist" aria-label="Menu Utama Portal">
+      <button type="button" class="portal-nav-tab active" id="btnTabAdd" data-tab="paneAddGuest" onclick="switchPortalTab('paneAddGuest')" role="tab" aria-selected="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        <span>1. Tambah Tamu</span>
+      </button>
+      <button type="button" class="portal-nav-tab" id="btnTabPreview" data-tab="panePreviewWA" onclick="switchPortalTab('panePreviewWA')" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>2. Preview WA</span>
+      </button>
+      <button type="button" class="portal-nav-tab" id="btnTabGuests" data-tab="paneGuestList" onclick="switchPortalTab('paneGuestList')" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>3. Daftar Tamu</span>
+        <span class="nav-tab-badge" id="navBadgeGuests">0</span>
+      </button>
+      <button type="button" class="portal-nav-tab" id="btnTabRsvps" data-tab="paneRsvps" onclick="switchPortalTab('paneRsvps')" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <span>4. RSVP &amp; Doa</span>
+        <span class="nav-tab-badge" id="navBadgeRsvps">0</span>
+      </button>
+    </nav>
+
+    <!-- PANE 1: Tambah Data Tamu -->
+    <div class="portal-tab-pane active" id="paneAddGuest" role="tabpanel">
       <div class="card">
         <h2 style="font-size:1.15rem;margin-bottom:18px;display:flex;align-items:center;gap:8px">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
@@ -1642,8 +1805,10 @@
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Sisi Kanan: Live Preview & Tombol Kirim WhatsApp -->
+    <!-- PANE 2: Preview Teks WhatsApp -->
+    <div class="portal-tab-pane" id="panePreviewWA" role="tabpanel">
       <div class="card">
         <h2 style="font-size:1.15rem;margin-bottom:18px;display:flex;align-items:center;gap:8px">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -1680,108 +1845,112 @@
       </div>
     </div>
 
-    <!-- Section 3: Daftar Tamu & Riwayat Blasting -->
-    <div class="card">
-      <div class="guest-list-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px">
-        <div>
-          <h2 style="font-size:1.15rem">Daftar Tamu Undangan</h2>
-          <p style="font-size:0.8rem;color:var(--gold-soft);margin-top:2px">Kelola dan pantau status pengiriman undangan</p>
+    <!-- PANE 3: Daftar Tamu & Riwayat Blasting -->
+    <div class="portal-tab-pane" id="paneGuestList" role="tabpanel">
+      <div class="card">
+        <div class="guest-list-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+          <div>
+            <h2 style="font-size:1.15rem">Daftar Tamu Undangan</h2>
+            <p style="font-size:0.8rem;color:var(--gold-soft);margin-top:2px">Kelola dan pantau status pengiriman undangan</p>
+          </div>
+          <div class="guest-list-actions" style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="btn btn-outline btn-sm" onclick="exportRecapText()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Salin Rekap Tamu
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" style="border-color:#ff5277;color:#ff859d" onclick="clearAllGuests()">
+              Hapus Semua
+            </button>
+          </div>
         </div>
-        <div class="guest-list-actions" style="display:flex;gap:8px;flex-wrap:wrap">
-          <button type="button" class="btn btn-outline btn-sm" onclick="exportRecapText()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            Salin Rekap Tamu
-          </button>
-          <button type="button" class="btn btn-outline btn-sm" style="border-color:#ff5277;color:#ff859d" onclick="clearAllGuests()">
-            Hapus Semua
-          </button>
-        </div>
-      </div>
 
-      <!-- Search & Category Filter -->
-      <div class="filter-bar">
-        <div class="filter-search-box">
-          <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="searchGuest" class="form-input filter-search-input" placeholder="Cari nama tamu..." oninput="renderGuestTable()" />
+        <!-- Search & Category Filter -->
+        <div class="filter-bar">
+          <div class="filter-search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchGuest" class="form-input filter-search-input" placeholder="Cari nama tamu..." oninput="renderGuestTable()" />
+          </div>
+          <div class="filter-selects-row">
+            <select id="filterCategory" class="form-select" onchange="renderGuestTable()">
+              <option value="ALL">Semua Kategori</option>
+              <option value="Umum">Umum</option>
+              <option value="Keluarga">Keluarga</option>
+              <option value="VIP">VIP</option>
+              <option value="Sahabat">Sahabat</option>
+              <option value="Teman Pondok">Teman Pondok</option>
+              <option value="Grup WA">👥 Grup WA</option>
+            </select>
+            <select id="filterStatus" class="form-select" onchange="renderGuestTable()">
+              <option value="ALL">Semua Status</option>
+              <option value="sent">Sudah Dikirim</option>
+              <option value="unsent">Belum Dikirim</option>
+            </select>
+          </div>
         </div>
-        <div class="filter-selects-row">
-          <select id="filterCategory" class="form-select" onchange="renderGuestTable()">
-            <option value="ALL">Semua Kategori</option>
-            <option value="Umum">Umum</option>
-            <option value="Keluarga">Keluarga</option>
-            <option value="VIP">VIP</option>
-            <option value="Sahabat">Sahabat</option>
-            <option value="Teman Pondok">Teman Pondok</option>
-            <option value="Grup WA">👥 Grup WA</option>
-          </select>
-          <select id="filterStatus" class="form-select" onchange="renderGuestTable()">
-            <option value="ALL">Semua Status</option>
-            <option value="sent">Sudah Dikirim</option>
-            <option value="unsent">Belum Dikirim</option>
-          </select>
-        </div>
-      </div>
 
-      <!-- Tabel Tamu -->
-      <div class="table-container">
-        <table class="guest-table">
-          <thead>
-            <tr>
-              <th style="width:40px">#</th>
-              <th>Nama Tamu &amp; Kategori</th>
-              <th>WhatsApp</th>
-              <th>Status</th>
-              <th style="text-align:right">Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="guestTableBody">
-            <!-- Rows injected by JavaScript -->
-          </tbody>
-        </table>
+        <!-- Tabel Tamu -->
+        <div class="table-container">
+          <table class="guest-table">
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th>Nama Tamu &amp; Kategori</th>
+                <th>WhatsApp</th>
+                <th>Status</th>
+                <th style="text-align:right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="guestTableBody">
+              <!-- Rows injected by JavaScript -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- Section 4: Rekapitulasi RSVP & Doa Tamu -->
-    <div class="card" id="sectionRsvps">
-      <div class="guest-list-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px">
-        <div>
-          <h2 style="font-size:1.15rem;display:flex;align-items:center;gap:8px">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            Daftar Konfirmasi Kehadiran &amp; Doa (RSVP)
-          </h2>
-          <p style="font-size:0.8rem;color:var(--gold-soft);margin-top:2px">Data konfirmasi dan ucapan langsung dari tamu undangan</p>
-        </div>
-        <div class="guest-list-actions" style="display:flex;gap:8px;flex-wrap:wrap">
-          <button type="button" class="btn btn-outline btn-sm" onclick="fetchRsvpsFromD1(true)">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-            Refresh RSVP
-          </button>
-        </div>
-      </div>
-
-      <!-- Search & Filter RSVP Tabs (Matching User Reference) -->
-      <div class="rsvp-filter-container">
-        <div class="rsvp-search-box">
-          <svg class="rsvp-search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="searchRsvp" class="rsvp-search-input" placeholder="Cari nama atau isi ucapan..." oninput="renderRsvpCards()" />
+    <!-- PANE 4: Rekapitulasi RSVP & Doa Tamu -->
+    <div class="portal-tab-pane" id="paneRsvps" role="tabpanel">
+      <div class="card" id="sectionRsvps">
+        <div class="guest-list-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+          <div>
+            <h2 style="font-size:1.15rem;display:flex;align-items:center;gap:8px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              Daftar Konfirmasi Kehadiran &amp; Doa (RSVP)
+            </h2>
+            <p style="font-size:0.8rem;color:var(--gold-soft);margin-top:2px">Data konfirmasi dan ucapan langsung dari tamu undangan</p>
+          </div>
+          <div class="guest-list-actions" style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="btn btn-outline btn-sm" onclick="fetchRsvpsFromD1(true)">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              Refresh RSVP
+            </button>
+          </div>
         </div>
 
-        <div class="rsvp-filter-tabs" role="tablist">
-          <button type="button" class="rsvp-tab active" id="tabRsvpAll" onclick="setRsvpFilterTab('all')">
-            Semua <span class="tab-badge" id="tabCountAll">0</span>
-          </button>
-          <button type="button" class="rsvp-tab" id="tabRsvpVisible" onclick="setRsvpFilterTab('visible')">
-            Ditampilkan <span class="tab-badge" id="tabCountVisible">0</span>
-          </button>
-          <button type="button" class="rsvp-tab" id="tabRsvpHidden" onclick="setRsvpFilterTab('hidden')">
-            Disembunyikan <span class="tab-badge" id="tabCountHidden">0</span>
-          </button>
-        </div>
-      </div>
+        <!-- Search & Filter RSVP Tabs (Matching User Reference) -->
+        <div class="rsvp-filter-container">
+          <div class="rsvp-search-box">
+            <svg class="rsvp-search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchRsvp" class="rsvp-search-input" placeholder="Cari nama atau isi ucapan..." oninput="renderRsvpCards()" />
+          </div>
 
-      <!-- Card Grid Container (Model Baru) -->
-      <div class="rsvp-cards-grid" id="rsvpCardsGrid">
-        <!-- Wish cards rendered dynamically by JavaScript -->
+          <div class="rsvp-filter-tabs" role="tablist">
+            <button type="button" class="rsvp-tab active" id="tabRsvpAll" onclick="setRsvpFilterTab('all')">
+              Semua <span class="tab-badge" id="tabCountAll">0</span>
+            </button>
+            <button type="button" class="rsvp-tab" id="tabRsvpVisible" onclick="setRsvpFilterTab('visible')">
+              Ditampilkan <span class="tab-badge" id="tabCountVisible">0</span>
+            </button>
+            <button type="button" class="rsvp-tab" id="tabRsvpHidden" onclick="setRsvpFilterTab('hidden')">
+              Disembunyikan <span class="tab-badge" id="tabCountHidden">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card Grid Container (Model Baru) -->
+        <div class="rsvp-cards-grid" id="rsvpCardsGrid">
+          <!-- Wish cards rendered dynamically by JavaScript -->
+        </div>
       </div>
     </div>
 
@@ -1953,6 +2122,37 @@
     var GUESTS_STORAGE_KEY = 'azluna_guest_list_nabil';
     var CURRENT_CATEGORY = 'Umum';
     var CURRENT_TEMPLATE = 'formal';
+
+    // Sistem Navigasi Tab Menu Utama Portal
+    function switchPortalTab(tabId) {
+      var panes = document.querySelectorAll('.portal-tab-pane');
+      var tabs = document.querySelectorAll('.portal-nav-tab');
+      panes.forEach(function(pane) {
+        pane.classList.remove('active');
+      });
+      tabs.forEach(function(tab) {
+        tab.classList.remove('active');
+        tab.setAttribute('aria-selected', 'false');
+      });
+
+      var targetPane = document.getElementById(tabId);
+      if (targetPane) {
+        targetPane.classList.add('active');
+      }
+      var targetBtn = document.querySelector('.portal-nav-tab[data-tab="' + tabId + '"]');
+      if (targetBtn) {
+        targetBtn.classList.add('active');
+        targetBtn.setAttribute('aria-selected', 'true');
+      }
+      // Di layar mobile atau tablet, scroll halus ke posisi navigasi menu
+      if (window.innerWidth <= 768) {
+        var tabsNav = document.querySelector('.portal-nav-tabs');
+        if (tabsNav) {
+          tabsNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+    window.switchPortalTab = switchPortalTab;
 
     // 1. OTENTIKASI PENGANTIN
     function checkAuth() {
@@ -2326,9 +2526,11 @@
 
       var elTotal = document.getElementById('statTotal');
       var elSent = document.getElementById('statSent');
+      var navBadgeGuests = document.getElementById('navBadgeGuests');
 
       if (elTotal) elTotal.textContent = total;
       if (elSent) elSent.textContent = sent;
+      if (navBadgeGuests) navBadgeGuests.textContent = total;
 
       // Filter
       var filtered = list.filter(function(g){
@@ -2563,10 +2765,12 @@
       var tabAllEl = document.getElementById('tabCountAll');
       var tabVisEl = document.getElementById('tabCountVisible');
       var tabHidEl = document.getElementById('tabCountHidden');
+      var navBadgeRsvps = document.getElementById('navBadgeRsvps');
 
       if (tabAllEl) tabAllEl.textContent = RSVP_LIST.length;
       if (tabVisEl) tabVisEl.textContent = visibleCount;
       if (tabHidEl) tabHidEl.textContent = hiddenCount;
+      if (navBadgeRsvps) navBadgeRsvps.textContent = RSVP_LIST.length;
     }
 
     function getAvatarColor(name) {
