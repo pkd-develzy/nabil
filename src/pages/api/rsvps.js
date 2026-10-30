@@ -1,5 +1,8 @@
 export const prerender = false;
 
+import { getDb, schema } from '../../db/index.js';
+import { desc, eq } from 'drizzle-orm';
+
 function jsonResponse(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -7,7 +10,8 @@ function jsonResponse(data, status = 200) {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type'
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Cache-Control': 'no-store, no-cache, must-revalidate'
     }
   });
 }
@@ -18,16 +22,27 @@ export async function OPTIONS() {
 
 export async function GET(context) {
   try {
-    const env = context.locals?.runtime?.env;
-    const db = env?.DB;
-
-    if (!db) {
+    const d1 = context.locals?.runtime?.env?.DB;
+    if (!d1) {
       return jsonResponse({ error: 'Database D1 tidak ditemukan pada runtime Cloudflare' }, 500);
     }
 
-    const { results } = await db.prepare(
-      'SELECT id, name, city, category, attendance, pax, message, created_at FROM rsvps ORDER BY created_at DESC LIMIT 200'
-    ).all();
+    const db = getDb(d1);
+    const results = await db
+      .select({
+        id: schema.rsvps.id,
+        name: schema.rsvps.name,
+        city: schema.rsvps.city,
+        category: schema.rsvps.category,
+        attendance: schema.rsvps.attendance,
+        pax: schema.rsvps.pax,
+        message: schema.rsvps.message,
+        created_at: schema.rsvps.createdAt
+      })
+      .from(schema.rsvps)
+      .orderBy(desc(schema.rsvps.createdAt))
+      .limit(200);
+
     return jsonResponse({ success: true, data: results || [] });
   } catch (error) {
     return jsonResponse({ error: error.message || 'Gagal mengambil data RSVP' }, 500);
@@ -36,10 +51,8 @@ export async function GET(context) {
 
 export async function POST(context) {
   try {
-    const env = context.locals?.runtime?.env;
-    const db = env?.DB;
-
-    if (!db) {
+    const d1 = context.locals?.runtime?.env?.DB;
+    if (!d1) {
       return jsonResponse({ error: 'Database D1 tidak ditemukan pada runtime Cloudflare' }, 500);
     }
 
@@ -55,15 +68,22 @@ export async function POST(context) {
       return jsonResponse({ error: 'Nama pengirim wajib diisi' }, 400);
     }
 
-    const result = await db.prepare(`
-      INSERT INTO rsvps (name, city, category, attendance, pax, message)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `).bind(name, city, category, attendance, pax, message).run();
+    const db = getDb(d1);
+    const inserted = await db
+      .insert(schema.rsvps)
+      .values({
+        name,
+        city,
+        category,
+        attendance,
+        pax,
+        message
+      })
+      .returning();
 
     return jsonResponse({
       success: true,
-      rsvp: {
-        id: result.meta?.last_row_id,
+      rsvp: inserted[0] || {
         name,
         city,
         category,
@@ -80,10 +100,8 @@ export async function POST(context) {
 
 export async function DELETE(context) {
   try {
-    const env = context.locals?.runtime?.env;
-    const db = env?.DB;
-
-    if (!db) {
+    const d1 = context.locals?.runtime?.env?.DB;
+    if (!d1) {
       return jsonResponse({ error: 'Database D1 tidak ditemukan pada runtime Cloudflare' }, 500);
     }
 
@@ -91,14 +109,14 @@ export async function DELETE(context) {
     const id = url.searchParams.get('id');
 
     if (!id) {
-      return jsonResponse({ error: 'Parameter id wajib disertakan' }, 400);
+      return jsonResponse({ error: 'ID RSVP wajib disertakan' }, 400);
     }
 
-    await db.prepare('DELETE FROM rsvps WHERE id = ?').bind(id).run();
+    const db = getDb(d1);
+    await db.delete(schema.rsvps).where(eq(schema.rsvps.id, Number(id)));
 
-    return jsonResponse({ success: true, message: 'Data RSVP berhasil dihapus' });
+    return jsonResponse({ success: true, message: 'RSVP berhasil dihapus' });
   } catch (error) {
-    return jsonResponse({ error: error.message || 'Gagal menghapus data RSVP' }, 500);
+    return jsonResponse({ error: error.message || 'Gagal menghapus RSVP' }, 500);
   }
 }
-

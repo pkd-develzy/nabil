@@ -12,6 +12,10 @@
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.13",
     "@astrojs/vercel": "^8.0.0",
-    "astro": "^5.2.0"
+    "astro": "^5.2.0",
+    "drizzle-orm": "^0.45.4"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.11"
   }
 }

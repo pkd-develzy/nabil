@@ -1,6 +1,8 @@
 export const prerender = false;
 
-// Helper untuk respons JSON dengan header CORS & JSON
+import { getDb, schema } from '../../db/index.js';
+import { desc, eq } from 'drizzle-orm';
+
 function jsonResponse(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -8,7 +10,8 @@ function jsonResponse(data, status = 200) {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type'
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Cache-Control': 'no-store, no-cache, must-revalidate'
     }
   });
 }
@@ -19,14 +22,24 @@ export async function OPTIONS() {
 
 export async function GET(context) {
   try {
-    const env = context.locals?.runtime?.env;
-    const db = env?.DB;
-
-    if (!db) {
+    const d1 = context.locals?.runtime?.env?.DB;
+    if (!d1) {
       return jsonResponse({ error: 'Database D1 tidak ditemukan pada runtime Cloudflare' }, 500);
     }
 
-    const { results } = await db.prepare('SELECT id, name, category, phone, sent, created_at FROM guests ORDER BY created_at DESC').all();
+    const db = getDb(d1);
+    const results = await db
+      .select({
+        id: schema.guests.id,
+        name: schema.guests.name,
+        category: schema.guests.category,
+        phone: schema.guests.phone,
+        sent: schema.guests.sent,
+        created_at: schema.guests.createdAt
+      })
+      .from(schema.guests)
+      .orderBy(desc(schema.guests.createdAt));
+
     return jsonResponse({ success: true, data: results || [] });
   } catch (error) {
     return jsonResponse({ error: error.message || 'Gagal mengambil data tamu' }, 500);
@@ -35,10 +48,8 @@ export async function GET(context) {
 
 export async function POST(context) {
   try {
-    const env = context.locals?.runtime?.env;
-    const db = env?.DB;
-
-    if (!db) {
+    const d1 = context.locals?.runtime?.env?.DB;
+    if (!d1) {
       return jsonResponse({ error: 'Database D1 tidak ditemukan pada runtime Cloudflare' }, 500);
     }
 
@@ -53,18 +64,19 @@ export async function POST(context) {
       return jsonResponse({ error: 'Nama tamu wajib diisi' }, 400);
     }
 
-    // Insert atau update data tamu
-    await db.prepare(`
-      INSERT INTO guests (id, name, category, phone, sent)
-      VALUES (?, ?, ?, ?, ?)
-      ON CONFLICT(id) DO UPDATE SET
-        name = excluded.name,
-        category = excluded.category,
-        phone = excluded.phone,
-        sent = excluded.sent
-    `).bind(id, name, category, phone, sent).run();
+    const db = getDb(d1);
+    await db
+      .insert(schema.guests)
+      .values({ id, name, category, phone, sent })
+      .onConflictDoUpdate({
+        target: schema.guests.id,
+        set: { name, category, phone, sent }
+      });
 
-    return jsonResponse({ success: true, guest: { id, name, category, phone, sent: !!sent } });
+    return jsonResponse({
+      success: true,
+      guest: { id, name, category, phone, sent: !!sent }
+    });
   } catch (error) {
     return jsonResponse({ error: error.message || 'Gagal menyimpan data tamu' }, 500);
   }
@@ -72,10 +84,8 @@ export async function POST(context) {
 
 export async function DELETE(context) {
   try {
-    const env = context.locals?.runtime?.env;
-    const db = env?.DB;
-
-    if (!db) {
+    const d1 = context.locals?.runtime?.env?.DB;
+    if (!d1) {
       return jsonResponse({ error: 'Database D1 tidak ditemukan pada runtime Cloudflare' }, 500);
     }
 
@@ -86,10 +96,11 @@ export async function DELETE(context) {
       return jsonResponse({ error: 'ID tamu wajib disertakan' }, 400);
     }
 
-    await db.prepare('DELETE FROM guests WHERE id = ?').bind(id).run();
+    const db = getDb(d1);
+    await db.delete(schema.guests).where(eq(schema.guests.id, id));
+
     return jsonResponse({ success: true, message: 'Tamu berhasil dihapus' });
   } catch (error) {
     return jsonResponse({ error: error.message || 'Gagal menghapus data tamu' }, 500);
   }
 }
-
