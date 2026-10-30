@@ -91,12 +91,18 @@ export async function DELETE(context) {
 
     const url = new URL(context.request.url);
     const id = url.searchParams.get('id');
+    const isAll = url.searchParams.get('all') === '1';
 
-    if (!id) {
-      return jsonResponse({ error: 'ID tamu wajib disertakan' }, 400);
+    if (!id && !isAll) {
+      return jsonResponse({ error: 'ID tamu atau parameter all wajib disertakan' }, 400);
     }
 
     const db = getDb(d1);
+    if (isAll) {
+      await db.delete(schema.guests);
+      return jsonResponse({ success: true, message: 'Semua data tamu berhasil dihapus' });
+    }
+
     await db.delete(schema.guests).where(eq(schema.guests.id, id));
 
     return jsonResponse({ success: true, message: 'Tamu berhasil dihapus' });

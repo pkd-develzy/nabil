@@ -157,12 +157,18 @@ export async function DELETE(context) {
 
     const url = new URL(context.request.url);
     const id = url.searchParams.get('id');
+    const isAll = url.searchParams.get('all') === '1';
 
-    if (!id) {
-      return jsonResponse({ error: 'ID RSVP wajib disertakan' }, 400);
+    if (!id && !isAll) {
+      return jsonResponse({ error: 'ID RSVP atau parameter all wajib disertakan' }, 400);
     }
 
     const db = getDb(d1);
+    if (isAll) {
+      await db.delete(schema.rsvps);
+      return jsonResponse({ success: true, message: 'Semua RSVP berhasil dihapus' });
+    }
+
     await db.delete(schema.rsvps).where(eq(schema.rsvps.id, Number(id)));
 
     return jsonResponse({ success: true, message: 'RSVP berhasil dihapus' });

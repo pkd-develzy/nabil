@@ -2362,6 +2362,9 @@
           localStorage.removeItem(GUESTS_STORAGE_KEY);
           renderGuestTable();
           showToast('Semua tamu berhasil dibersihkan.');
+          fetch('/api/guests?all=1', { method: 'DELETE' }).catch(function(err){
+            console.warn('Gagal menghapus semua tamu dari D1:', err);
+          });
         });
     }
 
@@ -2601,7 +2604,7 @@
         "Terima kasih banyak atas ucapan, doa restu, dan konfirmasi kehadirannya untuk pernikahan kami:\n" +
         "*Ahmad Nabil Kholili & Fadilatul Izza*\n\n" +
         (item.message ? ('_"' + item.message + '"_\n\n') : '') +
-        "Semoga Allah SWT membalas segala ketulusan dan doa panjenengan dengan limpahan keberkahan, kesehatan, dan kebahagiaan berlipat ganda. Aamiin ya Rabbal 'Alamin. 🤲✨\n\n" +
+        "Semoga Allah SWT membalas segala ketulusan dan doa panjenengan dengan limpahan keberkahan, kesehatan, dan kebahagiaan berlipat ganda. Aamiin ya Rabbal 'Alamin. 🤲\n\n" +
         "Salam hangat,\n" +
         "*Nabil & Izza*";
 
