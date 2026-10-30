@@ -1,11 +1,45 @@
-/* ---------- RSVP FORM LOGIC (SUPABASE REALTIME INSERT) ---------- */
+/* ---------- RSVP FORM LOGIC (D1 & SUPABASE REALTIME INSERT) ---------- */
+function countRsvpWords(str) {
+  if (!str) return 0;
+  var m = str.trim().match(/\S+/g);
+  return m ? m.length : 0;
+}
+
 var form=$('#form'),result=$('#result'),msgText='';
+var fMsg = $('#fMsg'), wordCounter = $('#wordCounter');
+
+if(fMsg && wordCounter) {
+  var updateWordCount = function() {
+    var cnt = countRsvpWords(fMsg.value);
+    wordCounter.textContent = cnt + ' / 80 kata';
+    if(cnt > 80) {
+      wordCounter.style.color = '#dc2626';
+      wordCounter.style.fontWeight = '700';
+    } else {
+      wordCounter.style.color = 'var(--gold-deep)';
+      wordCounter.style.fontWeight = '600';
+    }
+  };
+  fMsg.addEventListener('input', updateWordCount);
+  updateWordCount();
+}
+
 if(form) {
   form.addEventListener('change',function(){var off=form.hadir.value==='Berhalangan';$('#fCount').disabled=off});
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    var nm=form.nama.value.trim(),h=form.hadir.value,n=+form.jumlah.value||1,p=form.pesan.value.trim();
-    var m="Assalamu'alaikum Wr. Wb.\n\nSaya "+nm+" mengonfirmasi kehadiran pada walimatul 'urs "+CONFIG.eventTitle+".\n\nKehadiran: "+(h==='Hadir'?'Insya Allah hadir ('+n+' orang)':'Mohon maaf, berhalangan hadir');
+    var nm=(window.__GUEST_NAME || form.nama.value).trim();
+    var city = form.asal ? form.asal.value.trim() : '';
+    var h=form.hadir.value,n=+form.jumlah.value||1,p=form.pesan.value.trim();
+
+    var words = countRsvpWords(p);
+    if(words > 80) {
+      alert('Mohon maaf, doa & ucapan maksimal 80 kata (saat ini ' + words + ' kata).');
+      form.pesan.focus();
+      return;
+    }
+
+    var m="Assalamu'alaikum Wr. Wb.\n\nSaya "+nm+(city ? " ("+city+")" : "")+" mengonfirmasi kehadiran pada walimatul 'urs "+CONFIG.eventTitle+".\n\nKehadiran: "+(h==='Hadir'?'Insya Allah hadir ('+n+' orang)':'Mohon maaf, berhalangan hadir');
     if(p)m+="\n\nDoa & ucapan:\n"+p;
     m+="\n\nJazakumullahu khairan.";
     msgText=m;
@@ -23,6 +57,8 @@ if(form) {
     var newWish = {
       wedding_slug: curSlug,
       name: nm,
+      city: city,
+      category: window.__GUEST_CATEGORY || 'Umum',
       presence: h,
       pax: (h==='Hadir' ? n : 0) + ' Orang',
       message: p,
@@ -52,6 +88,8 @@ if(form) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: nm,
+          city: city,
+          category: window.__GUEST_CATEGORY || 'Umum',
           attendance: h,
           pax: n,
           message: p

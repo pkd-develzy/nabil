@@ -6,7 +6,15 @@
     <h2 class="title rv" style="--d:.1s">Konfirmasi Kehadiran</h2>
     <p class="lead rv" style="--d:.15s">Mohon konfirmasi kehadiran Anda agar kami dapat mempersiapkan segalanya dengan sebaik-baiknya.</p>
     <form class="form rv" id="form" autocomplete="off">
-      <div><label class="fl" for="fName">Nama</label><input class="fi" id="fName" name="nama" type="text" required maxlength="80" placeholder="Nama lengkap Anda"></div>
+      <div>
+        <label class="fl" for="fName">Nama</label>
+        <input class="fi" id="fName" name="nama" type="text" required maxlength="80" placeholder="Nama lengkap Anda">
+        <small id="nameLockNote" style="display:none;margin-top:6px;font-size:0.75rem;color:var(--wine-700);font-weight:500">🔒 Nama terkunci sesuai tautan undangan khusus Anda</small>
+      </div>
+      <div>
+        <label class="fl" for="fCity">Asal Kota / Kabupaten</label>
+        <input class="fi" id="fCity" name="asal" type="text" required maxlength="60" placeholder="Contoh: Kudus / Surabaya / Jember">
+      </div>
       <div>
         <span class="fl" id="lAtt">Kehadiran</span>
         <div class="radios" role="radiogroup" aria-labelledby="lAtt">
@@ -14,9 +22,17 @@
           <label><input type="radio" name="hadir" value="Berhalangan"><span>Berhalangan</span></label>
         </div>
       </div>
-      <div><label class="fl" for="fCount">Jumlah Tamu</label>
-        <select class="sel" id="fCount" name="jumlah"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-      <div><label class="fl" for="fMsg">Doa &amp; Ucapan</label><textarea class="ta" id="fMsg" name="pesan" maxlength="400" placeholder="Tuliskan doa dan ucapan untuk kedua mempelai"></textarea></div>
+      <div>
+        <label class="fl" for="fCount">Jumlah Tamu</label>
+        <select class="sel" id="fCount" name="jumlah"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <label class="fl" for="fMsg" style="margin-bottom:0">Doa &amp; Ucapan</label>
+          <small id="wordCounter" style="font-size:0.75rem;color:var(--gold-deep);font-weight:600">0 / 80 kata</small>
+        </div>
+        <textarea class="ta" id="fMsg" name="pesan" placeholder="Tuliskan doa dan ucapan untuk kedua mempelai (maksimal 80 kata)"></textarea>
+      </div>
       <button class="btn" type="submit" style="background:linear-gradient(135deg,var(--wine-800),var(--wine-950));color:#fff1d2;font-weight:500;border-color:var(--wine-900)">Kirim Konfirmasi</button>
     </form>
     <div class="result" id="result" hidden>

@@ -5,6 +5,7 @@
 .form>.card-flora-cluster{position:absolute;z-index:-1}
 .fl{display:block;font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;font-weight:500;color:var(--gold-deep);margin-bottom:.45rem}
 .fi,.sel,.ta{width:100%;font:400 1rem 'Jost',sans-serif;color:var(--wine-900);background:var(--ivory);border:1px solid rgba(138,103,48,.55);padding:.8rem .95rem;border-radius:10px}
+.fi.readonly-locked{background:rgba(138,103,48,.09);border-color:rgba(138,103,48,.4);color:var(--wine-950);font-weight:500;cursor:not-allowed;user-select:none}
 .ta{min-height:120px;resize:vertical}
 .fi:focus-visible,.sel:focus-visible,.ta:focus-visible{outline:2px solid var(--wine-700);outline-offset:1px}
 .radios{display:grid;grid-template-columns:1fr 1fr;gap:10px}

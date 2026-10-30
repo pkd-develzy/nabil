@@ -318,6 +318,8 @@ window.__addLiveWishToCarousel = function(wish, prepend) {
   }
   var isHadir = (wish.presence || wish.hadir || 'Hadir') === 'Hadir';
   var safeName = esc(wish.name || wish.nama || 'Tamu Undangan');
+  var safeCity = esc(wish.city || wish.asal || '');
+  var safeCategory = esc(wish.category || wish.kategori || '');
   var safeText = esc(wish.message || wish.pesan || '');
   if (!safeText) return;
   var placeholderEl = $('#wishPlaceholderSlide');
@@ -326,6 +328,15 @@ window.__addLiveWishToCarousel = function(wish, prepend) {
   var seal = esc(CONFIG.seal || 'N&I');
   var slide = document.createElement('div');
   slide.className = 'wish-slide';
+
+  var subMetaHtml = '';
+  if (safeCity || safeCategory) {
+    subMetaHtml = '<div class="wish-sub-meta">' +
+      (safeCity ? '<span class="wish-meta-tag wish-city">📍 ' + safeCity + '</span>' : '') +
+      (safeCategory ? '<span class="wish-meta-tag wish-cat">' + safeCategory + '</span>' : '') +
+    '</div>';
+  }
+
   slide.innerHTML = '<article class="wish-env-card">'+
     '<div class="wish-env-top">'+
       '<div class="wish-env-flap"></div>'+
@@ -333,13 +344,15 @@ window.__addLiveWishToCarousel = function(wish, prepend) {
     '</div>'+
     '<div class="wish-paper">'+
       '<div class="wish-meta">'+
-        '<strong class="wish-name">'+safeName+'</strong>'+
+        '<div class="wish-meta-author">' +
+          '<strong class="wish-name">' + safeName + '</strong>' +
+          subMetaHtml +
+        '</div>' +
         '<span class="wish-badge '+(isHadir?'hadir':'berhalangan')+'">'+(isHadir?'Insya Allah Hadir':'Berhalangan')+'</span>'+
       '</div>'+
       '<p class="wish-text">"'+safeText+'"</p>'+
       '<div class="wish-footer">'+
-        '<small>' + esc(wishTimeLabel(wish.created_at || wish.tanggal)) + '</small>'+
-        '<span class="wish-dove-icon">✨</span>'+
+        '<small class="wish-time">' + esc(wishTimeLabel(wish.created_at || wish.tanggal)) + '</small>'+
       '</div>'+
     '</div>'+
   '</article>';
@@ -385,6 +398,8 @@ try {
         var withMsg = json.data.filter(function(w){ return (w.message || '').trim(); }).map(function(item){
           return {
             name: item.name,
+            city: item.city || '',
+            category: item.category || 'Umum',
             presence: (item.attendance === 'hadir' || item.attendance === 'Hadir') ? 'Hadir' : 'Berhalangan',
             message: item.message,
             created_at: item.created_at

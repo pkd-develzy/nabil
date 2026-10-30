@@ -184,10 +184,31 @@ window.__rebindConfig = function(){
 // Initial apply
 applyConfigToDom(CONFIG);
 
-/* ---------- GUEST NAME DARI URL PARAMETER ?to= ---------- */
-var to = (new URLSearchParams(location.search).get('to')||'').replace(/[-_+]+/g,' ').trim();
+/* ---------- GUEST NAME & CATEGORY DARI URL PARAMETER ?to= & ?c= ---------- */
+var urlParams = new URLSearchParams(location.search);
+var to = (urlParams.get('to') || '').replace(/[-_+]+/g, ' ').trim();
+var cat = (urlParams.get('c') || urlParams.get('cat') || urlParams.get('category') || '').trim();
+
+window.__GUEST_NAME = to;
+window.__GUEST_CATEGORY = cat || 'Umum';
+
 var guest = to || 'Bapak/Ibu/Saudara/i';
 if($('#guestName')) $('#guestName').textContent = guest;
 if($('#paperGuest')) $('#paperGuest').textContent = guest;
-if($('#fName') && to) $('#fName').value = to;
+
+if($('#fName')) {
+  if(to) {
+    $('#fName').value = to;
+    $('#fName').readOnly = true;
+    $('#fName').setAttribute('readonly', 'readonly');
+    $('#fName').classList.add('readonly-locked');
+    if($('#nameLockNote')) $('#nameLockNote').style.display = 'block';
+  } else {
+    $('#fName').value = '';
+    $('#fName').readOnly = false;
+    $('#fName').removeAttribute('readonly');
+    $('#fName').classList.remove('readonly-locked');
+    if($('#nameLockNote')) $('#nameLockNote').style.display = 'none';
+  }
+}
 
