@@ -160,6 +160,7 @@ function applyConfigToDom(cfg) {
   if (locCards[1]) locCards[1].style.display = (v.resepsi === false ? 'none' : '');
   var hideMaps = v.maps === false || (v.akad === false && v.resepsi === false);
   if ($('#lokasi')) $('#lokasi').style.display = (hideMaps ? 'none' : '');
+  if ($('#ayat')) $('#ayat').style.display = (v.ayat === false ? 'none' : '');
   if ($('#salam')) $('#salam').style.display = (v.salam === false ? 'none' : '');
   if ($('#cd')) $('#cd').style.display = (v.countdown === false ? 'none' : '');
   if ($('.dress')) $('.dress').style.display = (v.dressCode === false ? 'none' : '');

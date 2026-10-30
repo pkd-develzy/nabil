@@ -18,5 +18,5 @@ const CONFIG = {
     '/music/Maher Zain - Sepanjang Hidup.mp3'
   ],
   musicSrc:'/music/Maher Zain - Sepanjang Hidup.mp3',
-  visibility:{cover:true,salam:true,countdown:true,akad:true,resepsi:true,dressCode:true,maps:true,hadiah:true,rsvp:true,ucapan:true,doves:true,music:true}
+  visibility:{cover:true,ayat:true,salam:true,countdown:true,akad:true,resepsi:true,dressCode:true,maps:true,hadiah:true,rsvp:true,ucapan:true,doves:true,music:true}
 };
