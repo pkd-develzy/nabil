@@ -358,11 +358,11 @@ window.__addLiveWishToCarousel = function(wish, prepend) {
     '</div>'+
     '<div class="wish-paper">'+
       '<div class="wish-meta">'+
-        '<div class="wish-meta-author">' +
+        '<div class="wish-meta-header-row">' +
           '<strong class="wish-name">' + safeName + '</strong>' +
-          subMetaHtml +
+          '<span class="wish-badge '+(isHadir?'hadir':'berhalangan')+'">'+(isHadir?'Insya Allah Hadir':'Berhalangan')+'</span>'+
         '</div>' +
-        '<span class="wish-badge '+(isHadir?'hadir':'berhalangan')+'">'+(isHadir?'Insya Allah Hadir':'Berhalangan')+'</span>'+
+        subMetaHtml +
       '</div>'+
       '<p class="wish-text">"'+safeText+'"</p>'+
       '<div class="wish-footer">'+

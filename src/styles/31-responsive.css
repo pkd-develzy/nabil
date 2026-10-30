@@ -86,29 +86,114 @@
   .sw { gap: 10px; }
   .sw i { width: 36px; height: 36px; }
 
-  /* Realtime Wish Carousel - Fit Screen */
+  /* Realtime Wish Carousel - Fit Screen & Luxury Presentation */
   .wish-carousel-wrap {
-    padding: 0 34px;
-    margin-top: 1.8rem;
+    padding: 0 42px;
+    margin-top: 1.6rem;
+    width: 100%;
+    box-sizing: border-box;
   }
   .wish-nav-btn {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(30, 4, 12, 0.9);
+    border: 1.5px solid var(--gold);
+    color: var(--gold-soft);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
   }
   .wish-nav-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
   }
-  .wish-nav-btn.prev { left: -4px; }
-  .wish-nav-btn.next { right: -4px; }
-  .wish-env-card { border-radius: 18px; }
+  .wish-nav-btn.prev { left: 0; }
+  .wish-nav-btn.next { right: 0; }
+  .wish-env-card {
+    border-radius: 18px;
+    background: linear-gradient(165deg, #460c1d 0%, var(--wine-900) 60%, #1a040b 100%);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(201, 165, 107, 0.35);
+  }
+  .wish-env-top {
+    height: 42px;
+  }
+  .wish-mini-seal {
+    width: 30px;
+    height: 30px;
+    font-size: 0.62rem;
+    bottom: -14px;
+  }
   .wish-paper {
-    padding: 16px 12px 12px;
-    margin: 6px;
-    margin-top: 10px;
+    padding: 22px 14px 14px;
+    margin: 0 6px 6px 6px;
+    border-radius: 0 0 14px 14px;
+    background: linear-gradient(180deg, #fffefb 0%, #f7eee0 100%);
   }
-  .wish-name { font-size: 1.05rem; }
-  .wish-text { font-size: 0.96rem; line-height: 1.55; }
+  .wish-meta {
+    gap: 6px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+  }
+  .wish-meta-header-row {
+    gap: 8px;
+  }
+  .wish-name {
+    font-size: 1.15rem;
+    line-height: 1.25;
+  }
+  .wish-badge {
+    font-size: 0.62rem;
+    padding: 3px 8px;
+  }
+  .wish-sub-meta {
+    gap: 4px;
+    margin-top: 2px;
+  }
+  .wish-meta-tag {
+    font-size: 0.68rem;
+    padding: 2px 6px;
+  }
+  .wish-text {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    padding: 8px 12px;
+    margin: 10px 0 12px;
+  }
+  .wish-footer {
+    padding-top: 8px;
+  }
+  .wish-time {
+    font-size: 0.72rem;
+  }
+  .wish-controls-bottom {
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .wish-playback-group {
+    padding: 3px;
+    gap: 3px;
+  }
+  .wish-ctrl-btn {
+    padding: 4px 12px;
+    font-size: 0.72rem;
+  }
+  .wish-dots {
+    gap: 6px;
+  }
+  .wish-dot {
+    width: 7px;
+    height: 7px;
+  }
+  .wish-dot.active {
+    width: 20px;
+  }
+  .wish-bar-wrap {
+    width: 120px;
+    height: 2.5px;
+  }
+  .wish-status-badge {
+    font-size: 0.67rem;
+    padding: 3px 10px;
+  }
 
   /* Floating Controls & Navigation Bar */
   .music {
@@ -155,11 +240,13 @@
     font-size: 0.85rem;
   }
 
-  .wish-carousel-wrap { padding: 0 26px; }
-  .wish-nav-btn { width: 28px; height: 28px; }
-  .wish-nav-btn svg { width: 14px; height: 14px; }
-  .wish-nav-btn.prev { left: -6px; }
-  .wish-nav-btn.next { right: -6px; }
-  .wish-paper { padding: 14px 10px 10px; margin: 4px; }
+  .wish-carousel-wrap { padding: 0 38px; }
+  .wish-nav-btn { width: 34px; height: 34px; }
+  .wish-nav-btn svg { width: 16px; height: 16px; }
+  .wish-nav-btn.prev { left: 0; }
+  .wish-nav-btn.next { right: 0; }
+  .wish-paper { padding: 20px 12px 12px; margin: 0 5px 5px 5px; }
+  .wish-name { font-size: 1.08rem; }
+  .wish-text { font-size: 0.98rem; padding: 7px 10px; }
 }
 
