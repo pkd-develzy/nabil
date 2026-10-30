@@ -724,34 +724,138 @@
     }
     .login-seal span { transform: rotate(-45deg); }
 
-    /* Toast Notification */
-    #toast {
+    /* ==========================================================================
+       ROYAL TOAST NOTIFICATION SYSTEM (EXECUTIVE CLASS)
+       ========================================================================== */
+    .royal-toast-wrap {
       position: fixed;
-      bottom: 24px;
+      top: 20px;
       left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      max-width: min(90vw, 420px);
-      background: rgba(38, 6, 16, 0.95);
-      border: 1.5px solid var(--gold);
-      color: var(--gold-soft);
-      padding: 12px 22px;
-      border-radius: 999px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
-      font-size: 0.84rem;
-      letter-spacing: 0.04em;
-      z-index: 2000;
+      transform: translateX(-50%) translateY(-28px) scale(0.96);
       opacity: 0;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 100000;
+      width: calc(100% - 32px);
+      max-width: 430px;
+      transition: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .royal-toast-wrap.show {
+      transform: translateX(-50%) translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .royal-toast-card {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 18px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, rgba(34, 5, 14, 0.97) 0%, rgba(18, 3, 8, 0.98) 100%);
+      border: 1.5px solid rgba(201, 165, 107, 0.45);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8), 0 0 24px rgba(201, 165, 107, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .royal-toast-card:hover {
+      border-color: rgba(201, 165, 107, 0.7);
+      transform: translateY(-1px);
+    }
+    .royal-toast-icon-box {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border-radius: 11px;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      gap: 8px;
-      pointer-events: none;
+      background: rgba(201, 165, 107, 0.15);
+      border: 1px solid rgba(201, 165, 107, 0.35);
+      color: var(--gold-soft);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      transition: all 0.2s ease;
     }
-    #toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
+    .royal-toast-icon-box.icon-success {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: rgba(16, 185, 129, 0.45);
+      color: #6ee7b7;
+    }
+    .royal-toast-icon-box.icon-wa {
+      background: rgba(37, 211, 102, 0.18);
+      border-color: rgba(37, 211, 102, 0.45);
+      color: #4ade80;
+    }
+    .royal-toast-icon-box.icon-danger {
+      background: rgba(225, 29, 72, 0.2);
+      border-color: rgba(225, 29, 72, 0.45);
+      color: #fda4af;
+    }
+    .royal-toast-icon-box.icon-warning {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: rgba(245, 158, 11, 0.45);
+      color: #fde68a;
+    }
+    .royal-toast-body {
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+    }
+    .royal-toast-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+    .royal-toast-text {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.86rem;
+      color: #fffdf8;
+      font-weight: 400;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .royal-toast-close {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      border: none;
+      background: transparent;
+      color: rgba(201, 165, 107, 0.55);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+    .royal-toast-close:hover {
+      color: #ffffff;
+      background: rgba(201, 165, 107, 0.2);
+    }
+    .royal-toast-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2.5px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--gold-soft), var(--gold));
+      transform-origin: left;
+      opacity: 0.85;
+    }
+    .royal-toast-wrap.show .royal-toast-progress {
+      animation: toastProgressAnim 3.2s linear forwards;
+    }
+    @keyframes toastProgressAnim {
+      from { transform: scaleX(1); }
+      to { transform: scaleX(0); }
     }
 
     /* Search & Filter Bar Base */
@@ -1113,26 +1217,29 @@
         height: 36px !important;
       }
 
-      /* Modal Responsif di Mobile */
+      /* Modal Responsif di Mobile: Tetap Mewah & Proporsional Bersebelahan */
       .app-modal-dialog {
-        padding: 26px 18px 20px !important;
+        padding: 28px 20px 22px !important;
         border-radius: 20px !important;
         max-width: calc(100vw - 28px) !important;
       }
       .app-modal-seal {
-        width: 50px !important;
-        height: 50px !important;
-        margin: -50px auto 12px !important;
+        width: 52px !important;
+        height: 52px !important;
+        margin: 0 auto 14px !important;
       }
       .app-modal-actions {
-        flex-direction: column-reverse !important;
-        width: 100% !important;
+        grid-template-columns: 1fr 1fr !important;
         gap: 8px !important;
       }
-      .app-modal-actions .btn {
+      .app-modal-actions.single-action {
+        grid-template-columns: 1fr !important;
+      }
+      .app-modal-btn {
         width: 100% !important;
         min-height: 42px !important;
-        justify-content: center !important;
+        padding: 8px 10px !important;
+        font-size: 0.78rem !important;
       }
       #loginModal {
         padding: 14px !important;
@@ -1515,131 +1622,208 @@
     }
 
     /* ==========================================================================
-       ROYAL BURGUNDY & GOLD CUSTOM MODAL (ALERT / CONFIRM / PROMPT)
+       ROYAL EXECUTIVE MODAL & CONFIRMATION DIALOG (PREMIUM CLASS)
        ========================================================================== */
     .app-modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(14, 2, 7, 0.78);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(10, 1, 5, 0.84);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       z-index: 99999;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .app-modal-backdrop.show {
       opacity: 1;
       pointer-events: auto;
     }
     .app-modal-dialog {
-      background: radial-gradient(circle at 50% 0%, #3e0b1d 0%, var(--wine-950) 85%);
-      border: 1.5px solid var(--gold);
-      border-radius: 26px;
-      max-width: 440px;
+      background: linear-gradient(165deg, rgba(38, 6, 16, 0.98) 0%, rgba(18, 3, 8, 0.99) 100%);
+      border: 1.5px solid rgba(201, 165, 107, 0.4);
+      border-radius: 22px;
+      max-width: 420px;
       width: 100%;
-      padding: 34px 26px 28px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(201, 165, 107, 0.22);
+      padding: 30px 24px 24px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), 0 0 35px rgba(201, 165, 107, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.12);
       text-align: center;
       position: relative;
-      transform: scale(0.9) translateY(14px);
-      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(0.92) translateY(10px);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
       box-sizing: border-box;
+      overflow: hidden;
     }
     .app-modal-backdrop.show .app-modal-dialog {
       transform: scale(1) translateY(0);
     }
-    .app-modal-seal {
-      width: 56px;
-      height: 56px;
-      margin: -62px auto 16px;
+    .app-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #4d0d21, #1e030b);
-      border: 2px solid var(--gold);
+      background: rgba(201, 165, 107, 0.1);
+      border: 1px solid rgba(201, 165, 107, 0.22);
+      color: var(--gold-soft);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--gold-soft);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(201, 165, 107, 0.4);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+    .app-modal-close:hover {
+      background: rgba(201, 165, 107, 0.25);
+      color: #ffffff;
+      transform: rotate(90deg);
+    }
+    .app-modal-seal {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(201, 165, 107, 0.25), rgba(28, 4, 11, 0.95));
+      border: 1.5px solid rgba(201, 165, 107, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      position: relative;
     }
     .app-modal-seal.seal-danger {
-      border-color: #ef4444;
-      background: linear-gradient(135deg, #7f1d1d, #2a0712);
-      color: #fca5a5;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(239, 68, 68, 0.45);
+      border-color: rgba(225, 29, 72, 0.65);
+      background: radial-gradient(circle at 35% 35%, rgba(225, 29, 72, 0.28), rgba(42, 6, 16, 0.98));
+      color: #fecdd3;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 24px rgba(225, 29, 72, 0.3);
+    }
+    .app-modal-seal.seal-warning {
+      border-color: rgba(245, 158, 11, 0.65);
+      background: radial-gradient(circle at 35% 35%, rgba(245, 158, 11, 0.28), rgba(42, 18, 6, 0.98));
+      color: #fef3c7;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 24px rgba(245, 158, 11, 0.3);
     }
     .app-modal-seal.seal-success {
-      border-color: #10b981;
-      background: linear-gradient(135deg, #065f46, #1e030b);
-      color: #6ee7b7;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(16, 185, 129, 0.45);
+      border-color: rgba(16, 185, 129, 0.65);
+      background: radial-gradient(circle at 35% 35%, rgba(16, 185, 129, 0.28), rgba(6, 32, 20, 0.98));
+      color: #a7f3d0;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 24px rgba(16, 185, 129, 0.3);
     }
     .app-modal-title {
       font-family: 'Cinzel', serif;
-      font-size: 1.2rem;
-      color: var(--gold-soft);
+      font-size: 1.22rem;
+      color: #fffdf7;
       letter-spacing: 0.05em;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       font-weight: 600;
+    }
+    .app-modal-divider {
+      width: 50px;
+      height: 1.5px;
+      margin: 0 auto 14px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
     }
     .app-modal-message {
       font-family: 'Jost', sans-serif;
-      font-size: 0.94rem;
-      color: rgba(250, 243, 232, 0.92);
+      font-size: 0.92rem;
+      color: rgba(246, 235, 222, 0.92);
       line-height: 1.6;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       word-break: break-word;
-      white-space: pre-wrap;
-      font-weight: 300;
+      font-weight: 400;
     }
     .app-modal-input-wrap {
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
     .app-modal-input {
       width: 100%;
-      background: rgba(25, 3, 10, 0.75);
+      background: rgba(20, 3, 8, 0.85);
       border: 1.5px solid rgba(201, 165, 107, 0.45);
       border-radius: 12px;
-      padding: 11px 16px;
+      padding: 12px 16px;
       color: #ffffff;
       font-family: 'Jost', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       outline: none;
       text-align: center;
-      transition: all 0.25s ease;
+      transition: all 0.22s ease;
       box-sizing: border-box;
     }
     .app-modal-input:focus {
       border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(201, 165, 107, 0.3);
-      background: rgba(35, 5, 14, 0.9);
+      box-shadow: 0 0 0 3px rgba(201, 165, 107, 0.28);
+      background: rgba(30, 4, 12, 0.95);
     }
     .app-modal-actions {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .app-modal-actions.single-action {
+      grid-template-columns: 1fr;
+      max-width: 200px;
+      margin: 0 auto;
     }
     .app-modal-btn {
-      min-width: 110px;
-      padding: 0.55rem 1.4rem !important;
-      font-size: 0.8rem !important;
+      min-height: 44px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-sizing: border-box;
+      user-select: none;
+      touch-action: manipulation;
     }
-    .app-modal-btn.btn-danger-confirm {
-      background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%) !important;
-      border: 1.5px solid #ef4444 !important;
+    .app-modal-btn:active {
+      transform: scale(0.97);
+    }
+    .app-modal-btn-cancel {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid rgba(201, 165, 107, 0.35);
+      color: var(--gold-soft);
+    }
+    .app-modal-btn-cancel:hover {
+      background: rgba(201, 165, 107, 0.16);
+      border-color: var(--gold);
+      color: #ffffff;
+    }
+    .app-modal-btn-confirm {
+      background: linear-gradient(135deg, var(--gold-soft) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+      color: var(--wine-950);
+      border: none;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 0 12px rgba(201, 165, 107, 0.25);
+    }
+    .app-modal-btn-confirm:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55), 0 0 18px rgba(201, 165, 107, 0.4);
+    }
+    .app-modal-btn-confirm.btn-danger-confirm {
+      background: linear-gradient(135deg, #e11d48 0%, #be123c 50%, #881337 100%) !important;
       color: #ffffff !important;
-      box-shadow: 0 6px 18px rgba(185, 28, 28, 0.45), 0 0 14px rgba(239, 68, 68, 0.3) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      box-shadow: 0 4px 16px rgba(190, 18, 60, 0.45) !important;
     }
-    .app-modal-btn.btn-danger-confirm:hover {
-      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%) !important;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(220, 38, 38, 0.55), 0 0 18px rgba(239, 68, 68, 0.4) !important;
+    .app-modal-btn-confirm.btn-danger-confirm:hover {
+      background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important;
+      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.55) !important;
+      transform: translateY(-1px);
     }
   </style>
 </head>
@@ -1956,9 +2140,15 @@
 
   </div>
 
-  <!-- Royal Burgundy & Gold Custom Modal (Replaces Native Alert, Confirm, Prompt) -->
-  <div id="appModal" class="app-modal-backdrop" aria-hidden="true">
+  <!-- Royal Burgundy & Gold Executive Dialog Modal -->
+  <div id="appModal" class="app-modal-backdrop" aria-hidden="true" onclick="if(event.target===this) handleAppModalCancel()">
     <div class="app-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="appModalTitle">
+      <!-- Close button (x) -->
+      <button type="button" class="app-modal-close" onclick="handleAppModalCancel()" aria-label="Tutup dialog">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <!-- Luxury Medallion inside header -->
       <div class="app-modal-seal" id="appModalSeal">
         <span id="appModalIcon">
           <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1966,6 +2156,7 @@
       </div>
 
       <h3 class="app-modal-title" id="appModalTitle">Konfirmasi</h3>
+      <div class="app-modal-divider"></div>
       <div class="app-modal-message" id="appModalMessage">Apakah Anda yakin?</div>
 
       <div id="appModalInputWrap" class="app-modal-input-wrap" style="display:none">
@@ -1973,23 +2164,41 @@
       </div>
 
       <div class="app-modal-actions" id="appModalActions">
-        <button type="button" class="btn btn-outline btn-sm app-modal-btn" id="appModalCancelBtn">Batal</button>
-        <button type="button" class="btn btn-sm app-modal-btn" id="appModalConfirmBtn">Lanjutkan</button>
+        <button type="button" class="app-modal-btn app-modal-btn-cancel" id="appModalCancelBtn" onclick="handleAppModalCancel()">Batal</button>
+        <button type="button" class="app-modal-btn app-modal-btn-confirm" id="appModalConfirmBtn">Lanjutkan</button>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification -->
-  <div id="toast">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-    <span id="toastMsg">Tersalin ke papan klip!</span>
+  <!-- Luxury Royal Toast Notification -->
+  <div id="toast" class="royal-toast-wrap" onclick="dismissToastNow()" role="status" aria-live="polite">
+    <div class="royal-toast-card">
+      <div class="royal-toast-icon-box" id="toastIconBox">
+        <svg id="toastIconSvg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="royal-toast-body">
+        <div class="royal-toast-badge" id="toastBadge">NOTIFIKASI</div>
+        <div class="royal-toast-text" id="toastMsg">Tersalin ke papan klip!</div>
+      </div>
+      <button type="button" class="royal-toast-close" onclick="event.stopPropagation(); dismissToastNow();" aria-label="Tutup notifikasi">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="royal-toast-progress" id="toastProgress"></div>
+    </div>
   </div>
 
   <!-- SCRIPT LOGIKA PORTAL -->
   <script is:inline>
     // =========================================================================
-    // SISTEM MODAL POPUP & NOTIFIKASI TEMA ROYAL BURGUNDY & GOLD
+    // SISTEM MODAL POPUP & NOTIFIKASI TEMA ROYAL BURGUNDY & GOLD (EXECUTIVE CLASS)
     // =========================================================================
+    var _appModalActiveCancel = null;
+    function handleAppModalCancel() {
+      if (typeof _appModalActiveCancel === 'function') {
+        _appModalActiveCancel();
+      }
+    }
+
     function showAppModal(opts) {
       var modalEl = document.getElementById('appModal');
       var sealEl = document.getElementById('appModalSeal');
@@ -1998,25 +2207,26 @@
       var msgEl = document.getElementById('appModalMessage');
       var inputWrapEl = document.getElementById('appModalInputWrap');
       var inputEl = document.getElementById('appModalInput');
+      var actionsEl = document.getElementById('appModalActions');
       var confirmBtn = document.getElementById('appModalConfirmBtn');
       var cancelBtn = document.getElementById('appModalCancelBtn');
 
       if (!modalEl) return;
 
       var type = opts.type || 'info';
-      sealEl.className = 'app-modal-seal' + (type === 'danger' ? ' seal-danger' : (type === 'success' ? ' seal-success' : ''));
+      sealEl.className = 'app-modal-seal' + (type === 'danger' ? ' seal-danger' : (type === 'success' ? ' seal-success' : (type === 'warning' ? ' seal-warning' : '')));
 
       var iconSvg = '';
       if (type === 'danger') {
-        iconSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
+        iconSvg = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>';
       } else if (type === 'warning') {
-        iconSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+        iconSvg = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></svg>';
       } else if (type === 'success') {
-        iconSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+        iconSvg = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
       } else if (type === 'input') {
-        iconSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+        iconSvg = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
       } else {
-        iconSvg = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+        iconSvg = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><circle cx="12" cy="8" r="1.2" fill="currentColor"/></svg>';
       }
       iconEl.innerHTML = iconSvg;
 
@@ -2032,20 +2242,40 @@
         inputWrapEl.style.display = 'none';
       }
 
-      cancelBtn.style.display = opts.showCancel ? 'inline-flex' : 'none';
-      cancelBtn.textContent = opts.cancelText || 'Batal';
+      if (opts.showCancel) {
+        cancelBtn.style.display = 'inline-flex';
+        cancelBtn.textContent = opts.cancelText || 'Batal';
+        actionsEl.classList.remove('single-action');
+      } else {
+        cancelBtn.style.display = 'none';
+        actionsEl.classList.add('single-action');
+      }
 
       confirmBtn.textContent = opts.confirmText || (opts.showCancel ? 'Ya, Lanjutkan' : 'Mengerti');
-      confirmBtn.className = 'btn btn-sm app-modal-btn' + (type === 'danger' ? ' btn-danger-confirm' : '');
+      confirmBtn.className = 'app-modal-btn app-modal-btn-confirm' + (type === 'danger' ? ' btn-danger-confirm' : '');
 
       modalEl.classList.add('show');
 
       function cleanup() {
         modalEl.classList.remove('show');
         confirmBtn.onclick = null;
-        cancelBtn.onclick = null;
         inputEl.onkeydown = null;
+        document.removeEventListener('keydown', handleKeyEsc);
+        _appModalActiveCancel = null;
       }
+
+      function handleKeyEsc(e) {
+        if (e.key === 'Escape') {
+          cleanup();
+          if (opts.onCancel) opts.onCancel();
+        }
+      }
+      document.addEventListener('keydown', handleKeyEsc);
+
+      _appModalActiveCancel = function() {
+        cleanup();
+        if (opts.onCancel) opts.onCancel();
+      };
 
       confirmBtn.onclick = function() {
         var val = opts.isPrompt ? inputEl.value : true;
@@ -2053,17 +2283,12 @@
         if (opts.onConfirm) opts.onConfirm(val);
       };
 
-      cancelBtn.onclick = function() {
-        cleanup();
-        if (opts.onCancel) opts.onCancel();
-      };
-
       if (opts.isPrompt) {
         inputEl.onkeydown = function(e) {
           if (e.key === 'Enter') {
             confirmBtn.click();
           } else if (e.key === 'Escape') {
-            cancelBtn.click();
+            handleAppModalCancel();
           }
         };
       }
@@ -3087,12 +3312,77 @@
       });
     }
 
-    function showToast(msg) {
+    var _toastTimer = null;
+    function dismissToastNow() {
+      var t = document.getElementById('toast');
+      if (t) t.classList.remove('show');
+      if (_toastTimer) clearTimeout(_toastTimer);
+    }
+    window.dismissToastNow = dismissToastNow;
+
+    function showToast(msg, customType, customTitle) {
       var t = document.getElementById('toast');
       var m = document.getElementById('toastMsg');
-      m.textContent = msg;
+      var badge = document.getElementById('toastBadge');
+      var iconBox = document.getElementById('toastIconBox');
+      var iconSvg = document.getElementById('toastIconSvg');
+      var prog = document.getElementById('toastProgress');
+      if (!t || !m) return;
+
+      var text = String(msg || '');
+      var lower = text.toLowerCase();
+      var type = customType || 'info';
+      var title = customTitle || 'NOTIFIKASI';
+
+      if (!customType) {
+        if (lower.indexOf('whatsapp') !== -1 || lower.indexOf('wa ') !== -1) {
+          type = 'wa';
+          title = 'WHATSAPP';
+        } else if (lower.indexOf('dihapus') !== -1 || lower.indexOf('dibersihkan') !== -1) {
+          type = 'danger';
+          title = 'DIHAPUS';
+        } else if (lower.indexOf('berhasil') !== -1 || lower.indexOf('tersalin') !== -1 || lower.indexOf('disimpan') !== -1 || lower.indexOf('selamat') !== -1) {
+          type = 'success';
+          title = lower.indexOf('tersalin') !== -1 ? 'TERSALIN' : 'BERHASIL';
+        } else if (lower.indexOf('gagal') !== -1 || lower.indexOf('peringatan') !== -1) {
+          type = 'warning';
+          title = 'PERHATIAN';
+        }
+      }
+
+      if (badge) badge.textContent = title;
+      m.textContent = text;
+
+      if (iconBox) {
+        iconBox.className = 'royal-toast-icon-box icon-' + type;
+      }
+      if (iconSvg) {
+        if (type === 'wa') {
+          iconSvg.innerHTML = '<path fill="currentColor" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/>';
+        } else if (type === 'danger') {
+          iconSvg.innerHTML = '<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>';
+        } else if (type === 'warning') {
+          iconSvg.innerHTML = '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';
+        } else {
+          iconSvg.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+        }
+      }
+
+      if (prog) {
+        prog.style.animation = 'none';
+        void prog.offsetWidth;
+        prog.style.animation = '';
+      }
+
       t.classList.add('show');
-      setTimeout(function(){ t.classList.remove('show'); }, 3000);
+      if (navigator.vibrate) {
+        try { navigator.vibrate(30); } catch(e){}
+      }
+
+      if (_toastTimer) clearTimeout(_toastTimer);
+      _toastTimer = setTimeout(function(){
+        t.classList.remove('show');
+      }, 3200);
     }
 
     // Inisialisasi saat halaman dimuat
