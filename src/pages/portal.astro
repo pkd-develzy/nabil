@@ -738,15 +738,14 @@
       }
       .category-pills .pill-btn:nth-child(1),
       .category-pills .pill-btn:nth-child(2),
-      .category-pills .pill-btn:nth-child(3) {
+      .category-pills .pill-btn:nth-child(3),
+      .category-pills .pill-btn:nth-child(4),
+      .category-pills .pill-btn:nth-child(5),
+      .category-pills .pill-btn:nth-child(6) {
         grid-column: span 2 !important;
       }
-      .category-pills .pill-btn:nth-child(4),
-      .category-pills .pill-btn:nth-child(5) {
-        grid-column: span 3 !important;
-      }
       .template-pills {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: 1fr 1fr !important;
       }
 
       /* Responsive Guest Card Transformation (Bukan tabel kaku yang scroll horizontal) */
@@ -1032,6 +1031,7 @@
             <button type="button" class="pill-btn" data-cat="VIP" onclick="selectCategory(this)">VIP</button>
             <button type="button" class="pill-btn" data-cat="Sahabat" onclick="selectCategory(this)">Sahabat</button>
             <button type="button" class="pill-btn" data-cat="Teman Pondok" onclick="selectCategory(this)">Teman Pondok</button>
+            <button type="button" class="pill-btn" data-cat="Grup WA" onclick="selectCategory(this)">👥 Grup WA</button>
           </div>
         </div>
 
@@ -1041,6 +1041,7 @@
             <button type="button" class="pill-btn active" data-tpl="formal" onclick="selectTemplate(this)">Formal &amp; Sopan</button>
             <button type="button" class="pill-btn" data-tpl="keluarga" onclick="selectTemplate(this)">Hangat (Keluarga)</button>
             <button type="button" class="pill-btn" data-tpl="santai" onclick="selectTemplate(this)">Santai (Teman/Sahabat)</button>
+            <button type="button" class="pill-btn" data-tpl="grup" onclick="selectTemplate(this)">👥 Khusus Grup WA</button>
           </div>
         </div>
 
@@ -1124,6 +1125,7 @@
             <option value="VIP">VIP</option>
             <option value="Sahabat">Sahabat</option>
             <option value="Teman Pondok">Teman Pondok</option>
+            <option value="Grup WA">👥 Grup WA</option>
           </select>
           <select id="filterStatus" class="form-select" onchange="renderGuestTable()">
             <option value="ALL">Semua Status</option>
@@ -1335,6 +1337,9 @@
       if (cat && cat !== 'ALL') {
         url += '&c=' + encodeURIComponent(cat);
       }
+      if (cat === 'Grup WA' || cat.toLowerCase().indexOf('grup') !== -1 || cat.toLowerCase().indexOf('group') !== -1) {
+        url += '&grp=1';
+      }
       return url;
     }
 
@@ -1352,6 +1357,23 @@
     function generateMessage(name, link, style) {
       var guestName = name ? name.trim() : '[Nama Tamu]';
       var inviteLink = link || buildGuestUrl(name);
+
+      if (style === 'grup') {
+        return "Assalamu’alaikum Warahmatullahi Wabarakatuh.\n\n" +
+          "Kepada Sahabat & Rekan-Rekan di:\n" +
+          guestName + "\n\n" +
+          "Tanpa mengurangi rasa hormat, dengan memohon rahmat dan ridha Allah SWT, perkenankan kami mengundang seluruh sahabat dan rekan sekalian untuk menghadiri acara pernikahan kami:\n\n" +
+          "🤵 Ahmad Nabil Kholili, S.Ag.\n" +
+          "👰 Fadilatul Izza\n\n" +
+          "🗓️ Hari/Tanggal: Kamis, 21 Januari 2027\n" +
+          "📍 Tempat: Kediaman Mempelai Wanita, Desa Kubangwungu RT 08 RW 01, Kec. Ketanggungan, Kab. Brebes\n\n" +
+          "Mohon doa restu serta berkenan mengisi konfirmasi kehadiran (RSVP) masing-masing melalui tautan undangan resmi berikut:\n\n" +
+          inviteLink + "\n\n" +
+          "Kehadiran serta doa restu rekan-rekan sekalian merupakan kehormatan dan kebahagiaan bagi kami sekeluarga.\n\n" +
+          "Wassalamu’alaikum Warahmatullahi Wabarakatuh.\n\n" +
+          "Hormat kami,\n" +
+          "Nabil & Izza";
+      }
 
       if (style === 'santai') {
         return "Halo " + guestName + "!\n\n" +
@@ -1411,6 +1433,14 @@
       document.querySelectorAll('#categoryGroup .pill-btn').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
       CURRENT_CATEGORY = btn.getAttribute('data-cat');
+      if (CURRENT_CATEGORY === 'Grup WA') {
+        var tplBtn = document.querySelector('#templateGroup .pill-btn[data-tpl="grup"]');
+        if (tplBtn) {
+          document.querySelectorAll('#templateGroup .pill-btn').forEach(function(b){ b.classList.remove('active'); });
+          tplBtn.classList.add('active');
+          CURRENT_TEMPLATE = 'grup';
+        }
+      }
       updateMessagePreview();
     }
 
@@ -1588,6 +1618,7 @@
           '<button type="button" class="badge badge-sent" title="Klik untuk ubah status" onclick="toggleSentStatus(\'' + g.id + '\')"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Terkirim</button>' :
           '<button type="button" class="badge badge-unsent" title="Klik untuk ubah status" onclick="toggleSentStatus(\'' + g.id + '\')"><span class="status-dot"></span> Belum Kirim</button>';
 
+        var isGrp = g.category === 'Grup WA' || (g.category || '').toLowerCase().indexOf('grup') !== -1;
         html += '<tr class="guest-row">' +
           '<td class="td-num">' +
             '<span class="num-badge">' + (idx + 1) + '</span>' +
@@ -1595,7 +1626,7 @@
           '<td class="td-name">' +
             '<div class="guest-name-cell">' +
               '<span class="guest-name-text">' + escapeHtml(g.name) + '</span>' +
-              '<span class="badge badge-cat">' + escapeHtml(g.category) + '</span>' +
+              '<span class="badge badge-cat' + (isGrp ? ' badge-cat-grp' : '') + '">' + (isGrp ? '👥 ' : '') + escapeHtml(g.category) + '</span>' +
             '</div>' +
           '</td>' +
           '<td class="td-phone">' +
@@ -1791,6 +1822,7 @@
         var msgLabel = r.message ? '<div class="rsvp-msg-box">"' + escapeHtml(r.message) + '"</div>' : '<span style="color:rgba(242,224,190,0.4);font-style:italic;font-size:0.8rem">Tidak ada ucapan</span>';
         var timeLabel = r.created_at ? formatTimeAgo(r.created_at) : '-';
 
+        var isGrpR = (r.category || '').toLowerCase().indexOf('grup') !== -1 || (r.category || '').toLowerCase().indexOf('angkatan') !== -1 || (r.category || '').toLowerCase().indexOf('alumni') !== -1;
         html += '<tr class="guest-row">' +
           '<td class="td-num"><span class="num-badge">' + (idx + 1) + '</span></td>' +
           '<td class="td-name">' +
@@ -1801,7 +1833,7 @@
           '</td>' +
           '<td class="td-cat">' +
             '<span class="mobile-label">Kategori</span>' +
-            '<span class="badge badge-cat">' + escapeHtml(r.category || 'Umum') + '</span>' +
+            '<span class="badge badge-cat' + (isGrpR ? ' badge-cat-grp' : '') + '">' + (isGrpR ? '👥 ' : '') + escapeHtml(r.category || 'Umum') + '</span>' +
           '</td>' +
           '<td class="td-status">' +
             '<span class="mobile-label">Kehadiran</span>' +

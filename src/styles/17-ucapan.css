@@ -169,6 +169,12 @@
   color: var(--wine-800);
   font-weight: 600;
 }
+.wish-meta-tag.wish-cat.wish-cat-group {
+  background: rgba(87, 16, 36, 0.18);
+  border-color: rgba(201, 165, 107, 0.45);
+  color: var(--wine-950);
+  font-weight: 700;
+}
 .wish-badge {
   font-size: 0.65rem;
   font-weight: 600;

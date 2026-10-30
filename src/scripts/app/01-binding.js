@@ -188,27 +188,54 @@ applyConfigToDom(CONFIG);
 var urlParams = new URLSearchParams(location.search);
 var to = (urlParams.get('to') || '').replace(/[-_+]+/g, ' ').trim();
 var cat = (urlParams.get('c') || urlParams.get('cat') || urlParams.get('category') || '').trim();
+var isGroup = urlParams.get('grp') === '1' || urlParams.get('type') === 'group' || cat.toLowerCase().indexOf('grup') !== -1 || cat.toLowerCase().indexOf('group') !== -1;
 
 window.__GUEST_NAME = to;
 window.__GUEST_CATEGORY = cat || 'Umum';
+window.__IS_GROUP = isGroup;
+window.__GROUP_NAME = isGroup ? to : '';
 
 var guest = to || 'Bapak/Ibu/Saudara/i';
-if($('#guestName')) $('#guestName').textContent = guest;
+if($('#guestName')) {
+  if (isGroup && to) {
+    $('#guestName').textContent = to;
+    var guestSmall = $('#guestName').parentElement ? $('#guestName').parentElement.querySelector('small') : null;
+    if (guestSmall) guestSmall.textContent = 'Kepada Yth. Sahabat & Rekan:';
+  } else {
+    $('#guestName').textContent = guest;
+  }
+}
 if($('#paperGuest')) $('#paperGuest').textContent = guest;
 
 if($('#fName')) {
-  if(to) {
+  if (isGroup && to) {
+    // Mode Undangan Grup: Nama TIDAK dikunci, tamu mengisi nama masing-masing
+    $('#fName').value = '';
+    $('#fName').readOnly = false;
+    $('#fName').removeAttribute('readonly');
+    $('#fName').classList.remove('readonly-locked');
+    $('#fName').placeholder = 'Tuliskan nama Anda (Anggota ' + to + ')';
+    if($('#nameLockNote')) $('#nameLockNote').style.display = 'none';
+    if($('#groupNote')) {
+      $('#groupNote').style.display = 'block';
+      if($('#groupNameText')) $('#groupNameText').textContent = to;
+    }
+  } else if(to) {
+    // Mode Undangan Personal: Nama dikunci
     $('#fName').value = to;
     $('#fName').readOnly = true;
     $('#fName').setAttribute('readonly', 'readonly');
     $('#fName').classList.add('readonly-locked');
     if($('#nameLockNote')) $('#nameLockNote').style.display = 'block';
+    if($('#groupNote')) $('#groupNote').style.display = 'none';
   } else {
+    // Mode Buka Langsung: Nama bebas
     $('#fName').value = '';
     $('#fName').readOnly = false;
     $('#fName').removeAttribute('readonly');
     $('#fName').classList.remove('readonly-locked');
     if($('#nameLockNote')) $('#nameLockNote').style.display = 'none';
+    if($('#groupNote')) $('#groupNote').style.display = 'none';
   }
 }
 

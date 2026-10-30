@@ -331,9 +331,11 @@ window.__addLiveWishToCarousel = function(wish, prepend) {
 
   var subMetaHtml = '';
   if (safeCity || safeCategory) {
+    var isGrpCat = (safeCategory && (safeCategory.toLowerCase().indexOf('grup') !== -1 || safeCategory.toLowerCase().indexOf('angkatan') !== -1 || safeCategory.toLowerCase().indexOf('alumni') !== -1 || safeCategory.toLowerCase().indexOf('komunitas') !== -1));
+    var catDisplay = (isGrpCat ? '👥 ' : '') + safeCategory;
     subMetaHtml = '<div class="wish-sub-meta">' +
       (safeCity ? '<span class="wish-meta-tag wish-city">📍 ' + safeCity + '</span>' : '') +
-      (safeCategory ? '<span class="wish-meta-tag wish-cat">' + safeCategory + '</span>' : '') +
+      (safeCategory ? '<span class="wish-meta-tag wish-cat ' + (isGrpCat ? 'wish-cat-group' : '') + '">' + catDisplay + '</span>' : '') +
     '</div>';
   }
 

@@ -28,7 +28,7 @@ if(form) {
   form.addEventListener('change',function(){var off=form.hadir.value==='Berhalangan';$('#fCount').disabled=off});
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    var nm=(window.__GUEST_NAME || form.nama.value).trim();
+    var nm = (window.__IS_GROUP ? form.nama.value : (window.__GUEST_NAME || form.nama.value)).trim();
     var city = form.asal ? form.asal.value.trim() : '';
     var h=form.hadir.value,n=+form.jumlah.value||1,p=form.pesan.value.trim();
 
@@ -39,7 +39,8 @@ if(form) {
       return;
     }
 
-    var m="Assalamu'alaikum Wr. Wb.\n\nSaya "+nm+(city ? " ("+city+")" : "")+" mengonfirmasi kehadiran pada walimatul 'urs "+CONFIG.eventTitle+".\n\nKehadiran: "+(h==='Hadir'?'Insya Allah hadir ('+n+' orang)':'Mohon maaf, berhalangan hadir');
+    var groupTag = (window.__IS_GROUP && window.__GROUP_NAME) ? " (Grup: " + window.__GROUP_NAME + ")" : "";
+    var m="Assalamu'alaikum Wr. Wb.\n\nSaya "+nm+(city ? " ("+city+")" : "")+groupTag+" mengonfirmasi kehadiran pada walimatul 'urs "+CONFIG.eventTitle+".\n\nKehadiran: "+(h==='Hadir'?'Insya Allah hadir ('+n+' orang)':'Mohon maaf, berhalangan hadir');
     if(p)m+="\n\nDoa & ucapan:\n"+p;
     m+="\n\nJazakumullahu khairan.";
     msgText=m;
@@ -54,11 +55,12 @@ if(form) {
 
     // Update live wish carousel immediately so user sees their wish right away
     var curSlug = window.__WEDDING_SLUG || 'nabil-izza';
+    var assignedCategory = window.__IS_GROUP ? (window.__GROUP_NAME || 'Grup WA') : (window.__GUEST_CATEGORY || 'Umum');
     var newWish = {
       wedding_slug: curSlug,
       name: nm,
       city: city,
-      category: window.__GUEST_CATEGORY || 'Umum',
+      category: assignedCategory,
       presence: h,
       pax: (h==='Hadir' ? n : 0) + ' Orang',
       message: p,
@@ -89,7 +91,7 @@ if(form) {
         body: JSON.stringify({
           name: nm,
           city: city,
-          category: window.__GUEST_CATEGORY || 'Umum',
+          category: assignedCategory,
           attendance: h,
           pax: n,
           message: p
