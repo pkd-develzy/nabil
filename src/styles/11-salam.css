@@ -1,8 +1,17 @@
 /* ============ AYAT & SALAM ============ */
-#ayat{padding:clamp(65px,10vw,110px) 0 clamp(35px,5vw,50px)}
-#salam{padding:clamp(35px,5vw,50px) 0 clamp(80px,12vw,130px)}
+#ayat{padding:clamp(65px,10vw,110px) 0 clamp(70px,11vw,120px)}
 
-.salam-ar{font-family:var(--font-ar,'Aref Ruqaa',serif);font-weight:400;font-size:clamp(1.55rem,6vw,2.35rem);line-height:2;color:var(--wine-700)}
+/* Salam pembuka kini menjadi kepala section Mempelai (latar marun):
+   cukup kaligrafi Arab emas + kalimat memohon ridha, tanpa label & transliterasi. */
+.mempelai-salam{max-width:600px;margin:0 auto clamp(8px,2vw,16px)}
+.salam-ar{font-family:var(--font-ar,'Aref Ruqaa',serif);font-weight:400;font-size:clamp(1.6rem,6.6vw,2.45rem);line-height:2;color:var(--wine-700)}
+.dark .salam-ar,.darker .salam-ar{
+  color:#f1d9a4!important;
+  /* glow tipis: harakat tetap tajam (glow tebal membuat fathah/kasrah kabur) */
+  text-shadow:0 1px 2px rgba(20,3,8,.9),0 0 14px rgba(201,165,107,.32)!important;
+}
+.mempelai-salam .divider{margin:.6rem auto 1.1rem}
+.mempelai-salam .lead{max-width:520px;margin:0 auto}
 .salam-lt{font-family:'Cinzel',serif;font-weight:600;letter-spacing:.1em;font-size:clamp(.92rem,3.4vw,1.18rem);text-transform:uppercase;margin:.2rem 0 1.3rem}
 
 .ayat{position:relative;margin:0 auto;max-width:640px;padding:clamp(32px,6.5vw,48px) clamp(22px,5.5vw,42px);background:linear-gradient(180deg,#fffdfa 0%,#fbf4e8 100%);border:1.5px solid var(--gold);border-radius:24px;box-shadow:0 18px 45px rgba(58,9,22,.10),0 4px 14px rgba(138,103,48,.10);overflow:visible}
@@ -12,4 +21,3 @@
 .ayat-ar{font-family:var(--font-ar,'Aref Ruqaa',serif);font-weight:400;font-size:clamp(1.35rem,5.2vw,1.85rem);line-height:2.3;color:var(--wine-900);direction:rtl}
 .ayat-id{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(1.02rem,3.4vw,1.18rem);line-height:1.75;margin-top:1.15rem;color:var(--wine-950)}
 .ayat-src{display:inline-block;margin-top:1.15rem;font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-deep);font-weight:600}
-

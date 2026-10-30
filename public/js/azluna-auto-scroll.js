@@ -2,8 +2,8 @@
  * Azluna Cinematic Auto-Scroll Guided Tour Engine
  * - Reset otomatis ke tampilan paling pertama saat undangan dibuka.
  * - Wajib scroll otomatis secara elegan dari atas ke bawah.
- * - Selama auto-scroll berjalan, layar tidak boleh di-scroll manual sendiri.
- * - Begitu auto-scroll selesai sampai ke penutup, kontrol manual dibuka penuh (boleh scroll sendiri).
+ * - Tur berhenti begitu tamu menggeser/menggulir sendiri atau mengetik di form.
+ * - Setelah berhenti (atau sampai penutup), kontrol sepenuhnya di tangan tamu.
  */
 (function() {
   'use strict';
@@ -84,28 +84,33 @@
     rafId = requestAnimationFrame(step);
   }
 
-  // Larang scroll manual sendiri selama auto-scroll otomatis sedang berjalan
-  function handleManualScrollAttempt(e) {
-    if (isAutoScrolling && !isAutoScrollFinished) {
-      // Izinkan klik dan tap normal, tetapi cegah drag/wheel manual yang mengacaukan auto-scroll
-      if (e.cancelable && (e.type === 'touchmove' || e.type === 'wheel')) {
-        e.preventDefault();
-      }
-    }
+  // Tamu selalu memegang kendali: begitu ia menggeser, menggulir, atau mengetik,
+  // tur otomatis langsung berhenti dan scroll manual dibuka penuh.
+  // (Dulu scroll manual diblokir selama tur. Di HP itu terasa "macet" dan membuat
+  //  tamu tidak bisa kembali membaca atau mengisi form, jadi diganti.)
+  function yieldToGuest() {
+    if (startTimer) { clearTimeout(startTimer); startTimer = null; }
+    if (!isAutoScrollFinished) finishAutoScroll();
   }
-
+  function handleManualScrollAttempt() {
+    if (isAutoScrolling && !isAutoScrollFinished) yieldToGuest();
+  }
   function handleKeyScroll(e) {
     if (isAutoScrolling && !isAutoScrollFinished) {
-      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].indexOf(e.key) !== -1) {
-        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
-        if (e.cancelable) e.preventDefault();
-      }
+      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].indexOf(e.key) !== -1) yieldToGuest();
     }
   }
 
-  window.addEventListener('wheel', handleManualScrollAttempt, { passive: false });
-  window.addEventListener('touchmove', handleManualScrollAttempt, { passive: false });
-  window.addEventListener('keydown', handleKeyScroll, { passive: false });
+  window.addEventListener('wheel', handleManualScrollAttempt, { passive: true });
+  window.addEventListener('touchmove', handleManualScrollAttempt, { passive: true });
+  window.addEventListener('keydown', handleKeyScroll, { passive: true });
+  // Fokus ke kolom form (RSVP/ucapan) juga menghentikan tur agar layar tidak bergeser saat mengetik
+  document.addEventListener('focusin', function (e) {
+    var t = e.target;
+    if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) yieldToGuest();
+  });
+  // Pengguna yang memilih "kurangi gerakan" tidak diajak tur otomatis
+  if (document.documentElement.classList.contains('rm')) { isAutoScrollFinished = true; }
 
   // Pemicu saat undangan dibuka
   function onInvitationOpened() {

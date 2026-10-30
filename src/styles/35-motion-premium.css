@@ -1,0 +1,86 @@
+/* ======================= BAHASA GERAK PREMIUM =======================
+   Satu "tangan" untuk seluruh undangan:
+   - satu kurva easing, durasi 0,9-1,1 dtk, jarak geser kecil (12-22px)
+   - elemen bergerak SEKALI saat muncul, lalu diam (tidak melayang/berdenyut terus)
+   - hanya opacity & transform yang dianimasikan (ringan di HP kelas menengah)
+   File ini sengaja dimuat terakhir agar menimpa aturan gerak lama tanpa membongkarnya. */
+:root{--ease-lux:cubic-bezier(.22,1,.36,1);--dur-in:1.1s}
+
+/* ---------- 1. Reveal: satu keluarga gerak ---------- */
+html.js .rv{
+  transform:translate3d(0,18px,0);
+  filter:none;
+  transition:opacity .9s var(--ease-lux),transform var(--dur-in) var(--ease-lux);
+  transition-delay:var(--d,0s);
+  will-change:auto;
+}
+html.js .rv.in{transform:none}
+html.js .rv[data-m]{
+  transform:none;filter:none;
+  transition:opacity .9s var(--ease-lux),translate var(--dur-in) var(--ease-lux),scale var(--dur-in) var(--ease-lux),rotate var(--dur-in) var(--ease-lux),clip-path 1.2s var(--ease-lux);
+  transition-delay:var(--d,0s);
+}
+html.js .rv[data-m="rise"],
+html.js .rv[data-m="flip"],
+html.js .rv[data-m="unfold"]{translate:0 18px;rotate:0deg;scale:1}
+html.js .rv[data-m="drop"]{translate:0 -12px}
+html.js .rv[data-m="swing"]{translate:0 12px;rotate:0deg}
+html.js .rv[data-m="left"]{translate:-22px 0;rotate:0deg}
+html.js .rv[data-m="right"]{translate:22px 0;rotate:0deg}
+html.js .rv[data-m="zoom"],
+html.js .rv[data-m="pop"],
+html.js .rv[data-m="spin"]{scale:.96;rotate:0deg;translate:0 10px}
+html.js .rv[data-m="blur"],
+html.js .rv[data-m="spread"]{scale:1;filter:none;translate:0 12px}
+html.js .rv[data-m].in{opacity:1;translate:0 0;scale:1;rotate:0deg;filter:none}
+
+/* Hero: keluarga gerak yang sama, sedikit lebih lambat (momen pembuka) */
+html.js .h{filter:none;transform:translate3d(0,20px,0);transition:opacity 1.2s var(--ease-lux),transform 1.4s var(--ease-lux);transition-delay:calc(var(--i,0)*.18s*var(--k));will-change:auto}
+html.js .name-stage.h{filter:none;transform:translate3d(0,24px,0) scale(.97);transition:opacity 1.4s var(--ease-lux),transform 1.6s var(--ease-lux);transition-delay:calc(.5s*var(--k))}
+html.js .name-stage.h .name{filter:none;transform:translate3d(0,16px,0);transition:opacity 1.3s var(--ease-lux),transform 1.5s var(--ease-lux);transition-delay:calc(.65s*var(--k))}
+html.js.revealed .h,html.js.revealed .name-stage.h,html.js.revealed .name-stage.h .name{transform:none}
+
+/* Nama mempelai di bawah foto */
+.pname{filter:none!important;transform:translate3d(0,14px,0);transition:opacity 1.1s var(--ease-lux) .2s,transform 1.2s var(--ease-lux) .2s}
+
+/* ---------- 2. Diam setelah tiba: matikan gerak idle tanpa henti ---------- */
+.title,.salam-lt,.pname,.ev h3,.loc h3,.dress h3,
+.bismillah,.salam-ar,.ayat-ar,.eyebrow-ar,.sec:not(.hero) .eyebrow-ar,
+.lead,.sub,.cd div,
+.ev,.ev:nth-child(2),.bank,.ayat,.form,.wish-carousel-wrap,.loc .mapframe,.sw i,
+.mono,.amp-big,.loc .btn,.bank .btn,.arch{animation:none!important}
+.btn{animation:none}
+.btn.ghost::after,.form .btn::after{animation:none;display:none}
+.btn:not(.ghost)::after{animation-duration:9s}
+.btn:hover{transform:translateY(-1px)}
+/* bingkai foto: cahaya emas statis (box-shadow beranimasi = repaint terus di HP) */
+.arch{box-shadow:0 20px 46px rgba(10,1,4,.7),0 0 26px rgba(201,165,107,.38),0 0 0 8px rgba(201,165,107,.12)}
+
+/* ---------- 3. Foto mempelai: zoom lambat sekali saat masuk (gaya sinema) ---------- */
+.arch svg,.arch img{animation:none!important;transform:scale(1.07);transition:transform 2.8s var(--ease-lux);will-change:auto}
+.person.in .arch svg,.person.in .arch img{transform:scale(1)}
+
+/* ---------- 4. Kaligrafi salam "tertulis" dari kanan ke kiri (arah baca Arab), sekali saja ---------- */
+.mempelai-salam .salam-ar.in{
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,transparent 40%,#000 60%,#000 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,transparent 40%,#000 60%,#000 100%);
+  -webkit-mask-size:300% 100%;mask-size:300% 100%;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  animation:salamWrite 2.2s cubic-bezier(.45,.05,.25,1) .15s 1 both!important;
+}
+@keyframes salamWrite{
+  from{-webkit-mask-position:0% 0;mask-position:0% 0}
+  to{-webkit-mask-position:100% 0;mask-position:100% 0}
+}
+
+/* ---------- 5. Kilau dekoratif hanya di momen pembuka & penutup ---------- */
+.sec:not(#hero):not(#penutup) .sparkles{display:none}
+
+/* ---------- 6. Hadiah kini di latar gading: kartu rekening tetap marun ---------- */
+#hadiah .bank{color:var(--ivory)}
+.light .bank .btn.ghost{background:rgba(42,7,18,.32);color:var(--gold-soft);border-color:var(--gold)}
+#hadiah .ambient-floral-canvas{display:none}
+
+/* ---------- 7. Gerak dikurangi: hormati pengaturan perangkat ---------- */
+html.rm .mempelai-salam .salam-ar.in{animation:none!important;-webkit-mask-image:none;mask-image:none}
+html.rm .arch svg,html.rm .arch img{transform:none;transition:none}

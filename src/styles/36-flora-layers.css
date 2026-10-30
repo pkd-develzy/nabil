@@ -1,0 +1,35 @@
+/* ======================= BUNGA BERLAPIS (3 LAPIS KEDALAMAN) =======================
+   .gl-par = wadah satu lapis, seukuran section, tidak menangkap sentuhan.
+   Urutan DOM: back -> mid (.gl biasa) -> front, semua di bawah teks (.inner z:5). */
+.gl-par{position:absolute;inset:0;z-index:1;pointer-events:none}
+/* --ox/--oy = posisi lapis dari sudut (%), --py = geser parallax (px, diisi JS) */
+.gl-par .gl{z-index:1;translate:var(--ox,0%) calc(var(--oy,0%) + var(--py,0px))}
+
+/* Lapis belakang: besar, redup, sedikit lembut -> terasa jauh */
+.l-back .gl-img{
+  animation:none!important;
+  opacity:.74;
+  filter:blur(.8px) saturate(.88) brightness(.86);
+}
+.light .l-back .gl-img{opacity:.5;filter:blur(.7px) saturate(.8) brightness(1.03)}
+.l-back{transition:opacity 1.4s var(--ease-lux,ease)}
+.sec:not(.vis) .l-back{opacity:0}
+
+/* Lapis depan: kecil & tajam, dengan bayangan lebih dekat -> terasa paling dekat ke mata */
+.l-front .gl-img{filter:drop-shadow(0 6px 10px rgba(20,3,8,.45))}
+.light .l-front .gl-img{filter:drop-shadow(0 5px 9px rgba(58,9,22,.22))}
+
+/* ---------- Mobile: tetap kaya, tapi tidak sesak & tidak menutup teks ---------- */
+@media (max-width:680px){
+  /* lapis belakang sedikit lebih kecil agar tidak menutup tengah layar */
+  .l-back .gl{width:calc(var(--g)*var(--gm,1)*.9)}
+  /* tangkai depan dibatasi ukurannya */
+  .l-front .gl{max-width:34vw}
+}
+@media (max-width:359px){
+  /* ponsel sangat kecil (<360px): lapis belakang dilepas, cukup 2 lapis */
+  .l-back{display:none}
+}
+
+/* Gerak dikurangi: tanpa parallax */
+html.rm .gl-par{--py:0px!important}

@@ -57,6 +57,9 @@
 
   function register(el) {
     if (el.__wind) return;
+    // Lapis belakang sengaja diam (hanya parallax): bunga jauh tidak "tertiup", dan filter
+    // lembutnya cukup dirender sekali, jadi tetap ringan di HP.
+    if (el.closest('.l-back')) return;
     var r = el.getBoundingClientRect();
     var size = Math.max(r.width, r.height) || 200;
     var cs = getComputedStyle(el);

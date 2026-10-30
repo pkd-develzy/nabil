@@ -6,7 +6,6 @@ import Screen403 from '../components/Screen403.astro';
 import Cover from '../components/Cover.astro';
 import Hero from '../components/sections/Hero.astro';
 import Ayat from '../components/sections/Ayat.astro';
-import Salam from '../components/sections/Salam.astro';
 import Mempelai from '../components/sections/Mempelai.astro';
 import Acara from '../components/sections/Acara.astro';
 import Lokasi from '../components/sections/Lokasi.astro';
@@ -52,7 +51,7 @@ if ('scrollRestoration' in history) {
 }
 window.scrollTo(0, 0);
 document.documentElement.scrollTop = 0;
-document.body.scrollTop = 0;
+if (document.body) document.body.scrollTop = 0;
 document.documentElement.classList.add('js','locked');
 if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.style.setProperty('--k','.2');document.documentElement.classList.add('rm');}
 </script>
@@ -100,19 +99,19 @@ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){do
 
 <Ayat />
 
-<Salam />
-
+<!-- Mempelai dibuka dengan salam pembuka (dulu section terpisah) -->
 <Mempelai />
 
+<!-- Ritme warna: Acara (terang) > Lokasi (gelap) > RSVP (terang) > Ucapan (gelap) > Hadiah (terang) > Penutup (gelap) -->
 <Acara />
 
 <Lokasi />
 
-<Hadiah />
-
 <Rsvp />
 
 <Ucapan />
+
+<Hadiah />
 
 <Penutup />
 

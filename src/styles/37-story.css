@@ -1,0 +1,116 @@
+/* ======================= LATAR BERCERITA =======================
+   Palet tidak berubah (marun, gading, emas). Yang berubah dari section ke section
+   adalah SUASANA: arah cahaya, tekstur, dan kehangatan.
+   Semua lapisan suasana ada di ::after (z:0) -> di bawah bunga (z:1) dan teks (z:5).
+   Statis (tanpa animasi) kecuali lilin di Ucapan, agar ringan di HP. */
+.sec::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none}
+
+/* Sambungan antar-section terasa seperti satu kain: bayangan lembut di tepi */
+.light::after{
+  background:
+    linear-gradient(to bottom,rgba(58,9,22,.10),rgba(58,9,22,0) 70px),
+    linear-gradient(to top,rgba(58,9,22,.08),rgba(58,9,22,0) 70px);
+}
+/* Gading terang dibiarkan bersih: tekstur bunga marun hanya di section gelap */
+.light .ambient-floral-canvas{display:none}
+
+/* 1. HERO — Penantian: marun pekat, tepi meredup ke dalam */
+#hero::after{background:radial-gradient(ellipse 85% 70% at 50% 45%,rgba(20,3,8,0) 40%,rgba(20,3,8,.42) 100%)}
+
+/* 2. AYAT — Kesucian: cahaya lembut turun dari atas, seperti sinar dari jendela */
+#ayat{background:linear-gradient(180deg,#fdf8f0 0%,var(--ivory) 55%)}
+#ayat::after{
+  background:
+    radial-gradient(ellipse 70% 42% at 50% 0%,rgba(255,255,255,.95),rgba(255,253,247,0) 72%),
+    repeating-conic-gradient(from 160deg at 50% -12%,rgba(201,165,107,.085) 0deg 2.2deg,rgba(201,165,107,0) 2.2deg 8deg),
+    linear-gradient(to top,rgba(58,9,22,.08),rgba(58,9,22,0) 70px);
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 30%,rgba(0,0,0,.25) 75%,#000 100%);
+          mask-image:linear-gradient(to bottom,#000 0%,#000 30%,rgba(0,0,0,.25) 75%,#000 100%);
+}
+
+/* 3. MEMPELAI — Pertemuan: sorot cahaya hangat pada kedua mempelai */
+#mempelai::after{
+  background:
+    radial-gradient(ellipse 62% 15% at 50% 7%,rgba(214,166,104,.14),rgba(214,166,104,0) 70%),
+    radial-gradient(ellipse 75% 22% at 50% 36%,rgba(214,160,98,.17),rgba(214,160,98,0) 70%),
+    radial-gradient(ellipse 75% 22% at 50% 76%,rgba(214,160,98,.17),rgba(214,160,98,0) 70%),
+    linear-gradient(to bottom,rgba(248,240,228,.05),rgba(248,240,228,0) 60px);
+}
+@media(min-width:760px){
+  #mempelai::after{
+    background:
+      radial-gradient(ellipse 50% 12% at 50% 10%,rgba(214,166,104,.14),rgba(214,166,104,0) 70%),
+      radial-gradient(ellipse 60% 48% at 50% 60%,rgba(214,160,98,.18),rgba(214,160,98,0) 70%);
+  }
+}
+
+/* 4. ACARA — Janji suci: gading hangat, geometri Islami samar dari pola dasar */
+#acara{background:linear-gradient(180deg,#f6ead8 0%,var(--ivory) 38%,var(--ivory) 100%)}
+#acara::before{opacity:.18}
+
+/* 5. LOKASI — Perjalanan: garis rute emas samar berkelok menuju titik tujuan */
+#lokasi::after{
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M8 2 C 30 14, 4 30, 30 40 S 90 52, 70 66 S 20 80, 50 97' fill='none' stroke='%23c9a56b' stroke-width='1.4' stroke-dasharray='2 7' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center/100% 100% no-repeat,
+    linear-gradient(to bottom,rgba(248,240,228,.05),rgba(248,240,228,0) 60px);
+  opacity:.55;
+}
+
+/* 6. RSVP — Menjawab undangan: kertas surat bergaris halus */
+#rsvp{background:linear-gradient(180deg,#fbf5ea 0%,var(--ivory) 100%)}
+#rsvp::after{
+  background:
+    repeating-linear-gradient(to bottom,rgba(138,103,48,0) 0 33px,rgba(138,103,48,.07) 33px 34px),
+    linear-gradient(to bottom,rgba(58,9,22,.10),rgba(58,9,22,0) 70px),
+    linear-gradient(to top,rgba(58,9,22,.08),rgba(58,9,22,0) 70px);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 18%,#000 82%,transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0%,#000 18%,#000 82%,transparent 100%);
+}
+
+/* 7. UCAPAN — Doa-doa: titik cahaya hangat seperti lilin yang menyala pelan */
+#ucapan::after{
+  background:
+    radial-gradient(circle at 12% 22%,rgba(255,196,120,.16) 0,rgba(255,196,120,0) 46px),
+    radial-gradient(circle at 86% 30%,rgba(255,196,120,.13) 0,rgba(255,196,120,0) 38px),
+    radial-gradient(circle at 22% 70%,rgba(255,196,120,.12) 0,rgba(255,196,120,0) 54px),
+    radial-gradient(circle at 80% 78%,rgba(255,196,120,.15) 0,rgba(255,196,120,0) 44px),
+    radial-gradient(circle at 50% 92%,rgba(255,196,120,.10) 0,rgba(255,196,120,0) 70px),
+    radial-gradient(circle at 62% 12%,rgba(255,196,120,.09) 0,rgba(255,196,120,0) 30px),
+    linear-gradient(to bottom,rgba(248,240,228,.05),rgba(248,240,228,0) 60px);
+  animation:candle 7s ease-in-out infinite alternate;
+}
+@keyframes candle{from{opacity:.75}to{opacity:1}}
+
+/* 8. HADIAH — Tanda kasih: gading bertekstur linen */
+#hadiah::after{
+  background:
+    repeating-linear-gradient(0deg,rgba(138,103,48,.035) 0 1px,rgba(138,103,48,0) 1px 3px),
+    repeating-linear-gradient(90deg,rgba(138,103,48,.03) 0 1px,rgba(138,103,48,0) 1px 3px),
+    linear-gradient(to bottom,rgba(58,9,22,.10),rgba(58,9,22,0) 70px),
+    linear-gradient(to top,rgba(58,9,22,.10),rgba(58,9,22,0) 70px);
+}
+
+/* 9. PENUTUP — Perpisahan: cahaya emas naik dari bawah, tempat merpati terbang */
+#penutup::after{
+  background:
+    radial-gradient(ellipse 90% 42% at 50% 100%,rgba(201,165,107,.20),rgba(201,165,107,0) 70%),
+    radial-gradient(ellipse 60% 26% at 50% 46%,rgba(201,165,107,.10),rgba(201,165,107,0) 70%),
+    linear-gradient(to bottom,rgba(248,240,228,.05),rgba(248,240,228,0) 60px);
+}
+
+html.rm #ucapan::after{animation:none}
+
+/* ======================= BENANG EMAS =======================
+   Satu garis emas tipis "menjahit" setiap section: turun dari tepi atas section,
+   tergambar saat section masuk layar, dan berakhir pada kuncup emas kecil.
+   Menyambung garis "Gulir ke bawah" di Hero, dan berujung di merpati Penutup. */
+.thread{position:absolute;top:0;left:50%;width:14px;margin-left:-7px;height:clamp(30px,8vw,56px);z-index:3;pointer-events:none;display:flex;flex-direction:column;align-items:center}
+html.js .thread.rv{opacity:1;transform:none;translate:none}
+.th-line{display:block;width:1px;flex:1;background:linear-gradient(to bottom,rgba(201,165,107,0),var(--gold) 75%);transform:scaleY(0);transform-origin:50% 0;transition:transform 1.3s var(--ease-lux,ease)}
+.light .th-line{background:linear-gradient(to bottom,rgba(138,103,48,0),var(--gold-deep) 75%)}
+.th-bud{display:block;width:9px;height:9px;flex:none;margin-top:2px;opacity:0;scale:.3;transition:opacity .6s ease .9s,scale .9s var(--ease-lux,ease) .9s}
+.thread.in .th-line{transform:scaleY(1)}
+.thread.in .th-bud{opacity:1;scale:1}
+html.rm .th-line{transform:none;transition:none}
+html.rm .th-bud{opacity:1;scale:1;transition:none}
+.sec:not(.vis)::after{animation-play-state:paused}

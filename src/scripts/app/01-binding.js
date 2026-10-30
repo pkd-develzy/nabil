@@ -167,6 +167,7 @@ function applyConfigToDom(cfg) {
   if ($('#hadiah')) $('#hadiah').style.display = (v.hadiah === false ? 'none' : '');
   if ($('#rsvp')) $('#rsvp').style.display = (v.rsvp === false ? 'none' : '');
   if ($('#ucapan')) $('#ucapan').style.display = (v.ucapan === false ? 'none' : '');
+  if ($('#doves')) $('#doves').style.display = (v.doves === false ? 'none' : '');
   if ($('#music')) $('#music').style.display = (v.music === false ? 'none' : '');
   // Sembunyikan menu navigasi untuk bagian yang dimatikan
   $$('#navBar .nav-item').forEach(function(a){

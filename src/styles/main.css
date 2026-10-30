@@ -23,3 +23,9 @@
 @import './32-legibility.css';
 @import './33-floral-cards.css';
 @import './34-motion-system.css';
+/* Lapisan premium (dimuat terakhir agar menimpa gerak & latar lama) */
+@import './35-motion-premium.css';
+@import './36-flora-layers.css';
+@import './37-story.css';
+@import './38-doves.css';
+@import './39-couple-names.css';

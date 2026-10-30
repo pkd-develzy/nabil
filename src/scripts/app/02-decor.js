@@ -10,20 +10,53 @@ if($('#defs')) {
 /* ---------- CORNER BOTANICAL GARLANDS (SEMUA FLORAL MILIK KLIEN) ----------
    Setiap bagian memakai rangkaian bunga yang berbeda agar tidak monoton:
    - frame/*  : bingkai cat air (dari gambar referensi)       -> sampul, hero, hadiah, penutup
-   - roses-*  : 22378575_6561933-02.svg                        -> salam
    - peony-*  : 4121941_89159.svg                              -> mempelai, ucapan
    - red-spray-* : floral burgundy.svg                         -> acara, rsvp
    - pink-sprig-* : 36610889_fin_9.svg                         -> lokasi
    kind: 'corner' = menempel rapat di sudut, 'float' = rangkaian bebas yang keluar sedikit dari tepi */
 var FLORA_BASE = '/images/florals/';
 var SECTION_FLORA = {
-  salam:    [{ pos: 'tl', img: 'set/roses-tl', gm: 1.3 }, { pos: 'br', img: 'set/roses-br', gm: 1.3 }],
   mempelai: [{ pos: 'tr', img: 'set/peony-tr', gm: 1.35 }, { pos: 'bl', img: 'set/peony-bl', gm: 1.35 }],
   acara:    [{ pos: 'tl', img: 'set/red-spray-1', kind: 'float', gm: .78, rot: -8 }, { pos: 'br', img: 'set/red-spray-3', kind: 'float', gm: .78, rot: 10 }],
   lokasi:   [{ pos: 'tl', img: 'set/pink-sprig-b', kind: 'float', gm: 1.05, rot: 16 }, { pos: 'br', img: 'set/pink-sprig-a', kind: 'float', gm: 1.05, rot: -12 }],
   hadiah:   [{ pos: 'tr', img: 'frame/frame-tr' }, { pos: 'bl', img: 'frame/frame-bl', gm: .82, cls: 'f-tall' }],
   rsvp:     [{ pos: 'tr', img: 'set/red-spray-2', kind: 'float', gm: .9, rot: 6, fx: -1 }, { pos: 'bl', img: 'set/red-spray-1', kind: 'float', gm: .72, rot: 8, fx: -1 }],
   ucapan:   [{ pos: 'tl', img: 'set/peony-tr', gm: 1.3, fx: -1 }, { pos: 'br', img: 'set/peony-bl', gm: 1.3, fx: -1 }]
+};
+
+/* ---------- BUNGA BERLAPIS (alur cerita "bunga yang mekar") ----------
+   Tiap sudut bisa punya 3 lapis kedalaman:
+   - back  : rangkaian bertepi lembut (spray-*), besar & redup, seolah jauh di belakang; bergerak lebih lambat saat scroll
+   - mid   : rangkaian utama (SECTION_FLORA / bingkai default) yang tertiup angin
+   - front : tangkai kecil yang menumpuk di tepi rangkaian utama; bergerak sedikit lebih cepat
+   Kepadatan mengikuti cerita: Hero (kuncup) > Ayat (hening) > MEMPELAI (mekar penuh) >
+   Acara/Lokasi/RSVP (ringan, demi keterbacaan) > Ucapan/Hadiah (sedang) > PENUTUP (mekar penuh).
+   off = geser tambahan [x%, y%]; untuk sudut kanan nilai x negatif (ke kiri), sudut bawah nilai y negatif (ke atas). */
+var FLORA_LAYERS = {
+  hero: {
+    back:  [{ pos: 'tr', img: 'frame/spray-a', kind: 'float', gm: 1.05, rot: -6, off: [-6, 8] },
+            { pos: 'bl', img: 'frame/spray-b', kind: 'float', gm: 1.05, rot: 8, off: [6, -6] }],
+    front: [{ pos: 'tl', img: 'set/pink-sprig-a', kind: 'float', gm: .42, rot: 28, off: [34, 44] },
+            { pos: 'br', img: 'set/pink-sprig-b', kind: 'float', gm: .42, rot: -24, off: [-30, -40] }]
+  },
+  mempelai: {
+    back:  [{ pos: 'tl', img: 'frame/spray-c', kind: 'float', gm: 1.25, rot: -4, off: [4, 2] },
+            { pos: 'br', img: 'frame/spray-d', kind: 'float', gm: 1.3, rot: 6, off: [-2, -2] }],
+    front: [{ pos: 'tr', img: 'set/pink-sprig-b', kind: 'float', gm: .5, rot: -32, off: [-46, 52] },
+            { pos: 'bl', img: 'set/pink-sprig-a', kind: 'float', gm: .5, rot: 24, off: [44, -50] }]
+  },
+  ucapan: {
+    back:  [{ pos: 'tr', img: 'frame/spray-a', kind: 'float', gm: 1.1, rot: 4, off: [-4, 4] }]
+  },
+  hadiah: {
+    front: [{ pos: 'tr', img: 'set/pink-sprig-a', kind: 'float', gm: .4, rot: -20, off: [-40, 46] }]
+  },
+  penutup: {
+    back:  [{ pos: 'tl', img: 'frame/spray-d', kind: 'float', gm: 1.15, rot: -8, off: [4, 6] },
+            { pos: 'br', img: 'frame/spray-c', kind: 'float', gm: 1.15, rot: 6, off: [-4, -6] }],
+    front: [{ pos: 'tr', img: 'set/pink-sprig-b', kind: 'float', gm: .44, rot: -28, off: [-38, 48] },
+            { pos: 'bl', img: 'set/pink-sprig-a', kind: 'float', gm: .44, rot: 22, off: [36, -46] }]
+  }
 };
 function frameCorner(pos) {
   return { pos: pos, img: 'frame/frame-' + pos, gm: pos === 'bl' ? .82 : pos === 'br' ? 1.12 : 1, cls: pos === 'bl' ? 'f-tall' : '' };
@@ -43,6 +76,8 @@ function garland(item, size, eager) {
     extra = ';translate:' + (sx * b.tx) + '% ' + (sy * b.ty) + '%';
     imgStyle = ' style="transform-origin:' + b.ox + '% ' + b.oy + '%"';
   }
+  // geser tambahan dari sudut (nilai sudah ditulis sesuai arah sudut di FLORA_LAYERS)
+  if (!b && item.off) extra = ';--ox:' + item.off[0] + '%;--oy:' + item.off[1] + '%';
   var style = '--gm:' + gm + ';--rot:' + (item.rot || 0) + 'deg;--fx:' + (item.fx || 1) + extra;
   return '<div class="gl ' + item.pos + ' ' + size + ' ' + kind + (b ? ' bleed' : '') + (item.cls ? ' ' + item.cls : '') + '" style="' + style + '" aria-hidden="true">' +
     '<img src="' + FLORA_BASE + img + '.webp" class="gl-img" alt="" decoding="async"' + imgStyle + (eager ? '' : ' loading="lazy"') + ' />' +
@@ -54,12 +89,62 @@ $$('[data-g],[data-garland]').forEach(function(el) {
   var items = SECTION_FLORA[el.id] || (el.dataset.g || el.dataset.garland).split(' ').map(frameCorner);
   // Sampul & hero langsung terlihat: muat segera, sisanya lazy
   var eager = el.hasAttribute('data-garland') || el.id === 'hero';
+  var layers = FLORA_LAYERS[el.id] || {};
+  var wrap = function (name, list, isEager) {
+    if (!list || !list.length) return '';
+    return '<div class="gl-par l-' + name + '" aria-hidden="true">' + list.map(function (it) { return garland(it, size, isEager); }).join('') + '</div>';
+  };
+  out += wrap('back', layers.back, false);
   items.forEach(function(it) { out += garland(it, size, eager); });
+  out += wrap('front', layers.front, eager);
   if (el.hasAttribute('data-garland')) {
     el.outerHTML = out;
   } else {
     el.insertAdjacentHTML('afterbegin', out);
   }
+});
+
+/* Parallax kedalaman: lapis belakang tertinggal sedikit, lapis depan mendahului.
+   Hanya section yang sedang terlihat yang dihitung; satu rAF per frame scroll; hanya translate. */
+(function () {
+  if (html.classList.contains('rm')) return;
+  var pars = $$('.gl-par');
+  if (!pars.length) return;
+  var F = { back: -0.07, front: 0.06 }, MAX = 28, ticking = false, live = [];
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) { e.target.__parLive = e.isIntersecting; });
+    live = pars.filter(function (p) { return p.__parLive; });
+    req();
+  }, { rootMargin: '120px 0px' }) : null;
+  pars.forEach(function (p) {
+    p.__f = p.classList.contains('l-back') ? F.back : F.front;
+    p.__sec = p.parentElement;
+    if (io) io.observe(p);
+    else { p.__parLive = true; live.push(p); }
+  });
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight;
+    for (var i = 0; i < live.length; i++) {
+      var p = live[i], r = p.__sec.getBoundingClientRect();
+      var d = (r.top + Math.min(r.height, vh) / 2) - vh / 2;
+      var t = Math.max(-MAX, Math.min(MAX, d * p.__f));
+      // hanya variabel; yang benar-benar bergeser adalah gambar bunga (layer kecil), bukan wadah seukuran section
+      p.style.setProperty('--py', t.toFixed(1) + 'px');
+    }
+  }
+  function req() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', req, { passive: true });
+  window.addEventListener('resize', req, { passive: true });
+  req();
+})();
+
+/* ---------- BENANG EMAS: penyambung cerita antar-section ---------- */
+var THREAD = '<span class="thread rv" aria-hidden="true"><i class="th-line"></i>' +
+  '<svg class="th-bud" viewBox="-10 -10 20 20"><path d="M0-9L2.4-2.4L9 0L2.4 2.4L0 9L-2.4 2.4L-9 0L-2.4-2.4Z" fill="url(#gg)"/></svg></span>';
+$$('#page > .sec').forEach(function (sec) {
+  if (sec.id === 'hero' || sec.querySelector(':scope > .thread')) return;
+  sec.insertAdjacentHTML('beforeend', THREAD);
 });
 
 /* ---------- CARD FLORALS (rangkaian mengintip dari balik kartu + mahkota bunga) ---------- */

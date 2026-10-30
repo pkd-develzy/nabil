@@ -9,6 +9,57 @@
     <p class="sub rv" style="--d:.2s;font-style:italic">"Semoga Allah memberkahimu, melimpahkan keberkahan atasmu, dan menyatukan kalian berdua dalam kebaikan."</p>
     <div class="divider rv" data-star=""></div>
     <p class="sub rv">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+    <!-- Sepasang merpati emas yang TERBANG: masuk dari tepi layar sambil mengepak, lalu melayang
+         saling berhadapan di atas nama mempelai (dua kepakan, meluncur, berulang).
+         Siluet dari aset merpati klien; sayap dipisah dari badan (clipPath) agar bisa dikepakkan.
+         Bisa dimatikan dari dashboard: visibility.doves -->
+    <div class="doves rv" id="doves" aria-hidden="true">
+      <svg class="dove-def" width="0" height="0" focusable="false">
+        <defs>
+          <linearGradient id="dvGold" gradientUnits="userSpaceOnUse" x1="60" y1="55" x2="228" y2="253"><stop offset="0" stop-color="#fff4d4"/><stop offset=".38" stop-color="#e2c286"/><stop offset=".72" stop-color="#b58942"/><stop offset="1" stop-color="#6e4c17"/></linearGradient>
+          <path id="dovePath" d="M64.521,128.937c0.375,2.419,3.703,7.307,3.703,7.307s-2.351,2.233-0.352,6.024
+			c2,3.791,8.367,5.704,7.943,5.863c-0.424,0.159-3.352,2.27-1.41,4.488c1.942,2.219,4.975,2.966,4.975,2.966
+			s-1.356,2.053,1.004,3.97c2.36,1.917,4.504,1.839,4.504,1.839l-0.012,3.578L90,168.077c0,0-0.732,3.462,7.557,7.022
+			c-0.413,0.445,3.216,5.75,6.959,6.328c3.742,0.578,6.575-0.241,6.575-0.241s2.243,2.637,5.362,1.807
+			c-0.291-0.132,7.545,3.301,13.743,0.355c-0.833,0.46,2.178,4.5,10.506,1.332c0,0-8.305,11.611-11.898,22.906
+			c-1.94,5.653-25.438,20.54-25.487,23.118c-0.049,2.578,1.841,3.367,1.841,3.367s-6.015,3.799-4.788,6.044
+			c1.227,2.245,3.668,2.442,5.759,0.934c0,0-6.164,7.525-1.829,8.654c4.335,1.129,9.635-2.643,9.635-2.643s0.279,3.698,2.81,2.467
+			c2.531-1.231,5.889-7.222,5.889-7.222s5.543-1.062,8.361-6.174c2.818-5.113,9.81-17.391,9.81-17.391s1.461,0.805,2.832-0.819
+			c1.372-1.625,2.299-3.662,2.299-3.662s-1.669,5.214,0.761,5.124c2.43-0.089,3.219-1.979,3.219-1.979s1.731,0.366,4.072-2.153
+			c-0.397,0.873,3.584,0.155,5.792-2.073c2.208-2.228,4.232-5.594,7.552-8.721c3.32-3.127,9.736-3.792,17.686-13.386
+			c7.949-9.594,12.014-16.57,15.487-22.609c3.364-5.848,4.448-19.198,10.924-22.155c4.241-1.444,13.61,0.36,14.134-0.948
+			c0.525-1.307-4.259-6.857-5.688-6.804s-2.918,2.397-3.23,1.693c-0.312-0.704,1.885-2.272,2.473-2.81
+			c-0.206-1.71-8.36-9.426-13.898-8.221c-5.538,1.205-18.956,13.862-18.956,13.862c-3.522,3.325-8.011,6.084-8.72,5.811
+			c-0.616-0.238,6.379-4.521,9.251-7.969c0.907-4.225,2.641-13.752,2.929-20.581c0.459-10.894-2.442-23.669-1.237-33.731
+			c1.205-10.063,4.542-28.361,0.111-28.199c-4.431,0.162-10.053,14.681-10.053,14.681s0.53-16.765-4.727-15.713
+			c-5.257,1.052-6.281,8.245-5.256,12.787c-0.153-0.281-4.495-13.289-7.688-10.595c-3.193,2.693-0.684,16.484-0.684,16.484
+			s-6.396-10.5-9.542-6.52c-3.146,3.98-0.307,15.039-0.307,15.039s-5.721-3.798-7.162-0.167c-1.441,3.631,0.435,11.863,0.435,11.863
+			s-4.726-3.977-5.722,0.067c-0.997,4.044,2.908,9.053,2.908,9.053s-5.029-0.531-4.575,4.032c0.454,4.563,3.063,5.469,3.063,5.469
+			s-2.56,1.096-2.729,3.964c-0.169,2.869,3.064,5.183,3.064,5.183s-4.748-0.685-4.57,4.175c0.178,4.86,4.888,8.408,4.888,8.408
+			s-3.753-0.864-3.383,1.412c0.057,0.35,0.14,0.706,0.236,1.057c9.319,5.714,33.826,18.44,32.519,19.382
+			c-1.458,1.051-24.868-11.462-31.004-15.638c0,0-5.918-1.357-23.51-12.734c-17.592-11.377-20.369-16.857-24.321-23.153
+			c-3.952-6.296-6.637-17.074-8.209-17.017c-1.572,0.058-0.744,7.04-0.744,7.04s-7.686-14.46-9.778-12.952
+			c-2.092,1.508,1.526,10.392,1.526,10.392s-5.645-9.525-7.133-7.181c-1.488,2.345,0.283,7.718,0.283,7.718
+			s-1.836-3.225-2.859,0.105c-1.023,3.329,2.753,12.637,2.753,12.637s-2.782-3.762-3.716,0.136
+			c-0.934,3.899,3.41,11.038,3.41,11.038s-3.203-3.317-3.172,0.403c0.031,3.72,4.185,7.718,4.185,7.718
+			S64.146,126.518,64.521,128.937z M205.011,136.126c-0.044-1.208,0.899-2.224,2.107-2.268c1.208-0.044,2.224,0.899,2.268,2.107
+			c0.044,1.208-0.899,2.223-2.107,2.268C206.07,138.278,205.055,137.335,205.011,136.126z"/>
+          <clipPath id="dvClipNear" clipPathUnits="userSpaceOnUse"><polygon points="126,45 199,45 196,118 189,138 178,157 168,167 152,167 134,159 117,146 113,128 118,60"/></clipPath>
+          <clipPath id="dvClipFar" clipPathUnits="userSpaceOnUse"><polygon points="55,80 104,80 111,126 127,147 156,169 140,185 125,195 55,200"/></clipPath>
+          <mask id="dvBodyMask" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="300"><rect width="300" height="300" fill="#fff"/><polygon points="126,45 199,45 196,118 189,138 178,157 168,167 152,167 134,159 117,146 113,128 118,60" fill="#000"/><polygon points="55,80 104,80 111,126 127,147 156,169 140,185 125,195 55,200" fill="#000"/></mask>
+        </defs>
+      </svg>
+      <span class="dv dv-l"><span class="dv-fly"><svg viewBox="60 55 168 198" fill="url(#dvGold)" focusable="false">
+          <g class="dv-wing dv-far"><g clip-path="url(#dvClipFar)"><use href="#dovePath"/></g></g>
+          <g mask="url(#dvBodyMask)"><use href="#dovePath"/></g>
+          <g class="dv-wing dv-near"><g clip-path="url(#dvClipNear)"><use href="#dovePath"/></g></g>
+        </svg></span></span>
+      <span class="dv dv-r"><span class="dv-fly"><svg viewBox="60 55 168 198" fill="url(#dvGold)" focusable="false">
+          <g class="dv-wing dv-far"><g clip-path="url(#dvClipFar)"><use href="#dovePath"/></g></g>
+          <g mask="url(#dvBodyMask)"><use href="#dovePath"/></g>
+          <g class="dv-wing dv-near"><g clip-path="url(#dvClipNear)"><use href="#dovePath"/></g></g>
+        </svg></span></span>
+    </div>
     <div class="name-stage cl-names rv" style="--hs:min(120vw,640px)">
       <div class="halo" data-halo="a" aria-hidden="true"></div>
       <div class="names"><span class="name" data-t="groom.short">Nabil</span><span class="amp">&amp;</span><span class="name" data-t="bride.short">Izza</span></div>
