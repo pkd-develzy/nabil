@@ -1,6 +1,6 @@
 const CONFIG = {
-  groom:{short:'Nabil',initial:'N',full:'Ahmad Nabil Kholili, S.Ag.',order:'Putra ke-1 dari',parents:'Bpk. Shobirin & Ibu Ummu Aiman',address:'Desa Kubangwungu RT 05 RW 03, Kec. Ketanggungan, Kab. Brebes',family:'Keluarga Bpk. Shobirin & Ibu Ummu Aiman',photo:'pria.png'},
-  bride:{short:'Izza',initial:'I',full:'Fadilatul Izza',order:'Putri ke-3 dari',parents:'Bpk. Rosihin & Ibu Siti Chulasoh',address:'Desa Kubangwungu RT 08 RW 01, Kec. Ketanggungan, Kab. Brebes',family:'Keluarga Bpk. Rosihin & Ibu Siti Chulasoh',photo:'wanita.png'},
+  groom:{short:'Nabil',initial:'N',full:'Ahmad Nabil Kholili, S.Ag.',order:'Putra ke-1 dari',parents:'Bpk. Shobirin & Ibu Ummu Aiman',address:'Desa Kubangwungu RT 05 RW 03, Kec. Ketanggungan, Kab. Brebes',family:'Ahmad Nabil Kholili, S.Ag.',photo:'pria.png'},
+  bride:{short:'Izza',initial:'I',full:'Fadilatul Izza',order:'Putri ke-3 dari',parents:'Bpk. Rosihin & Ibu Siti Chulasoh',address:'Desa Kubangwungu RT 08 RW 01, Kec. Ketanggungan, Kab. Brebes',family:'Fadilatul Izza',photo:'wanita.png'},
   seal:'N&I',
   targetDate:'2027-01-21T09:00:00+07:00',
   eventTitle:'Nabil & Izza (Kamis, 21 Januari 2027)',
