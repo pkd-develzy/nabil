@@ -108,35 +108,37 @@
     }
     .btn:active { transform: translateY(0); }
     .btn-wa {
-      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%) !important;
+      background: linear-gradient(135deg, #1fa855 0%, #0d6e4f 100%) !important;
       color: #ffffff !important;
-      border: 1px solid rgba(37, 211, 102, 0.7) !important;
-      box-shadow: 0 6px 16px rgba(18, 140, 126, 0.4) !important;
+      border: 1.5px solid rgba(201, 165, 107, 0.45) !important;
+      box-shadow: 0 6px 16px rgba(13, 110, 79, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
       font-weight: 600;
     }
     .btn-wa:hover {
-      box-shadow: 0 10px 24px rgba(18, 140, 126, 0.6), 0 0 18px rgba(37, 211, 102, 0.5) !important;
-      filter: brightness(1.08) !important;
+      background: linear-gradient(135deg, #25d366 0%, #118762 100%) !important;
+      box-shadow: 0 8px 24px rgba(13, 110, 79, 0.6), 0 0 16px rgba(201, 165, 107, 0.4) !important;
+      transform: translateY(-2px);
     }
     .btn-outline {
-      background: rgba(42, 7, 18, 0.65) !important;
-      border: 1px solid rgba(201, 165, 107, 0.45) !important;
+      background: rgba(42, 7, 18, 0.7) !important;
+      border: 1.5px solid rgba(201, 165, 107, 0.4) !important;
       color: var(--gold-soft) !important;
       backdrop-filter: blur(8px);
     }
     .btn-outline:hover {
-      background: rgba(201, 165, 107, 0.22) !important;
+      background: rgba(201, 165, 107, 0.25) !important;
       border-color: var(--gold) !important;
       color: #ffffff !important;
-      box-shadow: 0 6px 18px rgba(201, 165, 107, 0.3) !important;
+      box-shadow: 0 6px 18px rgba(201, 165, 107, 0.35) !important;
+      transform: translateY(-2px);
     }
     .btn-sm {
-      min-height: 36px !important;
-      padding: 0.42rem 0.9rem !important;
-      font-size: 0.74rem !important;
+      min-height: 38px !important;
+      padding: 0.45rem 0.9rem !important;
+      font-size: 0.76rem !important;
       letter-spacing: 0.06em !important;
       border-radius: 10px !important;
-      gap: 5px !important;
+      gap: 6px !important;
     }
     .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
 
@@ -144,23 +146,23 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 10px;
-      background: rgba(255, 82, 119, 0.12);
-      border: 1px solid rgba(255, 82, 119, 0.35);
-      color: #ff859d;
+      background: rgba(180, 20, 50, 0.2);
+      border: 1.5px solid rgba(255, 82, 119, 0.4);
+      color: #ffa4b5;
       cursor: pointer;
       transition: all 0.2s ease;
       padding: 0;
       flex-shrink: 0;
     }
     .btn-danger-sm:hover {
-      background: rgba(255, 82, 119, 0.28);
+      background: rgba(220, 38, 38, 0.45);
       border-color: #ff5277;
       color: #ffffff;
       transform: translateY(-1.5px);
-      box-shadow: 0 4px 14px rgba(255, 82, 119, 0.45);
+      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
     }
     .btn-danger-sm svg { width: 15px; height: 15px; }
 
@@ -192,7 +194,7 @@
     }
     .form-input, .form-textarea, .form-select {
       width: 100%;
-      background: rgba(18, 3, 8, 0.65);
+      background: rgba(18, 3, 8, 0.75);
       border: 1.5px solid rgba(201, 165, 107, 0.35);
       border-radius: 14px;
       padding: 13px 16px;
@@ -200,19 +202,34 @@
       font-size: 16px; /* 16px standard to avoid iOS zoom */
       color: var(--ivory);
       outline: none;
-      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
       -webkit-appearance: none;
       appearance: none;
+      color-scheme: dark;
     }
     .form-select {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c9a56b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 14px center;
       padding-right: 38px;
+      cursor: pointer;
+    }
+    .form-select option {
+      background-color: #20040e;
+      color: #f7e6c4;
+      padding: 12px 14px;
+      font-family: 'Jost', sans-serif;
+      font-size: 15px;
+    }
+    .form-select option:checked {
+      background: #571024;
+      color: #ffffff;
+      font-weight: 600;
     }
     .form-input:focus, .form-textarea:focus, .form-select:focus {
       border-color: var(--gold);
       box-shadow: 0 0 16px rgba(201, 165, 107, 0.35);
+      background: rgba(28, 4, 12, 0.9);
     }
     .form-textarea {
       resize: vertical;
@@ -223,31 +240,49 @@
 
     /* Category & Template Pills */
     .pill-group {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
       gap: 8px;
-      margin-top: 6px;
+      margin-top: 8px;
+      width: 100%;
+    }
+    .category-pills {
+      grid-template-columns: repeat(5, 1fr);
+    }
+    .template-pills {
+      grid-template-columns: repeat(3, 1fr);
     }
     .pill-btn {
-      padding: 8px 16px;
-      min-height: 38px;
-      border-radius: 999px;
-      background: rgba(30, 5, 12, 0.6);
-      border: 1px solid rgba(201, 165, 107, 0.3);
+      padding: 9px 8px;
+      min-height: 42px;
+      border-radius: 12px;
+      background: rgba(36, 6, 16, 0.7);
+      border: 1.5px solid rgba(201, 165, 107, 0.3);
       color: var(--gold-soft);
       font-size: 0.82rem;
+      font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
       touch-action: manipulation;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
     }
-    .pill-btn:hover, .pill-btn.active {
-      background: var(--gold);
+    .pill-btn:hover {
+      border-color: var(--gold);
+      color: #ffffff;
+      background: rgba(87, 16, 36, 0.75);
+      transform: translateY(-1px);
+    }
+    .pill-btn.active {
+      background: linear-gradient(135deg, #fff1d0 0%, var(--gold) 52%, var(--gold-deep) 100%);
       color: var(--wine-950);
-      border-color: var(--gold-soft);
-      font-weight: 500;
+      border-color: #ffd88a;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(201, 165, 107, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      transform: translateY(-1px);
     }
 
     /* Portal Header */
@@ -392,7 +427,7 @@
       gap: 5px;
     }
     .guest-name-text {
-      font-size: 0.96rem;
+      font-size: 0.98rem;
       font-weight: 600;
       color: #fffdf5;
       letter-spacing: 0.02em;
@@ -400,21 +435,26 @@
     .guest-phone-link {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      color: #25D366;
+      gap: 7px;
+      color: #fffdf5;
       text-decoration: none;
       font-weight: 500;
       font-size: 0.86rem;
-      background: rgba(37, 211, 102, 0.08);
-      border: 1px solid rgba(37, 211, 102, 0.25);
-      padding: 4px 10px;
-      border-radius: 8px;
+      background: rgba(42, 7, 18, 0.85);
+      border: 1px solid rgba(201, 165, 107, 0.35);
+      padding: 5px 12px;
+      border-radius: 999px;
       transition: all 0.2s ease;
     }
+    .guest-phone-link svg {
+      color: #25D366;
+      flex-shrink: 0;
+    }
     .guest-phone-link:hover {
-      background: rgba(37, 211, 102, 0.2);
-      border-color: #25D366;
+      background: rgba(87, 16, 36, 0.95);
+      border-color: var(--gold);
       color: #ffffff;
+      box-shadow: 0 0 12px rgba(201, 165, 107, 0.35);
       transform: translateY(-1px);
     }
     .no-phone {
@@ -435,12 +475,12 @@
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 5px 12px;
+      gap: 6px;
+      padding: 5px 13px;
       border-radius: 999px;
       font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      font-weight: 500;
+      letter-spacing: 0.08em;
+      font-weight: 600;
       text-transform: uppercase;
       user-select: none;
       border: 1px solid transparent;
@@ -449,22 +489,24 @@
       cursor: pointer;
     }
     .badge-sent {
-      background: rgba(37, 211, 102, 0.16);
-      color: #4ade80;
-      border-color: rgba(37, 211, 102, 0.45);
+      background: rgba(34, 197, 94, 0.16);
+      color: #86efac;
+      border-color: rgba(74, 222, 128, 0.45);
     }
     .badge-sent:hover {
-      background: rgba(37, 211, 102, 0.28);
+      background: rgba(34, 197, 94, 0.28);
+      border-color: #86efac;
       transform: translateY(-1px);
-      box-shadow: 0 2px 10px rgba(37, 211, 102, 0.3);
+      box-shadow: 0 2px 10px rgba(34, 197, 94, 0.3);
     }
     .badge-unsent {
-      background: rgba(201, 165, 107, 0.14);
+      background: rgba(201, 165, 107, 0.12);
       color: var(--gold-soft);
       border-color: rgba(201, 165, 107, 0.35);
     }
     .badge-unsent:hover {
-      background: rgba(201, 165, 107, 0.25);
+      background: rgba(201, 165, 107, 0.24);
+      border-color: var(--gold);
       transform: translateY(-1px);
       box-shadow: 0 2px 10px rgba(201, 165, 107, 0.25);
     }
@@ -473,16 +515,19 @@
       height: 6px;
       border-radius: 50%;
       background: var(--gold);
-      box-shadow: 0 0 6px rgba(201, 165, 107, 0.7);
+      box-shadow: 0 0 6px rgba(201, 165, 107, 0.8);
     }
     .badge-cat {
-      background: rgba(87, 16, 36, 0.7);
+      background: linear-gradient(135deg, rgba(87, 16, 36, 0.9), rgba(42, 7, 18, 0.95));
       color: var(--gold-soft);
-      border: 1px solid rgba(201, 165, 107, 0.35);
-      padding: 2px 9px;
+      border: 1px solid rgba(201, 165, 107, 0.45);
+      padding: 3px 10px;
       font-size: 0.68rem;
       letter-spacing: 0.08em;
+      border-radius: 999px;
+      font-weight: 500;
       cursor: default;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     }
 
     /* Modal Login */
@@ -557,6 +602,38 @@
       opacity: 1;
     }
 
+    /* Search & Filter Bar Base */
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .filter-search-box {
+      position: relative;
+      flex: 1.3;
+      min-width: 240px;
+    }
+    .filter-search-box .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+      pointer-events: none;
+      opacity: 0.85;
+    }
+    .filter-search-input {
+      padding-left: 42px !important;
+    }
+    .filter-selects-row {
+      display: flex;
+      gap: 10px;
+      flex: 1.2;
+      min-width: 260px;
+    }
+
     /* ==========================================================================
        MOBILE RESPONSIVE SYSTEM (Mobile Friendly untuk semua layar < 768px)
        ========================================================================== */
@@ -594,23 +671,42 @@
       .filter-bar {
         flex-direction: column !important;
         align-items: stretch !important;
+        gap: 10px !important;
       }
-      .filter-bar .form-input,
-      .filter-bar .form-select {
-        max-width: 100% !important;
+      .filter-search-box {
         width: 100% !important;
+        min-width: 0 !important;
       }
       .filter-selects-row {
         display: grid !important;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        width: 100%;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        width: 100% !important;
+      }
+
+      /* Symmetrical Pills on Mobile */
+      .category-pills {
+        grid-template-columns: repeat(6, 1fr) !important;
+      }
+      .category-pills .pill-btn:nth-child(1),
+      .category-pills .pill-btn:nth-child(2),
+      .category-pills .pill-btn:nth-child(3) {
+        grid-column: span 2 !important;
+      }
+      .category-pills .pill-btn:nth-child(4),
+      .category-pills .pill-btn:nth-child(5) {
+        grid-column: span 3 !important;
+      }
+      .template-pills {
+        grid-template-columns: 1fr !important;
       }
 
       /* Responsive Guest Card Transformation (Bukan tabel kaku yang scroll horizontal) */
       .table-container {
         border: none;
         overflow: visible;
+        background: transparent;
+        box-shadow: none;
       }
       .guest-table, .guest-table tbody, .guest-table tr, .guest-table td {
         display: block;
@@ -620,66 +716,92 @@
         display: none; /* Sembunyikan header tabel di mobile */
       }
       .guest-table tr {
-        background: rgba(30, 5, 12, 0.78);
-        border: 1px solid rgba(201, 165, 107, 0.3);
+        background: rgba(30, 5, 12, 0.85);
+        border: 1px solid rgba(201, 165, 107, 0.35);
         border-radius: 16px;
         margin-bottom: 14px;
         padding: 16px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
       }
       .guest-table tr:hover td {
         background: transparent;
       }
       .guest-table td {
-        padding: 4px 0;
+        padding: 0;
         border-bottom: none;
       }
       .td-num {
         display: none !important;
       }
       .td-name {
-        padding-bottom: 8px !important;
-        border-bottom: 1px dashed rgba(201, 165, 107, 0.2) !important;
-        margin-bottom: 8px;
+        padding-bottom: 10px !important;
+        border-bottom: 1px dashed rgba(201, 165, 107, 0.22) !important;
+        margin-bottom: 10px;
+      }
+      .guest-name-cell {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+        width: 100% !important;
       }
       .guest-name-text {
-        font-size: 1.05rem;
-        color: var(--ivory);
-        display: block;
-        margin-bottom: 4px;
+        font-family: 'Cormorant Garamond', serif !important;
+        font-size: 1.25rem !important;
+        font-weight: 600 !important;
+        color: #fffdf5 !important;
+        letter-spacing: 0.02em !important;
+        line-height: 1.2 !important;
       }
       .td-phone, .td-status {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 5px 0 !important;
-        font-size: 0.88rem;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 12px !important;
+        background: rgba(18, 3, 8, 0.5) !important;
+        border: 1px solid rgba(201, 165, 107, 0.18) !important;
+        border-radius: 10px !important;
+        margin-bottom: 8px !important;
       }
       .mobile-label {
-        display: inline-block;
-        font-size: 0.72rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--gold-soft);
-        opacity: 0.85;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        font-size: 0.72rem !important;
+        letter-spacing: 0.14em !important;
+        text-transform: uppercase !important;
+        color: var(--gold-soft) !important;
+        font-weight: 500 !important;
+        opacity: 0.9 !important;
       }
       .td-actions {
-        padding-top: 12px !important;
+        padding-top: 10px !important;
         border-top: 1px solid rgba(201, 165, 107, 0.2) !important;
-        margin-top: 10px;
+        margin-top: 8px;
       }
       .action-btn-group {
-        display: grid;
-        grid-template-columns: 2.2fr 1fr 1fr 48px;
-        gap: 6px;
-        width: 100%;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 44px !important;
+        gap: 8px !important;
+        width: 100% !important;
       }
-      .action-btn-group .btn {
-        width: 100%;
-        min-height: 40px;
-        justify-content: center;
-        padding: 0.45rem 0.2rem;
-        font-size: 0.72rem;
+      .action-btn-group .btn-wa {
+        grid-column: 1 / -1 !important;
+        min-height: 44px !important;
+        font-size: 0.84rem !important;
+        letter-spacing: 0.06em !important;
+        width: 100% !important;
+      }
+      .action-btn-group .btn-outline {
+        min-height: 38px !important;
+        font-size: 0.78rem !important;
+        padding: 0.45rem 0.5rem !important;
+        width: 100% !important;
+      }
+      .action-btn-group .btn-danger-sm {
+        width: 100% !important;
+        height: 38px !important;
       }
 
       /* Stack header rekap di mobile */
@@ -713,14 +835,6 @@
       .card {
         padding: 16px 14px;
         border-radius: 16px;
-      }
-      .action-btn-group {
-        grid-template-columns: 1.8fr 1fr 1fr 42px;
-        gap: 5px;
-      }
-      .action-btn-group .btn {
-        font-size: 0.68rem;
-        letter-spacing: 0.06em;
       }
     }
 
@@ -847,7 +961,7 @@
 
         <div class="form-group">
           <label class="form-label">Kategori Tamu</label>
-          <div class="pill-group" id="categoryGroup">
+          <div class="pill-group category-pills" id="categoryGroup">
             <button type="button" class="pill-btn active" data-cat="Umum" onclick="selectCategory(this)">Umum</button>
             <button type="button" class="pill-btn" data-cat="Keluarga" onclick="selectCategory(this)">Keluarga</button>
             <button type="button" class="pill-btn" data-cat="VIP" onclick="selectCategory(this)">VIP</button>
@@ -858,7 +972,7 @@
 
         <div class="form-group">
           <label class="form-label">Gaya Bahasa Template Pesan</label>
-          <div class="pill-group" id="templateGroup">
+          <div class="pill-group template-pills" id="templateGroup">
             <button type="button" class="pill-btn active" data-tpl="formal" onclick="selectTemplate(this)">Formal &amp; Sopan</button>
             <button type="button" class="pill-btn" data-tpl="keluarga" onclick="selectTemplate(this)">Hangat (Keluarga)</button>
             <button type="button" class="pill-btn" data-tpl="santai" onclick="selectTemplate(this)">Santai (Teman/Sahabat)</button>
@@ -932,9 +1046,12 @@
       </div>
 
       <!-- Search & Category Filter -->
-      <div class="filter-bar" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
-        <input type="text" id="searchGuest" class="form-input" style="max-width:280px" placeholder="Cari nama tamu..." oninput="renderGuestTable()" />
-        <div class="filter-selects-row" style="display:flex;gap:10px;flex:1">
+      <div class="filter-bar">
+        <div class="filter-search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchGuest" class="form-input filter-search-input" placeholder="Cari nama tamu..." oninput="renderGuestTable()" />
+        </div>
+        <div class="filter-selects-row">
           <select id="filterCategory" class="form-select" onchange="renderGuestTable()">
             <option value="ALL">Semua Kategori</option>
             <option value="Umum">Umum</option>
@@ -1372,12 +1489,12 @@
           '<td class="td-actions">' +
             '<div class="action-btn-group">' +
               '<button type="button" class="btn btn-wa btn-sm" onclick="quickSendWA(\'' + g.id + '\')" title="Kirim via WhatsApp">' +
-                '<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>' +
-                '<span>Kirim WA</span>' +
+                '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>' +
+                '<span>Kirim Undangan WA</span>' +
               '</button>' +
               '<button type="button" class="btn btn-outline btn-sm" onclick="quickCopyLink(\'' + g.id + '\')" title="Salin Tautan">' +
                 '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>' +
-                '<span>Link</span>' +
+                '<span>Salin Link</span>' +
               '</button>' +
               '<a href="' + link + '" target="_blank" class="btn btn-outline btn-sm" title="Buka Undangan">' +
                 '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>' +
