@@ -1560,13 +1560,12 @@
       // Hitung Statistik
       var total = list.length;
       var sent = list.filter(function(g){ return g.sent; }).length;
-      var unsent = total - sent;
-      var vip = list.filter(function(g){ return g.category === 'VIP' || g.category === 'Keluarga'; }).length;
 
-      document.getElementById('statTotal').textContent = total;
-      document.getElementById('statSent').textContent = sent;
-      document.getElementById('statUnsent').textContent = unsent;
-      document.getElementById('statVip').textContent = vip;
+      var elTotal = document.getElementById('statTotal');
+      var elSent = document.getElementById('statSent');
+
+      if (elTotal) elTotal.textContent = total;
+      if (elSent) elSent.textContent = sent;
 
       // Filter
       var filtered = list.filter(function(g){
@@ -1817,8 +1816,8 @@
           '</td>' +
           '<td class="td-actions">' +
             '<div class="action-btn-group" style="justify-content:flex-end">' +
-              '<button type="button" class="btn-danger-sm" onclick="deleteRsvp(' + r.id + ', \'' + escapeHtml(r.name).replace(/'/g, "\\'") + '\')" title="Hapus data RSVP ini">' +
-                '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
+              '<button type="button" class="btn-danger-sm" onclick="deleteRsvp(' + r.id + ')" title="Hapus data RSVP ini">' +
+                '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
               '</button>' +
             '</div>' +
           '</td>' +
@@ -1827,8 +1826,10 @@
       tbody.innerHTML = html;
     }
 
-    function deleteRsvp(id, name) {
-      if (!confirm('Apakah Anda yakin ingin menghapus konfirmasi RSVP dari ' + (name || 'tamu ini') + '?')) {
+    function deleteRsvp(id) {
+      var item = (RSVP_LIST || []).find(function(x){ return String(x.id) === String(id); });
+      var name = item ? item.name : 'tamu ini';
+      if (!confirm('Apakah Anda yakin ingin menghapus konfirmasi RSVP dari ' + name + '?')) {
         return;
       }
       fetch('/api/rsvps?id=' + encodeURIComponent(id), {
@@ -1840,7 +1841,7 @@
       })
       .then(function(json){
         if (json && json.success) {
-          showToast('RSVP ' + (name || '') + ' berhasil dihapus.');
+          showToast('RSVP ' + name + ' berhasil dihapus.');
           RSVP_LIST = RSVP_LIST.filter(function(r){ return String(r.id) !== String(id); });
           renderRsvpTable();
         } else {
