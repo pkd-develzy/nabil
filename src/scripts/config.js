@@ -12,7 +12,7 @@ const CONFIG = {
         address:'Desa Kubangwungu RT 08 RW 01, Kec. Ketanggungan, Kab. Brebes',
         mapQuery:'Desa Kubangwungu Ketanggungan Brebes',
         mapEmbed:'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d495.05173887371683!2d108.8909996!3d-6.960403!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6fa152a808cbc5%3A0xe7605c2872509698!2s2VQR%2BW84%2C%20Kubangwungu%2C%20Kec.%20Ketanggungan%2C%20Kabupaten%20Brebes%2C%20Jawa%20Tengah%2052263!5e0!3m2!1sid!2sid!4v1791902472357!5m2!1sid!2sid'},
-  whatsapp:'6285171542025',
+  whatsapp:'628192402390',
   banks:[{bank:'BNI',number:'966757484',name:'Ahmad Nabil Kholili'},{bank:'BNI',number:'2098721559',name:'Fadilatul Izza'}],
   playlist:[
     '/music/Maher Zain - Sepanjang Hidup.mp3'

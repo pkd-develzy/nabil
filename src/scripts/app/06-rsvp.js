@@ -45,7 +45,7 @@ if(form) {
     m+="\n\nJazakumullahu khairan.";
     msgText=m;
     if($('#resMsg')) $('#resMsg').textContent=m;
-    var phone = (CONFIG.whatsapp || '6285171542025').replace(/[^0-9]/g, '');
+    var phone = (CONFIG.whatsapp || '628192402390').replace(/[^0-9]/g, '');
     if($('#waBtn')) $('#waBtn').href='https://wa.me/'+phone+'?text='+encodeURIComponent(m);
     form.hidden=true;
     if(result) {
