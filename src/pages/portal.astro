@@ -3375,50 +3375,168 @@
       window.open(waUrl, '_blank');
     }
 
-    // 2. FITUR DOWNLOAD KARTU UCAPAN MENJADI PNG/JPG
+    // 2. FITUR DOWNLOAD KARTU UCAPAN MENJADI PNG/JPG (EXECUTIVE KEEPSAKE CARD)
     function downloadWishCard(id) {
-      var cardEl = document.getElementById('rsvp-card-' + id);
-      if (!cardEl) return;
+      var item = (RSVP_LIST || []).find(function(x){ return String(x.id) === String(id); });
+      if (!item) {
+        appAlert('Data ucapan tidak ditemukan.', 'Perhatian', 'warning');
+        return;
+      }
 
       if (typeof html2canvas !== 'function') {
         appAlert('Modul download gambar sedang dimuat dari CDN. Silakan coba kembali sesaat lagi.', 'Menyiapkan Gambar', 'info');
         return;
       }
 
-      showToast('Menyiapkan gambar kartu ucapan...');
+      showToast('Menyiapkan kartu ucapan eksklusif HD...', 'info', 'EXPORT GAMBAR');
 
-      var footerEl = cardEl.querySelector('.rsvp-card-footer');
-      var prevDisplay = footerEl ? footerEl.style.display : '';
-      if (footerEl) footerEl.style.display = 'none';
+      var cleanName = (item.name || 'Tamu').replace(/[^a-zA-Z0-9]/g, '_');
+      var isHadir = (item.attendance || '').toLowerCase() === 'hadir';
+      var safeName = escapeHtml(item.name || 'Tamu Undangan');
+      var safeCity = escapeHtml(item.city || '');
+      var safeCategory = escapeHtml(item.category || '');
+      var safeMessage = item.message ? escapeHtml(item.message) : 'Mendoakan keberkahan, sakinah, mawaddah, wa rahmah untuk kedua mempelai.';
+      var dateFormatted = formatRsvpDate(item.created_at);
+      var paxText = (item.pax || 1) + ' Orang';
 
-      // Elemen watermark / header eksklusif kartu kenangan tema royal
-      var exportBrand = document.createElement('div');
-      exportBrand.className = 'export-watermark';
-      exportBrand.innerHTML = '<div style="margin-top:16px;padding-top:12px;border-top:1px dashed rgba(201,165,107,0.4);display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;color:var(--gold-soft);font-family:\'Cinzel\',serif;letter-spacing:0.04em;"><span>The Wedding of Nabil &amp; Izza</span><span>21 Januari 2027</span></div>';
-      cardEl.appendChild(exportBrand);
+      var exportWrap = document.createElement('div');
+      exportWrap.id = 'exportWishCardContainer';
+      exportWrap.style.cssText = 'position:fixed;left:-9999px;top:0;width:640px;z-index:999999;pointer-events:none;';
 
-      html2canvas(cardEl, {
-        scale: 2.5,
-        backgroundColor: '#260610',
-        useCORS: true,
-        logging: false
-      }).then(function(canvas) {
-        if (footerEl) footerEl.style.display = prevDisplay;
-        if (exportBrand && exportBrand.parentNode) exportBrand.parentNode.removeChild(exportBrand);
+      exportWrap.innerHTML = 
+        '<div style="' +
+          'width:640px;' +
+          'background: radial-gradient(ellipse at 50% 15%, #460c1d 0%, #20040e 65%, #0f0207 100%);' +
+          'border: 2px solid #c9a56b;' +
+          'border-radius: 28px;' +
+          'padding: 38px 32px 30px;' +
+          'box-sizing: border-box;' +
+          'box-shadow: 0 24px 70px rgba(0,0,0,0.85);' +
+          'position: relative;' +
+          'font-family: \'Jost\', sans-serif;' +
+          'color: #fffdf8;' +
+          'overflow: hidden;' +
+        '">' +
+          // Inner decorative thin gold frame
+          '<div style="' +
+            'position: absolute;' +
+            'inset: 9px;' +
+            'border: 1px solid rgba(201, 165, 107, 0.4);' +
+            'border-radius: 20px;' +
+            'pointer-events: none;' +
+          '"></div>' +
 
-        var item = (RSVP_LIST || []).find(function(x){ return String(x.id) === String(id); });
-        var cleanName = (item && item.name ? item.name : 'Tamu').replace(/[^a-zA-Z0-9]/g, '_');
-        var link = document.createElement('a');
-        link.download = 'Ucapan_' + cleanName + '.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        showToast('Kartu ucapan ' + cleanName + ' berhasil diunduh!');
-      }).catch(function(err) {
-        if (footerEl) footerEl.style.display = prevDisplay;
-        if (exportBrand && exportBrand.parentNode) exportBrand.parentNode.removeChild(exportBrand);
-        console.error('Gagal export kartu:', err);
-        appAlert('Gagal mendownload kartu ucapan: ' + err.message, 'Gagal Download', 'warning');
-      });
+          // Header Royal Seal & Event Title
+          '<div style="text-align:center;position:relative;z-index:2;margin-bottom:22px;">' +
+            // Wax Seal Medallion
+            '<div style="' +
+              'width: 58px;' +
+              'height: 58px;' +
+              'margin: 0 auto 12px;' +
+              'border-radius: 50%;' +
+              'background: radial-gradient(circle at 35% 30%, #fff4db 0%, #e2c082 30%, #c9a56b 60%, #8c6833 100%);' +
+              'border: 2px solid #8c6833;' +
+              'box-shadow: 0 8px 24px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.7), inset 0 -3px 5px rgba(0,0,0,0.4);' +
+              'display: flex;' +
+              'align-items: center;' +
+              'justify-content: center;' +
+              'color: #260610;' +
+              'font-family: \'Cinzel\', serif;' +
+              'font-weight: 700;' +
+              'font-size: 1.15rem;' +
+              'letter-spacing: 0.05em;' +
+            '">N&amp;I</div>' +
+
+            '<div style="font-family:\'Cinzel\',serif;font-size:0.75rem;letter-spacing:0.26em;color:#c9a56b;text-transform:uppercase;margin-bottom:4px;">The Wedding of</div>' +
+            '<div style="font-family:\'Cormorant Garamond\',serif;font-size:2.2rem;font-weight:700;color:#fffdf5;letter-spacing:0.03em;line-height:1.2;">Ahmad Nabil &amp; Fadilatul Izza</div>' +
+            '<div style="font-family:\'Jost\',sans-serif;font-size:0.82rem;color:rgba(242,224,190,0.85);letter-spacing:0.08em;margin-top:4px;">Kamis, 21 Januari 2027 · Brebes, Jawa Tengah</div>' +
+            
+            // Decorative divider
+            '<div style="width:140px;height:1px;background:linear-gradient(90deg,transparent,#c9a56b,transparent);margin:16px auto 0;"></div>' +
+          '</div>' +
+
+          // Main Parchment Wish Card (Royal Letter / Manuscript)
+          '<div style="' +
+            'background: linear-gradient(180deg, #fffefb 0%, #f7eee0 100%);' +
+            'border: 1.5px solid rgba(201, 165, 107, 0.65);' +
+            'border-radius: 20px;' +
+            'padding: 24px 24px 20px;' +
+            'box-shadow: 0 12px 36px rgba(0,0,0,0.4), inset 0 0 20px rgba(201,165,107,0.12);' +
+            'position: relative;' +
+            'z-index: 2;' +
+            'color: #24030d;' +
+          '">' +
+            // Author row & badges
+            '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;border-bottom:1px dashed rgba(138,103,48,0.35);padding-bottom:14px;margin-bottom:16px;">' +
+              '<div style="flex:1;min-width:0;text-align:left;">' +
+                '<div style="font-family:\'Cinzel\',serif;font-size:0.68rem;letter-spacing:0.14em;color:#8a6730;text-transform:uppercase;margin-bottom:3px;">Untaian Doa Dari:</div>' +
+                '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:700;color:#350614;line-height:1.22;word-break:break-word;">' + safeName + '</div>' +
+                '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px;">' +
+                  (safeCity ? '<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(138,103,48,0.12);border:1px solid rgba(138,103,48,0.35);color:#4a2b0a;font-size:0.75rem;padding:3px 9px;border-radius:6px;font-weight:500;">📍 ' + safeCity + '</span>' : '') +
+                  (safeCategory ? '<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(87,16,36,0.12);border:1px solid rgba(87,16,36,0.3);color:#460c1d;font-size:0.75rem;padding:3px 9px;border-radius:6px;font-weight:600;">🏷️ ' + safeCategory + '</span>' : '') +
+                  (dateFormatted ? '<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(138,103,48,0.08);border:1px solid rgba(138,103,48,0.25);color:#5c3e16;font-size:0.75rem;padding:3px 9px;border-radius:6px;">🗓️ ' + dateFormatted + '</span>' : '') +
+                '</div>' +
+              '</div>' +
+              // Attendance Badge
+              '<div style="flex-shrink:0;">' +
+                (isHadir
+                  ? '<div style="background:linear-gradient(135deg,rgba(34,139,34,0.15),rgba(46,125,50,0.22));border:1.5px solid #2e7d32;color:#1b5e20;padding:6px 14px;border-radius:999px;font-size:0.76rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px;box-shadow:0 2px 8px rgba(46,125,50,0.18);"><span>✓ Insya Allah Hadir</span><span style="font-size:0.7rem;opacity:0.85">(' + paxText + ')</span></div>'
+                  : '<div style="background:rgba(180,40,60,0.14);border:1.5px solid #b71c1c;color:#8b0000;padding:6px 14px;border-radius:999px;font-size:0.76rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px;"><span>✕ Berhalangan</span></div>'
+                ) +
+              '</div>' +
+            '</div>' +
+
+            // Quote Box
+            '<div style="position:relative;padding:12px 18px 14px;background:rgba(201,165,107,0.1);border-left:3.5px solid #c9a56b;border-radius:0 14px 14px 0;margin-bottom:10px;">' +
+              '<div style="font-family:\'Cormorant Garamond\',serif;font-size:2.8rem;line-height:0.8;color:#c9a56b;opacity:0.6;margin-bottom:-10px;">“</div>' +
+              '<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:1.32rem;line-height:1.65;color:#24030d;word-break:break-word;white-space:pre-wrap;text-align:left;padding:0 4px;">' + safeMessage + '</div>' +
+              '<div style="font-family:\'Cormorant Garamond\',serif;font-size:2.8rem;line-height:0.8;color:#c9a56b;opacity:0.6;text-align:right;margin-top:-6px;">”</div>' +
+            '</div>' +
+          '</div>' +
+
+          // Card Footer Certificate of Memory
+          '<div style="text-align:center;position:relative;z-index:2;margin-top:20px;padding-top:14px;border-top:1px dashed rgba(201,165,107,0.35);">' +
+            '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.15rem;font-style:italic;color:#f2e0be;letter-spacing:0.02em;">Jazakumullahu Khairan Katsiran</div>' +
+            '<div style="font-family:\'Jost\',sans-serif;font-size:0.72rem;color:rgba(242,224,190,0.65);letter-spacing:0.06em;margin-top:3px;">Lembaran Kenangan Doa &amp; Restu · Azluna Wedding Portal</div>' +
+          '</div>' +
+        '</div>';
+
+      document.body.appendChild(exportWrap);
+
+      var captureNode = exportWrap.firstElementChild;
+
+      var triggerCapture = function() {
+        html2canvas(captureNode, {
+          scale: 2,
+          backgroundColor: '#0f0207',
+          useCORS: true,
+          logging: false
+        }).then(function(canvas) {
+          if (exportWrap && exportWrap.parentNode) {
+            exportWrap.parentNode.removeChild(exportWrap);
+          }
+
+          var link = document.createElement('a');
+          link.download = 'Ucapan_' + cleanName + '.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+          showToast('Kartu ucapan ' + cleanName + ' berhasil diunduh dalam kualitas HD!', 'success', 'BERHASIL DIUNDUH');
+        }).catch(function(err) {
+          if (exportWrap && exportWrap.parentNode) {
+            exportWrap.parentNode.removeChild(exportWrap);
+          }
+          console.error('Gagal export kartu ucapan:', err);
+          appAlert('Gagal mendownload kartu ucapan: ' + err.message, 'Gagal Download', 'warning');
+        });
+      };
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function() {
+          setTimeout(triggerCapture, 150);
+        });
+      } else {
+        setTimeout(triggerCapture, 250);
+      }
     }
 
     // 3. FITUR ON/OFF DITAMPILKAN / SEMBUNYIKAN
