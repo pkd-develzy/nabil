@@ -97,24 +97,50 @@ html.locked:not(.revealed) .floating-nav {
   font-weight: 600;
 }
 
-/* Mobile Ergonomics (< 560px) */
-@media (max-width: 560px) {
+/* Mobile Mode (< 768px): Posisi di sebelah kanan di atas icon musik, hanya icon saja tanpa teks */
+@media (max-width: 768px) {
   .floating-nav {
-    padding: 4px 6px;
-    gap: 3px;
-    max-width: calc(100vw - 16px);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 14px, black calc(100% - 14px), transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, black 14px, black calc(100% - 14px), transparent 100%);
+    left: auto;
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px) + 44px + 10px);
+    transform: translateX(120%);
+    flex-direction: column;
+    width: 44px;
+    max-width: 44px;
+    padding: 6px 3px;
+    gap: 6px;
+    border-radius: 26px;
+    -webkit-mask-image: none;
+    mask-image: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: calc(100vh - (14px + env(safe-area-inset-bottom, 0px) + 44px + 10px) - 20px);
+    touch-action: pan-y;
+  }
+  .floating-nav.show {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  html.locked:not(.revealed) .floating-nav {
+    transform: translateX(140%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
   .nav-item {
-    min-width: 52px;
-    min-height: 44px;
-    padding: 5px 6px;
-    border-radius: 12px;
-    font-size: 0.62rem;
+    min-width: 36px;
+    min-height: 36px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 0;
   }
   .nav-item svg {
-    width: 17px;
-    height: 17px;
+    margin-bottom: 0;
+    width: 18px;
+    height: 18px;
+  }
+  .nav-item span {
+    display: none !important;
   }
 }
