@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/fonts-wedding.css">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <style is:global>
     :root {
       --wine-950: #1b030b;
@@ -912,6 +913,309 @@
         grid-template-columns: 1.15fr 0.85fr;
       }
     }
+
+    /* ==========================================================================
+       RSVP & UCAPAN CARD GRID STYLES (MATCHING USER REFERENCE DESIGN)
+       ========================================================================== */
+    .rsvp-filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .rsvp-search-box {
+      position: relative;
+      flex: 1 1 260px;
+      max-width: 380px;
+    }
+    .rsvp-search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      pointer-events: none;
+    }
+    .rsvp-search-input {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px solid rgba(201, 165, 107, 0.35);
+      border-radius: 999px;
+      padding: 9px 16px 9px 38px;
+      font-size: 0.86rem;
+      font-family: inherit;
+      color: #1e293b;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+    .rsvp-search-input:focus {
+      background: #ffffff;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201, 165, 107, 0.25);
+    }
+    .rsvp-search-input::placeholder {
+      color: #94a3b8;
+    }
+    .rsvp-filter-tabs {
+      display: inline-flex;
+      background: rgba(30, 4, 13, 0.55);
+      padding: 4px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(201, 165, 107, 0.35);
+      gap: 4px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    .rsvp-tab {
+      background: transparent;
+      border: none;
+      color: var(--gold-soft);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .rsvp-tab:hover {
+      color: #ffffff;
+      background: rgba(201, 165, 107, 0.15);
+    }
+    .rsvp-tab.active {
+      background: #ffffff;
+      color: #1e293b;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    }
+    .rsvp-tab .tab-badge {
+      font-size: 0.75rem;
+      opacity: 0.85;
+      font-weight: 500;
+    }
+    .rsvp-tab.active .tab-badge {
+      color: #64748b;
+    }
+
+    /* Cards Grid */
+    .rsvp-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 18px;
+    }
+    @media (max-width: 640px) {
+      .rsvp-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+    .rsvp-card {
+      background: #ffffff;
+      color: #1e293b;
+      border-radius: 18px;
+      padding: 20px 20px 16px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+      border: 1px solid #edf0f5;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .rsvp-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    .rsvp-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .rsvp-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #ffffff;
+      flex-shrink: 0;
+      text-transform: uppercase;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .rsvp-user-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .rsvp-user-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .rsvp-user-name {
+      font-weight: 600;
+      font-size: 0.98rem;
+      color: #1e293b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .rsvp-badge-att {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .rsvp-badge-hadir {
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+    }
+    .rsvp-badge-berhalangan {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+    .rsvp-user-meta {
+      font-size: 0.78rem;
+      color: #8c96a3;
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .rsvp-card-body {
+      margin: 14px 0 16px;
+      font-size: 0.92rem;
+      color: #334155;
+      line-height: 1.58;
+      flex-grow: 1;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+    .rsvp-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid #f1f5f9;
+      margin-top: auto;
+    }
+
+    /* Switch Toggle */
+    .switch-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+    }
+    .switch-toggle {
+      position: relative;
+      display: inline-block;
+      width: 42px;
+      height: 24px;
+      cursor: pointer;
+      margin: 0;
+    }
+    .switch-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+    .switch-slider {
+      position: absolute;
+      inset: 0;
+      background-color: #cbd5e1;
+      transition: 0.25s ease;
+      border-radius: 24px;
+    }
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.25s ease;
+      border-radius: 50%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    .switch-toggle input:checked + .switch-slider {
+      background-color: #10b981;
+    }
+    .switch-toggle input:checked + .switch-slider:before {
+      transform: translateX(18px);
+    }
+    .switch-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    .switch-label.is-active {
+      color: #10b981;
+    }
+    .switch-label.is-hidden {
+      color: #94a3b8;
+    }
+
+    /* Action Icon Buttons */
+    .rsvp-card-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rsvp-icon-btn {
+      background: transparent;
+      border: none;
+      color: #64748b;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+    .rsvp-icon-btn:hover {
+      background: #f1f5f9;
+      color: #1e293b;
+      transform: scale(1.08);
+    }
+    .rsvp-icon-btn.btn-act-wa:hover {
+      background: #ecfdf5;
+      color: #059669;
+    }
+    .rsvp-icon-btn.btn-act-dl:hover {
+      background: #eff6ff;
+      color: #2563eb;
+    }
+    .rsvp-icon-btn.btn-act-del:hover {
+      background: #fef2f2;
+      color: #ef4444;
+    }
+    .rsvp-empty-state {
+      text-align: center;
+      padding: 42px 20px;
+      color: var(--gold-soft);
+      grid-column: 1 / -1;
+      background: rgba(30, 4, 13, 0.4);
+      border-radius: 16px;
+      border: 1px dashed rgba(201, 165, 107, 0.3);
+    }
   </style>
 </head>
 <body>
@@ -1172,39 +1476,29 @@
         </div>
       </div>
 
-      <!-- Search & Filter RSVP -->
-      <div class="filter-bar">
-        <div class="filter-search-box">
-          <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="searchRsvp" class="form-input filter-search-input" placeholder="Cari nama atau kota tamu..." oninput="renderRsvpTable()" />
+      <!-- Search & Filter RSVP Tabs (Matching User Reference) -->
+      <div class="rsvp-filter-container">
+        <div class="rsvp-search-box">
+          <svg class="rsvp-search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchRsvp" class="rsvp-search-input" placeholder="Cari nama atau isi ucapan..." oninput="renderRsvpCards()" />
         </div>
-        <div class="filter-selects-row">
-          <select id="filterRsvpAttendance" class="form-select" onchange="renderRsvpTable()">
-            <option value="ALL">Semua Kehadiran</option>
-            <option value="Hadir">Insya Allah Hadir</option>
-            <option value="Berhalangan">Berhalangan</option>
-          </select>
+
+        <div class="rsvp-filter-tabs" role="tablist">
+          <button type="button" class="rsvp-tab active" id="tabRsvpAll" onclick="setRsvpFilterTab('all')">
+            Semua <span class="tab-badge" id="tabCountAll">0</span>
+          </button>
+          <button type="button" class="rsvp-tab" id="tabRsvpVisible" onclick="setRsvpFilterTab('visible')">
+            Ditampilkan <span class="tab-badge" id="tabCountVisible">0</span>
+          </button>
+          <button type="button" class="rsvp-tab" id="tabRsvpHidden" onclick="setRsvpFilterTab('hidden')">
+            Disembunyikan <span class="tab-badge" id="tabCountHidden">0</span>
+          </button>
         </div>
       </div>
 
-      <!-- Tabel RSVP -->
-      <div class="table-container">
-        <table class="guest-table">
-          <thead>
-            <tr>
-              <th style="width:40px">#</th>
-              <th>Nama &amp; Asal Kota</th>
-              <th>Kategori</th>
-              <th>Kehadiran &amp; Pax</th>
-              <th>Doa &amp; Ucapan</th>
-              <th>Waktu</th>
-              <th style="text-align:right">Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="rsvpTableBody">
-            <!-- Rows injected by JavaScript -->
-          </tbody>
-        </table>
+      <!-- Card Grid Container (Model Baru) -->
+      <div class="rsvp-cards-grid" id="rsvpCardsGrid">
+        <!-- Wish cards rendered dynamically by JavaScript -->
       </div>
     </div>
 
@@ -1764,11 +2058,12 @@
       copyToClipboard(text, 'Rekapitulasi seluruh tamu berhasil disalin!');
     }
 
-    // 6. LOGIKA REKAPITULASI RSVP DARI CLOUDFLARE D1
+    // 6. LOGIKA REKAPITULASI RSVP DARI CLOUDFLARE D1 (CARD GRID SYSTEM)
     var RSVP_LIST = [];
+    var RSVP_ACTIVE_TAB = 'all';
 
     function fetchRsvpsFromD1(showToastMsg) {
-      fetch('/api/rsvps')
+      fetch('/api/rsvps?admin=1')
         .then(function(res){
           if (!res.ok) throw new Error('Status: ' + res.status);
           return res.json();
@@ -1776,7 +2071,7 @@
         .then(function(json){
           if (json && json.success && Array.isArray(json.data)) {
             RSVP_LIST = json.data;
-            renderRsvpTable();
+            renderRsvpCards();
             if (showToastMsg) showToast('Data RSVP berhasil diperbarui!');
           }
         })
@@ -1785,14 +2080,20 @@
         });
     }
 
-    function renderRsvpTable() {
-      var tbody = document.getElementById('rsvpTableBody');
-      if (!tbody) return;
+    function setRsvpFilterTab(tab) {
+      RSVP_ACTIVE_TAB = tab;
+      var tabs = ['all', 'visible', 'hidden'];
+      tabs.forEach(function(t) {
+        var el = document.getElementById(t === 'all' ? 'tabRsvpAll' : (t === 'visible' ? 'tabRsvpVisible' : 'tabRsvpHidden'));
+        if (el) {
+          if (t === tab) el.classList.add('active');
+          else el.classList.remove('active');
+        }
+      });
+      renderRsvpCards();
+    }
 
-      var search = (document.getElementById('searchRsvp') ? document.getElementById('searchRsvp').value : '').toLowerCase().trim();
-      var filterAtt = document.getElementById('filterRsvpAttendance') ? document.getElementById('filterRsvpAttendance').value : 'ALL';
-
-      // Update Top Stats
+    function updateRsvpStatsAndTabs() {
       var hadirList = RSVP_LIST.filter(function(r){ return (r.attendance || '').toLowerCase() === 'hadir'; });
       var totalPax = hadirList.reduce(function(acc, r){ return acc + (parseInt(r.pax, 10) || 1); }, 0);
       var statHadirEl = document.getElementById('statRsvpHadir');
@@ -1800,64 +2101,275 @@
       if (statHadirEl) statHadirEl.textContent = totalPax + ' Org';
       if (statTotalEl) statTotalEl.textContent = RSVP_LIST.length;
 
+      var visibleCount = RSVP_LIST.filter(function(r){ return r.is_visible !== 0; }).length;
+      var hiddenCount = RSVP_LIST.filter(function(r){ return r.is_visible === 0; }).length;
+
+      var tabAllEl = document.getElementById('tabCountAll');
+      var tabVisEl = document.getElementById('tabCountVisible');
+      var tabHidEl = document.getElementById('tabCountHidden');
+
+      if (tabAllEl) tabAllEl.textContent = RSVP_LIST.length;
+      if (tabVisEl) tabVisEl.textContent = visibleCount;
+      if (tabHidEl) tabHidEl.textContent = hiddenCount;
+    }
+
+    function getAvatarColor(name) {
+      var colors = [
+        '#e5a8c2', '#d48bb1', '#c47da5', '#9ab6e8', '#8bc0c8',
+        '#e2a58b', '#cca473', '#9acfa1', '#b5a4db', '#d997a0'
+      ];
+      var hash = 0;
+      var str = name || '';
+      for (var i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      return colors[Math.abs(hash) % colors.length];
+    }
+
+    function formatRsvpDate(isoDate) {
+      if (!isoDate) return '';
+      try {
+        var d = new Date(isoDate);
+        if (isNaN(d.getTime())) return '';
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+        return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+      } catch(e) {
+        return '';
+      }
+    }
+
+    function renderRsvpCards() {
+      var grid = document.getElementById('rsvpCardsGrid');
+      if (!grid) return;
+
+      updateRsvpStatsAndTabs();
+
+      var search = (document.getElementById('searchRsvp') ? document.getElementById('searchRsvp').value : '').toLowerCase().trim();
+
       var filtered = RSVP_LIST.filter(function(r){
-        var nameMatch = !search || (r.name || '').toLowerCase().indexOf(search) !== -1 || (r.city || '').toLowerCase().indexOf(search) !== -1;
-        var attMatch = filterAtt === 'ALL' || (filterAtt === 'Hadir' && (r.attendance || '').toLowerCase() === 'hadir') || (filterAtt === 'Berhalangan' && (r.attendance || '').toLowerCase() !== 'hadir');
-        return nameMatch && attMatch;
+        // Tab Filter
+        var isVisible = r.is_visible !== 0;
+        if (RSVP_ACTIVE_TAB === 'visible' && !isVisible) return false;
+        if (RSVP_ACTIVE_TAB === 'hidden' && isVisible) return false;
+
+        // Search Filter (nama, kota, ucapan)
+        if (search) {
+          var n = (r.name || '').toLowerCase();
+          var c = (r.city || '').toLowerCase();
+          var m = (r.message || '').toLowerCase();
+          if (n.indexOf(search) === -1 && c.indexOf(search) === -1 && m.indexOf(search) === -1) {
+            return false;
+          }
+        }
+        return true;
       });
 
       if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:rgba(242,224,190,0.6)">Belum ada data RSVP yang sesuai.</td></tr>';
+        grid.innerHTML = '<div class="rsvp-empty-state">' +
+          '<p style="font-size:1.6rem;margin-bottom:8px">💌</p>' +
+          '<strong style="font-size:1rem;color:var(--gold-soft)">Tidak ada ucapan atau konfirmasi yang sesuai</strong>' +
+          '<p style="font-size:0.8rem;opacity:0.7;margin-top:4px">Coba ubah kata kunci pencarian atau filter tab.</p>' +
+        '</div>';
         return;
       }
 
       var html = '';
-      filtered.forEach(function(r, idx){
+      filtered.forEach(function(r){
+        var isVisible = r.is_visible !== 0;
         var isHadir = (r.attendance || '').toLowerCase() === 'hadir';
-        var statusBadge = isHadir ?
-          '<span class="badge badge-sent"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Hadir <span class="badge-pax">' + (r.pax || 1) + ' Org</span></span>' :
-          '<span class="badge" style="background:rgba(180,40,60,0.18);color:#ffa4b5;border-color:rgba(255,82,119,0.4)">Berhalangan</span>';
+        var firstLetter = (r.name || 'T').trim().charAt(0).toUpperCase();
+        var avatarBg = getAvatarColor(r.name);
+        var dateFormatted = formatRsvpDate(r.created_at);
+        var cityMeta = (r.city ? escapeHtml(r.city) : '') + (r.city && dateFormatted ? ' · ' : '') + dateFormatted;
+        if (!cityMeta) cityMeta = 'Tamu Undangan';
 
-        var cityLabel = r.city ? '<span class="rsvp-city-tag">📍 ' + escapeHtml(r.city) + '</span>' : '<span style="font-size:0.75rem;color:rgba(242,224,190,0.4);font-style:italic">Asal belum diisi</span>';
-        var msgLabel = r.message ? '<div class="rsvp-msg-box">"' + escapeHtml(r.message) + '"</div>' : '<span style="color:rgba(242,224,190,0.4);font-style:italic;font-size:0.8rem">Tidak ada ucapan</span>';
-        var timeLabel = r.created_at ? formatTimeAgo(r.created_at) : '-';
+        var attBadge = isHadir
+          ? '<span class="rsvp-badge-att rsvp-badge-hadir">Hadir (' + (r.pax || 1) + 'p)</span>'
+          : '<span class="rsvp-badge-att rsvp-badge-berhalangan">Berhalangan</span>';
 
-        var isGrpR = (r.category || '').toLowerCase().indexOf('grup') !== -1 || (r.category || '').toLowerCase().indexOf('angkatan') !== -1 || (r.category || '').toLowerCase().indexOf('alumni') !== -1;
-        html += '<tr class="guest-row">' +
-          '<td class="td-num"><span class="num-badge">' + (idx + 1) + '</span></td>' +
-          '<td class="td-name">' +
-            '<div class="guest-name-cell">' +
-              '<strong class="guest-name-text">' + escapeHtml(r.name) + '</strong>' +
-              cityLabel +
+        var messageText = r.message ? escapeHtml(r.message) : '<em style="color:#94a3b8;font-size:0.85rem">Tidak menyertakan ucapan tertulis</em>';
+
+        html += '<article class="rsvp-card" id="rsvp-card-' + r.id + '">' +
+          // Header: Avatar + User Info + Attendance Badge
+          '<div class="rsvp-card-header">' +
+            '<div class="rsvp-avatar" style="background-color:' + avatarBg + '">' + firstLetter + '</div>' +
+            '<div class="rsvp-user-info">' +
+              '<div class="rsvp-user-name-row">' +
+                '<h3 class="rsvp-user-name" title="' + escapeHtml(r.name) + '">' + escapeHtml(r.name) + '</h3>' +
+                attBadge +
+              '</div>' +
+              '<div class="rsvp-user-meta">' + cityMeta + '</div>' +
             '</div>' +
-          '</td>' +
-          '<td class="td-cat">' +
-            '<span class="mobile-label">Kategori</span>' +
-            '<span class="badge badge-cat' + (isGrpR ? ' badge-cat-grp' : '') + '">' + (isGrpR ? '👥 ' : '') + escapeHtml(r.category || 'Umum') + '</span>' +
-          '</td>' +
-          '<td class="td-status">' +
-            '<span class="mobile-label">Kehadiran</span>' +
-            statusBadge +
-          '</td>' +
-          '<td class="td-msg">' +
-            '<span class="mobile-label">Ucapan</span>' +
-            msgLabel +
-          '</td>' +
-          '<td class="td-time" style="font-size:0.78rem;color:rgba(242,224,190,0.65);white-space:nowrap">' +
-            '<span class="mobile-label">Waktu</span>' + timeLabel +
-          '</td>' +
-          '<td class="td-actions">' +
-            '<div class="action-btn-group" style="justify-content:flex-end">' +
-              '<button type="button" class="btn-danger-sm" onclick="deleteRsvp(' + r.id + ')" title="Hapus data RSVP ini">' +
-                '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
+          '</div>' +
+
+          // Body: Pesan Ucapan
+          '<div class="rsvp-card-body">' + messageText + '</div>' +
+
+          // Footer: Switch Ditampilkan + 3 Action Icons (Balas WA, Download PNG, Hapus)
+          '<div class="rsvp-card-footer">' +
+            // On/Off Ditampilkan / Disembunyikan
+            '<div class="switch-wrap">' +
+              '<label class="switch-toggle" title="Aktifkan untuk menampilkan di web, matikan untuk menyembunyikan">' +
+                '<input type="checkbox" id="switch-input-' + r.id + '" onchange="toggleWishVisibility(' + r.id + ', this.checked)"' + (isVisible ? ' checked' : '') + ' />' +
+                '<span class="switch-slider"></span>' +
+              '</label>' +
+              '<span class="switch-label ' + (isVisible ? 'is-active' : 'is-hidden') + '" id="switch-label-' + r.id + '">' +
+                (isVisible ? 'Ditampilkan' : 'Disembunyikan') +
+              '</span>' +
+            '</div>' +
+
+            // Action Icons (Balas WA, Download PNG, Hapus)
+            '<div class="rsvp-card-actions">' +
+              // 1. Balas ke WhatsApp
+              '<button type="button" class="rsvp-icon-btn btn-act-wa" onclick="replyWa(' + r.id + ')" title="Balas Ucapan ke WhatsApp">' +
+                '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>' +
+              '</button>' +
+              // 2. Download JPG/PNG
+              '<button type="button" class="rsvp-icon-btn btn-act-dl" onclick="downloadWishCard(' + r.id + ')" title="Download Kartu Ucapan (PNG)">' +
+                '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+              '</button>' +
+              // 3. Hapus
+              '<button type="button" class="rsvp-icon-btn btn-act-del" onclick="deleteRsvp(' + r.id + ')" title="Hapus Data RSVP Ini">' +
+                '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
               '</button>' +
             '</div>' +
-          '</td>' +
-        '</tr>';
+          '</div>' +
+        '</article>';
       });
-      tbody.innerHTML = html;
+
+      grid.innerHTML = html;
     }
 
+    // Alias untuk backwards-compatibility
+    var renderRsvpTable = renderRsvpCards;
+
+    // 1. FITUR BALAS KE WA
+    function replyWa(id) {
+      var item = (RSVP_LIST || []).find(function(x){ return String(x.id) === String(id); });
+      if (!item) return;
+
+      // Cari nomor tamu di daftar tamu jika cocok namanya
+      var matchedGuest = (GUEST_LIST || []).find(function(g){
+        return (g.name || '').trim().toLowerCase() === (item.name || '').trim().toLowerCase();
+      });
+      var phone = matchedGuest && matchedGuest.phone ? matchedGuest.phone : '';
+
+      if (!phone) {
+        phone = prompt('Kirim balasan terima kasih ke WhatsApp ' + item.name + '.\nMasukkan nomor WhatsApp tujuan (contoh: 08123456789):', '');
+        if (!phone) return;
+      }
+
+      phone = phone.replace(/[^0-9]/g, '');
+      if (phone.startsWith('0')) {
+        phone = '62' + phone.substring(1);
+      }
+
+      var text = "Assalamu'alaikum Wr. Wb.\n\n" +
+        "Halo *" + item.name + "*,\n\n" +
+        "Terima kasih banyak atas ucapan, doa restu, dan konfirmasi kehadirannya untuk pernikahan kami:\n" +
+        "*Ahmad Nabil Kholili & Fadilatul Izza*\n\n" +
+        (item.message ? ('_"' + item.message + '"_\n\n') : '') +
+        "Semoga Allah SWT membalas segala ketulusan dan doa panjenengan dengan limpahan keberkahan, kesehatan, dan kebahagiaan berlipat ganda. Aamiin ya Rabbal 'Alamin. 🤲✨\n\n" +
+        "Salam hangat,\n" +
+        "*Nabil & Izza*";
+
+      var waUrl = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(text);
+      window.open(waUrl, '_blank');
+    }
+
+    // 2. FITUR DOWNLOAD KARTU UCAPAN MENJADI PNG/JPG
+    function downloadWishCard(id) {
+      var cardEl = document.getElementById('rsvp-card-' + id);
+      if (!cardEl) return;
+
+      if (typeof html2canvas !== 'function') {
+        alert('Modul download gambar sedang dimuat dari CDN. Silakan coba kembali sesaat lagi.');
+        return;
+      }
+
+      showToast('Menyiapkan gambar kartu ucapan...');
+
+      var footerEl = cardEl.querySelector('.rsvp-card-footer');
+      var prevDisplay = footerEl ? footerEl.style.display : '';
+      if (footerEl) footerEl.style.display = 'none';
+
+      // Elemen watermark / header eksklusif kartu kenangan
+      var exportBrand = document.createElement('div');
+      exportBrand.className = 'export-watermark';
+      exportBrand.innerHTML = '<div style="margin-top:16px;padding-top:10px;border-top:1px dashed #cbd5e1;display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;color:#94a3b8;font-family:sans-serif;"><span>The Wedding of Nabil &amp; Izza</span><span>21 Januari 2027</span></div>';
+      cardEl.appendChild(exportBrand);
+
+      html2canvas(cardEl, {
+        scale: 2.5,
+        backgroundColor: '#ffffff',
+        useCORS: true,
+        logging: false
+      }).then(function(canvas) {
+        if (footerEl) footerEl.style.display = prevDisplay;
+        if (exportBrand && exportBrand.parentNode) exportBrand.parentNode.removeChild(exportBrand);
+
+        var item = (RSVP_LIST || []).find(function(x){ return String(x.id) === String(id); });
+        var cleanName = (item && item.name ? item.name : 'Tamu').replace(/[^a-zA-Z0-9]/g, '_');
+        var link = document.createElement('a');
+        link.download = 'Ucapan_' + cleanName + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('Kartu ucapan ' + cleanName + ' berhasil diunduh!');
+      }).catch(function(err) {
+        if (footerEl) footerEl.style.display = prevDisplay;
+        if (exportBrand && exportBrand.parentNode) exportBrand.parentNode.removeChild(exportBrand);
+        console.error('Gagal export kartu:', err);
+        alert('Gagal mendownload kartu ucapan: ' + err.message);
+      });
+    }
+
+    // 3. FITUR ON/OFF DITAMPILKAN / SEMBUNYIKAN
+    function toggleWishVisibility(id, isChecked) {
+      var item = (RSVP_LIST || []).find(function(x){ return String(x.id) === String(id); });
+      if (item) {
+        item.is_visible = isChecked ? 1 : 0;
+      }
+
+      var labelEl = document.getElementById('switch-label-' + id);
+      if (labelEl) {
+        labelEl.textContent = isChecked ? 'Ditampilkan' : 'Disembunyikan';
+        labelEl.className = 'switch-label ' + (isChecked ? 'is-active' : 'is-hidden');
+      }
+
+      updateRsvpStatsAndTabs();
+
+      fetch('/api/rsvps', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: Number(id), is_visible: isChecked ? 1 : 0 })
+      })
+      .then(function(res){
+        if (!res.ok) throw new Error('Status: ' + res.status);
+        return res.json();
+      })
+      .then(function(json){
+        if (json && json.success) {
+          showToast(isChecked ? 'Ucapan ditampilkan di web undangan' : 'Ucapan disembunyikan dari web undangan');
+        } else {
+          throw new Error(json.error || 'Gagal menyimpan perubahan');
+        }
+      })
+      .catch(function(err){
+        console.error('Gagal toggle visibilitas:', err);
+        alert('Gagal mengubah status: ' + err.message);
+        // Revert switch on error
+        var switchInput = document.getElementById('switch-input-' + id);
+        if (switchInput) switchInput.checked = !isChecked;
+        if (item) item.is_visible = isChecked ? 0 : 1;
+        if (labelEl) {
+          labelEl.textContent = !isChecked ? 'Ditampilkan' : 'Disembunyikan';
+          labelEl.className = 'switch-label ' + (!isChecked ? 'is-active' : 'is-hidden');
+        }
+        updateRsvpStatsAndTabs();
+      });
+    }
+
+    // 4. FITUR HAPUS RSVP
     function deleteRsvp(id) {
       var item = (RSVP_LIST || []).find(function(x){ return String(x.id) === String(id); });
       var name = item ? item.name : 'tamu ini';
@@ -1875,7 +2387,7 @@
         if (json && json.success) {
           showToast('RSVP ' + name + ' berhasil dihapus.');
           RSVP_LIST = RSVP_LIST.filter(function(r){ return String(r.id) !== String(id); });
-          renderRsvpTable();
+          renderRsvpCards();
         } else {
           alert('Gagal menghapus: ' + (json.error || 'Terjadi kesalahan'));
         }

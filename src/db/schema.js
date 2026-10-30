@@ -18,5 +18,7 @@ export const rsvps = sqliteTable('rsvps', {
   attendance: text('attendance').notNull(),
   pax: integer('pax').default(1),
   message: text('message'),
+  isVisible: integer('is_visible').default(1),
   createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`)
 });
+

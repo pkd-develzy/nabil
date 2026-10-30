@@ -1,7 +1,7 @@
 export const prerender = false;
 
 import { getDb, schema } from '../../db/index.js';
-import { desc, eq } from 'drizzle-orm';
+import { desc, eq, or, isNull } from 'drizzle-orm';
 
 function jsonResponse(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -9,7 +9,7 @@ function jsonResponse(data, status = 200) {
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Cache-Control': 'no-store, no-cache, must-revalidate'
     }
@@ -27,8 +27,11 @@ export async function GET(context) {
       return jsonResponse({ error: 'Database D1 tidak ditemukan pada runtime Cloudflare' }, 500);
     }
 
+    const url = new URL(context.request.url);
+    const isAdmin = url.searchParams.get('admin') === '1' || url.searchParams.get('all') === '1';
+
     const db = getDb(d1);
-    const results = await db
+    let query = db
       .select({
         id: schema.rsvps.id,
         name: schema.rsvps.name,
@@ -37,11 +40,17 @@ export async function GET(context) {
         attendance: schema.rsvps.attendance,
         pax: schema.rsvps.pax,
         message: schema.rsvps.message,
+        is_visible: schema.rsvps.isVisible,
         created_at: schema.rsvps.createdAt
       })
-      .from(schema.rsvps)
-      .orderBy(desc(schema.rsvps.createdAt))
-      .limit(200);
+      .from(schema.rsvps);
+
+    if (!isAdmin) {
+      // Halaman publik hanya menampilkan ucapan yang disetujui / aktif (is_visible = 1)
+      query = query.where(or(eq(schema.rsvps.isVisible, 1), isNull(schema.rsvps.isVisible)));
+    }
+
+    const results = await query.orderBy(desc(schema.rsvps.createdAt)).limit(300);
 
     return jsonResponse({ success: true, data: results || [] });
   } catch (error) {
@@ -57,6 +66,18 @@ export async function POST(context) {
     }
 
     const body = await context.request.json();
+
+    // Support toggle action via POST as fallback
+    if (body.action === 'toggle' && body.id) {
+      const db = getDb(d1);
+      const isVisible = body.is_visible ? 1 : 0;
+      await db
+        .update(schema.rsvps)
+        .set({ isVisible })
+        .where(eq(schema.rsvps.id, Number(body.id)));
+      return jsonResponse({ success: true, is_visible: isVisible });
+    }
+
     const name = (body.name || '').trim();
     const city = (body.city || body.asal || '').trim();
     const category = (body.category || body.kategori || 'Umum').trim();
@@ -77,7 +98,8 @@ export async function POST(context) {
         category,
         attendance,
         pax,
-        message
+        message,
+        isVisible: 1
       })
       .returning();
 
@@ -90,11 +112,39 @@ export async function POST(context) {
         attendance,
         pax,
         message,
+        is_visible: 1,
         created_at: new Date().toISOString()
       }
     });
   } catch (error) {
     return jsonResponse({ error: error.message || 'Gagal menyimpan respon RSVP' }, 500);
+  }
+}
+
+export async function PATCH(context) {
+  try {
+    const d1 = context.locals?.runtime?.env?.DB;
+    if (!d1) {
+      return jsonResponse({ error: 'Database D1 tidak ditemukan pada runtime Cloudflare' }, 500);
+    }
+
+    const body = await context.request.json();
+    const id = Number(body.id);
+    const isVisible = body.is_visible ? 1 : 0;
+
+    if (!id) {
+      return jsonResponse({ error: 'ID RSVP wajib disertakan' }, 400);
+    }
+
+    const db = getDb(d1);
+    await db
+      .update(schema.rsvps)
+      .set({ isVisible })
+      .where(eq(schema.rsvps.id, id));
+
+    return jsonResponse({ success: true, is_visible: isVisible, message: 'Status visibilitas ucapan berhasil diperbarui' });
+  } catch (error) {
+    return jsonResponse({ error: error.message || 'Gagal mengubah status visibilitas' }, 500);
   }
 }
 
