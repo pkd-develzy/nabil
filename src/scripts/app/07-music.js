@@ -57,8 +57,7 @@ var Music=(function(){
   }
 
   var defaultPlaylist = [
-    '/music/Royal Burgundy Serenade.mp3',
-    '/music/The_Grace_of_Union.mp3'
+    '/music/Maher Zain - Sepanjang Hidup.mp3'
   ];
   var currentTrackIndex = 0;
   var useSynth = false;

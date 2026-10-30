@@ -15,9 +15,8 @@ const CONFIG = {
   whatsapp:'6285171542025',
   banks:[{bank:'BNI',number:'966757484',name:'Ahmad Nabil Kholili'},{bank:'BNI',number:'2098721559',name:'Fadilatul Izza'}],
   playlist:[
-    '/music/Royal Burgundy Serenade.mp3',
-    '/music/The_Grace_of_Union.mp3'
+    '/music/Maher Zain - Sepanjang Hidup.mp3'
   ],
-  musicSrc:'/music/Royal Burgundy Serenade.mp3',
+  musicSrc:'/music/Maher Zain - Sepanjang Hidup.mp3',
   visibility:{cover:true,salam:true,countdown:true,akad:true,resepsi:true,dressCode:true,maps:true,hadiah:true,rsvp:true,ucapan:true,doves:true,music:true}
 };
